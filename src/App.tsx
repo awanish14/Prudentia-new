@@ -2303,9 +2303,7 @@ export default function Home() {
     <ReactLenis root options={{ lerp: 0.08, duration: 1.4, smoothWheel: true }}>
       <CustomCursor />
       <ScrollToTop />
-      {/* Footer: fixed at viewport bottom, behind scrollable content (z-index 0) */}
-      <Footer />
-      {/* Scrollable content sits above the fixed footer (z-index 1) */}
+      {/* Scrollable content sits above the fixed footer on desktop (z-index 1) */}
       <div
         className="bg-white min-h-screen selection:bg-[var(--color-prudentia-green)]/10 selection:text-[var(--color-prudentia-green-dark)] font-sans antialiased text-gray-900 cursor-none"
         style={{ position: 'relative', zIndex: 1 }}
@@ -2326,9 +2324,10 @@ export default function Home() {
           <FinalCTA />
         </main>
       </div>
-      {/* Transparent spacer — footer clip-reveals through here as FinalCTA scrolls away.
-          Mobile renders the footer in normal flow, so the spacer isn't needed there. */}
+      {/* Transparent spacer (desktop only) — footer clip-reveals through here as FinalCTA scrolls away. */}
       <div className="hidden lg:block h-screen relative z-[1]" />
+      {/* Footer: fixed bottom on desktop (clip-revealed via spacer). In normal flow on mobile (renders after content). */}
+      <Footer />
       <ExitIntent />
     </ReactLenis>
   );
