@@ -1150,7 +1150,7 @@ function Solution() {
 
   return (
     <section className="bg-white min-h-screen flex items-center overflow-hidden">
-      <div className="w-full px-8 md:px-16 lg:px-24 py-16 flex flex-col gap-12">
+      <div className="w-full px-6 sm:px-8 md:px-16 lg:px-24 py-10 sm:py-14 lg:py-16 flex flex-col gap-8 sm:gap-10 lg:gap-12">
 
         {/* Heading */}
         <SectionReveal className="text-center">
@@ -1359,7 +1359,7 @@ function OfferBreakdown() {
   ];
 
   return (
-    <section className="py-28 px-8 md:px-16 lg:px-24 bg-white border-y border-gray-100">
+    <section className="py-14 sm:py-20 lg:py-28 px-6 sm:px-8 md:px-16 lg:px-24 bg-white border-y border-gray-100">
       <SectionReveal className="mb-16">
         <p className="text-[15px] font-bold tracking-[0.28em] uppercase text-[#008A45] mb-5 flex items-center gap-3">
           <span className="inline-block w-6 h-px bg-[#008A45]" />
@@ -1574,7 +1574,7 @@ function Testimonials() {
   const fourthCol = TESTIMONIALS_DATA.slice(15, 20);
 
   return (
-    <section className="py-24 bg-gradient-to-br from-[#faf8f5] via-[#f4f9f6] to-[#ecf3f9] border-y border-gray-200/50 relative overflow-hidden">
+    <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-[#faf8f5] via-[#f4f9f6] to-[#ecf3f9] border-y border-gray-200/50 relative overflow-hidden">
       <div className="px-6 lg:px-16 mb-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1625,7 +1625,7 @@ function TrustAndDifferentiation() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen min-h-[860px] w-full overflow-hidden flex items-center px-8 md:px-16 lg:px-24 py-16 border-t border-white/5"
+      className="relative lg:h-screen lg:min-h-[860px] w-full overflow-hidden flex items-center px-6 sm:px-8 md:px-16 lg:px-24 py-12 sm:py-16 border-t border-white/5"
     >
       {/* Background image */}
       <div
@@ -2014,7 +2014,7 @@ function Footer() {
 
   return (
     <footer
-      className="fixed bottom-0 left-0 right-0 w-full h-screen overflow-hidden"
+      className="relative lg:fixed lg:bottom-0 lg:left-0 lg:right-0 w-full lg:h-screen overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #061826 0%, #0A2A3A 50%, #0F3F3A 100%)', zIndex: 0 }}
     >
       {/* Subtle texture overlay */}
@@ -2326,8 +2326,9 @@ export default function Home() {
           <FinalCTA />
         </main>
       </div>
-      {/* Transparent spacer — footer clip-reveals through here as FinalCTA scrolls away */}
-      <div style={{ height: '100vh', position: 'relative', zIndex: 1 }} />
+      {/* Transparent spacer — footer clip-reveals through here as FinalCTA scrolls away.
+          Mobile renders the footer in normal flow, so the spacer isn't needed there. */}
+      <div className="hidden lg:block h-screen relative z-[1]" />
       <ExitIntent />
     </ReactLenis>
   );
