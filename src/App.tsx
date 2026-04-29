@@ -192,13 +192,13 @@ function CustomCursor() {
 
   return (
     <>
-      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+      <motion.div className="hidden lg:block fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
         style={{ x: springX, y: springY, translateX: '-50%', translateY: '-50%' }}>
         <motion.div className="rounded-full bg-white"
           animate={{ width: isHovering ? 48 : 28, height: isHovering ? 48 : 28, opacity: isHovering ? 0.9 : 0.7 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }} />
       </motion.div>
-      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999]"
+      <motion.div className="hidden lg:block fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%' }}>
         <div className="w-2 h-2 rounded-full bg-[#008A45] mix-blend-difference" />
       </motion.div>
@@ -255,18 +255,18 @@ function Logo({ light = false }: { light?: boolean }) {
   return (
     <div className="flex flex-col items-center w-fit select-none">
       <div className="flex items-end relative pb-1">
-        <span className="text-[#008A45] font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none">P</span>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none tracking-tight`}>rudent</span>
-        <div className="relative flex flex-col items-center justify-end h-[26px] sm:h-[32px] lg:h-[42px] mx-[1px]">
-          <div className="absolute top-[-7px] sm:top-[-8px] lg:top-[-10px] left-1/2 -translate-x-1/2 w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] lg:w-[24px] lg:h-[24px] rounded-full overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#4ade80] to-[#15803d]">
+        <span className="text-[#008A45] font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none">P</span>
+        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none tracking-tight`}>rudent</span>
+        <div className="relative flex flex-col items-center justify-end h-[22px] sm:h-[28px] lg:h-[42px] mx-[1px]">
+          <div className="absolute top-[-6px] sm:top-[-8px] lg:top-[-10px] left-1/2 -translate-x-1/2 w-[12px] h-[12px] sm:w-[16px] sm:h-[16px] lg:w-[24px] lg:h-[24px] rounded-full overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#4ade80] to-[#15803d]">
             <svg viewBox="0 0 100 100" className="w-full h-full text-white/80 mix-blend-overlay">
               <path fill="currentColor" opacity="0.8" d="M30 40Q40 30 50 35T70 50Q60 60 40 55T30 40M60 20Q75 25 80 40T60 70Q40 50 60 20" />
               <path fill="none" stroke="currentColor" strokeWidth="0.5" d="M10 50A40 40 0 0 1 90 50A40 40 0 0 1 10 50M50 10A40 40 0 0 1 50 90M20 50A30 40 0 0 1 80 50A30 40 0 0 1 20 50M50 20A40 30 0 0 1 50 80" opacity="0.5" />
             </svg>
           </div>
-          <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none`}>i</span>
+          <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none`}>i</span>
         </div>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none tracking-tight`}>a</span>
+        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none tracking-tight`}>a</span>
       </div>
       <div className="w-[105%] h-[2px] bg-[#008A45] my-1" />
       <div className={`text-[15px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide whitespace-nowrap`}>Technology Solutions India Pvt Ltd</div>
@@ -519,7 +519,7 @@ function Hero() {
         w-full px-6 sm:px-10 lg:px-16 xl:px-20 max-w-none">
 
         {/* Left text column */}
-        <div className="relative h-[430px] w-full lg:w-[58%] flex items-center">
+        <div className="relative h-[360px] sm:h-[400px] lg:h-[430px] w-full lg:w-[58%] flex items-center">
           <AnimatePresence mode="wait">
             <motion.div key={current}
               initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
@@ -571,10 +571,10 @@ function Hero() {
           </AnimatePresence>
         </div>
 
-        {/* ── Slide dot nav ── */}
+        {/* ── Slide dot nav (desktop only — mobile uses the card strip's progress bar) ── */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
-          className="flex items-center gap-3 mt-6
+          className="hidden lg:flex items-center gap-3 mt-6
             lg:absolute lg:bottom-10 lg:left-16 xl:left-20">
           {SLIDES.map((_, idx) => (
             <button key={idx} onClick={() => goTo(idx)}
@@ -586,11 +586,11 @@ function Hero() {
           ))}
         </motion.div>
 
-        {/* ── Bounded card strip (bottom-right) — hidden on mobile ── */}
-        <div className="hidden md:block absolute bottom-0 md:bottom-8 lg:bottom-10
-          right-0
-          w-[580px] lg:w-[880px] xl:w-[980px]
-          h-[300px] lg:h-[340px]
+        {/* ── Bounded card strip (bottom on mobile, bottom-right on desktop) ── */}
+        <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 lg:bottom-10
+          left-0 md:left-auto right-0
+          w-full md:w-[580px] lg:w-[880px] xl:w-[980px]
+          h-[200px] sm:h-[240px] md:h-[300px] lg:h-[340px]
           overflow-hidden pointer-events-none z-30">
           <div className="relative w-full h-full pointer-events-auto">
             {SLIDES.map((slide, idx) => (
@@ -602,8 +602,8 @@ function Hero() {
                   scale: csAll[idx],
                   zIndex: idx === current ? 10 : 5,
                 }}
-                className="absolute top-4 bottom-4 left-6 rounded-[2px]
-                  w-[330px] lg:w-[400px] xl:w-[430px]
+                className="absolute top-3 bottom-3 sm:top-4 sm:bottom-4 left-4 sm:left-6 rounded-[2px]
+                  w-[260px] sm:w-[300px] md:w-[330px] lg:w-[400px] xl:w-[430px]
                   overflow-hidden cursor-pointer shadow-2xl
                   border border-white/15 group flex flex-col"
                 aria-label={`Go to slide ${idx + 1}`}>
@@ -626,8 +626,8 @@ function Hero() {
                 </div>
 
                 {/* White text box below image */}
-                <div className="bg-white px-5 py-4 shrink-0 min-h-[90px]">
-                  <h4 className="text-gray-900 text-[16px] lg:text-[18px] font-semibold leading-snug line-clamp-2 mb-3 tracking-tight">
+                <div className="bg-white px-3 py-3 sm:px-5 sm:py-4 shrink-0 min-h-[68px] sm:min-h-[80px] md:min-h-[90px]">
+                  <h4 className="text-gray-900 text-[15px] sm:text-[16px] lg:text-[18px] font-semibold leading-snug line-clamp-2 mb-2 sm:mb-3 tracking-tight">
                     {slide.before} <span className="text-[#008A45] italic font-serif">{slide.accent}</span> {slide.after}
                   </h4>
                   <div className="h-[2px] bg-gray-100 w-full overflow-hidden rounded-full">
@@ -2313,7 +2313,7 @@ export default function Home() {
       <ScrollToTop />
       {/* Scrollable content sits above the fixed footer on desktop (z-index 1) */}
       <div
-        className="bg-white min-h-screen selection:bg-[var(--color-prudentia-green)]/10 selection:text-[var(--color-prudentia-green-dark)] font-sans antialiased text-gray-900 cursor-none"
+        className="bg-white min-h-screen selection:bg-[var(--color-prudentia-green)]/10 selection:text-[var(--color-prudentia-green-dark)] font-sans antialiased text-gray-900 lg:cursor-none"
         style={{ position: 'relative', zIndex: 1 }}
       >
         {/* Nav is absolute within this relative container — overlays the hero, scrolls away with the page */}
