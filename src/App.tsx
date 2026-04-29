@@ -1048,17 +1048,14 @@ function HowItWorks() {
     <section className="bg-white min-h-screen flex items-center overflow-hidden">
       <div className="w-full px-8 md:px-16 lg:px-24 py-16 flex flex-col gap-14">
 
-        {/* Header */}
-        <SectionReveal className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-gray-100 pb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-sans font-medium text-gray-900 tracking-tight leading-[1.1] max-w-2xl">
+        {/* Header — heading only, full breathing room */}
+        <SectionReveal className="border-b border-gray-100 pb-10 md:pb-12">
+          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-sans font-medium text-gray-900 tracking-tight leading-[1.1] max-w-3xl">
             <AnimatedWords text="A Structured Approach That" delay={0} />{' '}
             <span className="italic font-serif text-[#008A45] font-normal">
               <AnimatedWords text="Drives Real Results." delay={0.45} />
             </span>
           </h2>
-          <p className="text-[15px] text-gray-500 max-w-xs">
-            We don't do boilerplate. Every program is engineered for your specific operational reality.
-          </p>
         </SectionReveal>
 
         {/* Steps — horizontal row on desktop, stacked on mobile */}
@@ -1100,10 +1097,18 @@ function HowItWorks() {
           ))}
         </div>
 
-        {/* CTA */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ delay: 0.6 }} className="flex justify-end">
-          <MagneticButton className="btn-primary px-8 py-3.5 text-base gap-2 group">
+        {/* Closing strip — description (left) + CTA (right) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-15%' }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 border-t border-gray-100 pt-8 md:pt-10"
+        >
+          <p className="text-[15px] md:text-[16px] text-gray-500 max-w-md leading-relaxed">
+            We don't do boilerplate. Every program is engineered for your specific operational reality.
+          </p>
+          <MagneticButton className="btn-primary px-8 py-3.5 text-[15px] gap-2 group shrink-0 self-start md:self-end">
             Plan My Training
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </MagneticButton>
