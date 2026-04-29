@@ -253,24 +253,12 @@ function SectionReveal({ children, className }: { children: React.ReactNode; cla
 
 function Logo({ light = false }: { light?: boolean }) {
   return (
-    <div className="flex flex-col items-center w-fit select-none">
-      <div className="flex items-end relative pb-1">
-        <span className="text-[#008A45] font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none">P</span>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none tracking-tight`}>rudent</span>
-        <div className="relative flex flex-col items-center justify-end h-[22px] sm:h-[28px] lg:h-[42px] mx-[1px]">
-          <div className="absolute top-[-6px] sm:top-[-8px] lg:top-[-10px] left-1/2 -translate-x-1/2 w-[12px] h-[12px] sm:w-[16px] sm:h-[16px] lg:w-[24px] lg:h-[24px] rounded-full overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#4ade80] to-[#15803d]">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-white/80 mix-blend-overlay">
-              <path fill="currentColor" opacity="0.8" d="M30 40Q40 30 50 35T70 50Q60 60 40 55T30 40M60 20Q75 25 80 40T60 70Q40 50 60 20" />
-              <path fill="none" stroke="currentColor" strokeWidth="0.5" d="M10 50A40 40 0 0 1 90 50A40 40 0 0 1 10 50M50 10A40 40 0 0 1 50 90M20 50A30 40 0 0 1 80 50A30 40 0 0 1 20 50M50 20A40 30 0 0 1 50 80" opacity="0.5" />
-            </svg>
-          </div>
-          <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none`}>i</span>
-        </div>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[22px] sm:text-[28px] lg:text-[42px] leading-none tracking-tight`}>a</span>
-      </div>
-      <div className="w-[105%] h-[2px] bg-[#008A45] my-1" />
-      <div className={`text-[15px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide whitespace-nowrap`}>Technology Solutions India Pvt Ltd</div>
-    </div>
+    <img
+      src="/images/logo-prudentia.png"
+      alt="Prudentia — Technology Solutions India Pvt Ltd"
+      draggable={false}
+      className={`h-12 sm:h-14 md:h-16 lg:h-20 w-auto select-none ${light ? 'brightness-0 invert opacity-90' : ''}`}
+    />
   );
 }
 
@@ -298,7 +286,7 @@ function Navigation() {
     <>
       <header className="absolute top-0 left-0 right-0 z-50 px-6 sm:px-10 lg:px-16 xl:px-20 py-4">
         <div className="flex items-center justify-between gap-4">
-          <div className="scale-[1.0] origin-left shrink-0">
+          <div className="shrink-0">
             <Logo />
           </div>
 
@@ -308,7 +296,7 @@ function Navigation() {
           >
             {NAV_LINKS.map(link => (
               <a key={link.label} href={link.href}
-                className="px-4 py-2 rounded-full text-[15px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20">
+                className="px-4 py-2 rounded-full text-[14px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20">
                 {link.label}
               </a>
             ))}
@@ -358,7 +346,7 @@ function Navigation() {
 
               {/* Header */}
               <div className="relative flex items-center justify-between px-6 py-5 border-b border-white/10">
-                <div className="scale-[0.7] origin-left -ml-2"><Logo light /></div>
+                <Logo light />
                 <button onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
                   className="w-10 h-10 flex items-center justify-center bg-white/8 border border-white/15 rounded-full text-white/85 hover:bg-white/15 hover:text-white transition-colors">
