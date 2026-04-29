@@ -1974,6 +1974,7 @@ function FinalCTA() {
 function Footer() {
   const { scrollY } = useScroll();
   const [range, setRange] = useState<[number, number]>([8000, 9000]);
+  const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
     const calc = () => {
@@ -1982,11 +1983,18 @@ function Footer() {
       const end = docH - winH;
       setRange([Math.max(0, end - winH * 0.88), end]);
     };
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
     calc();
+    checkDesktop();
     const id = setTimeout(calc, 600);
-    const ro = new ResizeObserver(calc);
+    const ro = new ResizeObserver(() => { calc(); checkDesktop(); });
     ro.observe(document.documentElement);
-    return () => { clearTimeout(id); ro.disconnect(); };
+    window.addEventListener('resize', checkDesktop);
+    return () => {
+      clearTimeout(id);
+      ro.disconnect();
+      window.removeEventListener('resize', checkDesktop);
+    };
   }, []);
 
   const [start, end] = range;
@@ -2028,7 +2036,7 @@ function Footer() {
           mixBlendMode: 'overlay',
         }}
       />
-      <motion.div style={{ scale, opacity, filter: blurStyle }} className="lg:h-full flex flex-col origin-bottom relative z-10">
+      <motion.div style={isDesktop ? { scale, opacity, filter: blurStyle } : undefined} className="lg:h-full flex flex-col origin-bottom relative z-10">
 
         {/* ── TOP: Newsletter — white/light gradient zone ── */}
         <div
