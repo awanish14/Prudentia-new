@@ -643,6 +643,14 @@ const PROBLEM_BULLETS = [
   "ROI remains completely unclear",
 ];
 
+const CONSEQUENCES = [
+  { icon: Clock, text: "Slower project delivery" },
+  { icon: Building2, text: "Increased operational errors" },
+  { icon: BarChart3, text: "Low employee productivity" },
+  { icon: Layout, text: "Poor adoption of new technologies" },
+  { icon: Users, text: "Higher attrition due to lack of growth" },
+];
+
 const CARD_POSITIONS = [
   "top-[20%] left-[8%] md:left-[15%]",
   "top-[10%] right-[8%] md:right-[15%]",
@@ -653,10 +661,10 @@ const CARD_POSITIONS = [
 const CARD_ROTATIONS = [-4, 4, -4, 4];
 
 const CARD_RANGES: { yRange: [number, number]; opIn: [number, number]; opOut: [number, number] }[] = [
-  { yRange: [0.12, 0.50], opIn: [0.12, 0.20], opOut: [0.44, 0.50] },
-  { yRange: [0.22, 0.58], opIn: [0.22, 0.30], opOut: [0.52, 0.58] },
-  { yRange: [0.32, 0.66], opIn: [0.32, 0.40], opOut: [0.60, 0.66] },
-  { yRange: [0.42, 0.74], opIn: [0.42, 0.50], opOut: [0.68, 0.74] },
+  { yRange: [0.04, 0.42], opIn: [0.04, 0.12], opOut: [0.36, 0.42] },
+  { yRange: [0.14, 0.50], opIn: [0.14, 0.22], opOut: [0.44, 0.50] },
+  { yRange: [0.24, 0.58], opIn: [0.24, 0.32], opOut: [0.52, 0.58] },
+  { yRange: [0.34, 0.66], opIn: [0.34, 0.42], opOut: [0.60, 0.66] },
 ];
 
 // Fallback gradient backgrounds per card while images load or are unavailable
@@ -765,32 +773,32 @@ function Problem() {
     return Math.max(0, Math.min(1, (y - top) / scrollDistance));
   });
 
-  // Phase 1: headline fades in, dims progressively as cards arrive, exits before Phase 3
-  const cnt1Opacity = useTransform(scrollYProgress, [0, 0.55, 0.76, 0.82], [1, 0.5, 0.08, 0]);
-  const cnt1Scale   = useTransform(scrollYProgress, [0, 0.76, 0.82], [1, 1, 1.08]);
-  const cnt1Y       = useTransform(scrollYProgress, [0, 0], ['0px', '0px']);
+  // Phase 1: headline visible at entry, dims as Card 1 arrives
+  const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.28, 0.36], [1, 1, 0.35, 0]);
+  const cnt1Scale   = useTransform(scrollYProgress, [0, 0.28, 0.36], [1, 1, 1.06]);
 
-  // Phase 3: "But after that?" — full-bleed gradient headline
-  const cnt3Opacity = useTransform(scrollYProgress, [0.78, 0.85, 0.91, 0.94], [0, 1, 1, 0]);
-  const cnt3Scale   = useTransform(scrollYProgress, [0.78, 0.85, 0.91, 0.94], [0.82, 1, 1, 1.08]);
+  // Phase 3: "But after that?" + WHAT GOES WRONG panel
+  const cnt3Opacity      = useTransform(scrollYProgress, [0.50, 0.58, 0.74, 0.80], [0, 1, 1, 0]);
+  const cnt3HeadScale    = useTransform(scrollYProgress, [0.50, 0.58], [0.85, 1]);
+  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.58, 0.65], [0, 1]);
+  const cnt3PanelY       = useTransform(scrollYProgress, [0.58, 0.65], ['40px', '0px']);
 
-  // Phase 4: glass panel slides up
-  const cnt4Opacity = useTransform(scrollYProgress, [0.93, 0.975], [0, 1]);
-  const cnt4Y       = useTransform(scrollYProgress, [0.93, 0.975], ['36px', '0px']);
-
-  // Right column (solution pivot) appears slightly after panel
-  const solOpacity  = useTransform(scrollYProgress, [0.955, 1.0], [0, 1]);
-  const solScale    = useTransform(scrollYProgress, [0.955, 1.0], [0.92, 1]);
-  const solY        = useTransform(scrollYProgress, [0.955, 1.0], ['28px', '0px']);
+  // Phase 4: Cost of Inaction — staggered entrance
+  const cnt4Opacity       = useTransform(scrollYProgress, [0.80, 0.87], [0, 1]);
+  const cnt4Y             = useTransform(scrollYProgress, [0.80, 0.87], ['40px', '0px']);
+  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.85, 0.91], [0, 1]);
+  const cnt4IconsY        = useTransform(scrollYProgress, [0.85, 0.91], ['20px', '0px']);
+  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.89, 0.95], [0, 1]);
+  const cnt4BannerY       = useTransform(scrollYProgress, [0.89, 0.95], ['20px', '0px']);
 
   // Scroll prompt vanishes quickly
   const promptOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
 
   const bulletRanges: [number, number][] = [
-    [0.930, 0.955],
-    [0.940, 0.965],
-    [0.950, 0.975],
-    [0.960, 0.985],
+    [0.62, 0.68],
+    [0.64, 0.70],
+    [0.66, 0.72],
+    [0.68, 0.74],
   ];
 
   return (
@@ -815,10 +823,9 @@ function Problem() {
 
         {/* ── Phase 1 — Problem headline ── */}
         <motion.div
-          style={{ opacity: cnt1Opacity, scale: cnt1Scale, y: cnt1Y }}
+          style={{ opacity: cnt1Opacity, scale: cnt1Scale }}
           className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 xl:px-20 pointer-events-none"
         >
-          {/* Section label — mirrors Hero pill style */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
@@ -846,30 +853,29 @@ function Problem() {
           ))}
         </div>
 
-        {/* ── Phase 3 — "But after that?" full-bleed moment ── */}
+        {/* ── Phase 3 — "But after that?" + WHAT GOES WRONG ── */}
         <motion.div
-          style={{ opacity: cnt3Opacity, scale: cnt3Scale }}
-          className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center px-6 sm:px-10 lg:px-16 xl:px-20"
+          style={{ opacity: cnt3Opacity }}
+          className="absolute inset-0 z-30 flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
         >
-          <h2 className="text-[3.5rem] md:text-8xl lg:text-[9rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#00558F] via-[#008A45] to-[#00558F] text-center leading-none pb-2">
+          <motion.h2
+            style={{ scale: cnt3HeadScale }}
+            className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#00558F] via-[#008A45] to-[#00558F] text-center leading-[0.95] pb-2 mb-6 md:mb-8 lg:mb-10"
+          >
             But after that?
-          </h2>
-        </motion.div>
+          </motion.h2>
 
-        {/* ── Phase 4 — Glass panel: problem reality + solution pivot ── */}
-        <motion.div
-          style={{ opacity: cnt4Opacity, y: cnt4Y }}
-          className="absolute inset-0 z-40 flex items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
-        >
-          <div className="w-full max-w-7xl bg-white/92 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-gray-100 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.12)] relative overflow-hidden flex flex-col lg:flex-row items-stretch gap-0">
+          <motion.div
+            style={{ opacity: cnt3PanelOpacity, y: cnt3PanelY }}
+            className="w-full max-w-3xl bg-white/92 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-gray-100 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.12)] relative overflow-hidden p-6 sm:p-8 md:p-10 lg:p-12"
+          >
+            <div className="absolute -top-32 -right-32 w-72 h-72 bg-[#008A45]/8 rounded-full blur-[70px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 w-72 h-72 bg-[#00558F]/8 rounded-full blur-[70px] pointer-events-none" />
 
-            {/* Ambient glow blobs */}
-            <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#008A45]/8 rounded-full blur-[70px] pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-[#00558F]/8 rounded-full blur-[70px] pointer-events-none" />
-
-            {/* Left column — what goes wrong */}
-            <div className="relative z-10 w-full lg:w-1/2 p-8 md:p-10 lg:p-12 space-y-4 md:space-y-5">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">What goes wrong</p>
+            <p className="relative z-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-5 md:mb-6">
+              What goes wrong
+            </p>
+            <div className="relative z-10 space-y-3.5 md:space-y-5">
               {PROBLEM_BULLETS.map((text, i) => (
                 <ProblemBullet
                   key={i}
@@ -879,152 +885,60 @@ function Problem() {
                 />
               ))}
             </div>
+          </motion.div>
+        </motion.div>
 
-            {/* Divider */}
-            <div className="hidden lg:block w-px bg-gray-100 self-stretch" />
-            <div className="block lg:hidden h-px bg-gray-100 mx-8" />
-
-            {/* Right column — Prudentia solution pivot */}
-            <motion.div
-              style={{ opacity: solOpacity, scale: solScale, y: solY }}
-              className="relative z-10 w-full lg:w-1/2 p-8 md:p-10 lg:p-12 flex flex-col justify-center"
-            >
-              {/* Green label */}
-              <div className="inline-flex items-center gap-2 mb-5 w-fit">
+        {/* ── Phase 4 — The Cost of Inaction ── */}
+        <motion.div
+          style={{ opacity: cnt4Opacity, y: cnt4Y }}
+          className="absolute inset-0 z-40 flex items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
+        >
+          <div className="w-full max-w-6xl flex flex-col gap-5 md:gap-7 lg:gap-9 pointer-events-auto">
+            <div className="flex flex-col items-center text-center">
+              <div className="inline-flex items-center gap-2 mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#008A45]">The Solution</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#008A45]">The Cost of Inaction</span>
               </div>
-
-              <p className="font-serif italic text-xl md:text-2xl text-gray-500 tracking-tight mb-3">
-                This isn't a training problem.
+              <h2 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-sans tracking-tight leading-[1.05] mb-3 text-gray-900 max-w-3xl">
+                If This Continues,{' '}
+                <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
+              </h2>
+              <p className="text-gray-500 text-sm md:text-base max-w-xl">
+                When training fails, the consequences compound across your entire organization.
               </p>
-              <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#00558F] tracking-tighter leading-tight mb-4">
-                It's a<br />performance gap.
-              </h3>
+            </div>
 
-              {/* Divider */}
-              <div className="w-12 h-[2px] bg-[#008A45] mb-5" />
+            <motion.div
+              style={{ opacity: cnt4IconsOpacity, y: cnt4IconsY }}
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-3 md:gap-x-4 gap-y-5 md:gap-y-6 max-w-5xl mx-auto w-full"
+            >
+              {CONSEQUENCES.map((item, i) => (
+                <div key={i} className="flex flex-col items-center text-center gap-2">
+                  <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
+                    <item.icon className="w-4 h-4 text-[#008A45]" />
+                  </div>
+                  <span className="text-[11px] md:text-xs text-gray-500 leading-snug">{item.text}</span>
+                </div>
+              ))}
+            </motion.div>
 
-              {/* Prudentia value statement */}
-              <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#008A45] mb-1">Full Capability Stack</p>
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed font-medium">
-                Everything needed to build a<br className="hidden md:block" /> high-performing workforce.
+            <motion.div
+              style={{ opacity: cnt4BannerOpacity, y: cnt4BannerY }}
+              className="bg-[#0c1f13] rounded-xl flex items-center gap-3 sm:gap-4 md:gap-5 px-4 sm:px-5 md:px-7 py-4 md:py-6"
+            >
+              <div className="shrink-0 w-9 h-9 md:w-11 md:h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-[#008A45]" />
+              </div>
+              <p className="flex-1 text-white text-sm sm:text-base md:text-lg font-serif italic leading-snug">
+                This isn't a training problem.{' '}
+                <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
               </p>
+              <button className="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
+                <ArrowRight className="w-4 h-4 text-white" />
+              </button>
             </motion.div>
           </div>
         </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CONSEQUENCE
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Consequence() {
-  const consequences = [
-    { icon: Clock, text: "Slower project delivery" },
-    { icon: Building2, text: "Increased operational errors" },
-    { icon: BarChart3, text: "Low employee productivity" },
-    { icon: Layout, text: "Poor adoption of new technologies" },
-    { icon: Users, text: "Higher attrition due to lack of growth" },
-  ];
-
-  return (
-    <section className="bg-white min-h-screen flex items-center overflow-hidden">
-      {/* Full-width padded container — feels like a box but fills the screen */}
-      <div className="w-full px-8 md:px-16 lg:px-24 py-16 flex flex-col gap-8">
-
-        {/* Two-column main area */}
-        <div className="grid lg:grid-cols-[55fr_45fr] gap-10 lg:gap-14 items-stretch">
-
-          {/* Left column */}
-          <div className="flex flex-col justify-center">
-            <SectionReveal>
-              <span className="text-[#008A45] text-[15px] font-semibold tracking-widest uppercase mb-5 block">
-                The Cost of Inaction
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-sans tracking-tight leading-[1.1] mb-5 text-gray-900">
-                <AnimatedWords text="If This Continues," delay={0} />{' '}
-                <span className="italic font-serif text-[#008A45] font-normal">
-                  <AnimatedWords text="It Gets Expensive." delay={0.3} />
-                </span>
-              </h2>
-              <motion.p
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-gray-500 text-[15px] mb-10 max-w-xl">
-                When training fails, the consequences compound across your entire organization.
-              </motion.p>
-            </SectionReveal>
-
-            {/* Icon consequence row */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-7">
-              {consequences.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * i + 0.35, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col items-center text-center gap-3"
-                >
-                  <div className="w-11 h-11 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
-                    <item.icon className="w-4 h-4 text-[#008A45]" />
-                  </div>
-                  <span className="text-xs text-gray-500 leading-snug">{item.text}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right column — photo */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-2xl overflow-hidden min-h-[420px] lg:min-h-[520px]"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
-              alt="Business meeting"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-[#071510]/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#071510]/90 via-[#071510]/30 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-7">
-              <p className="text-[10px] uppercase tracking-widest font-semibold text-[#6ee89a] mb-3">
-                And the biggest cost:
-              </p>
-              <p className="text-2xl md:text-3xl font-serif leading-tight text-white">
-                Missed business opportunities because your team simply isn't ready.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom banner — contained inside the padded box, not full viewport */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="bg-[#0c1f13] rounded-xl flex items-center gap-5 px-7 py-8"
-        >
-          <div className="shrink-0 w-11 h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
-            <TrendingUp className="w-4 h-4 text-[#008A45]" />
-          </div>
-          <p className="flex-1 text-white text-lg md:text-xl font-serif italic leading-snug">
-            This isn't a training problem.{' '}
-            <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
-          </p>
-          <button className="shrink-0 w-10 h-10 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
-            <ArrowRight className="w-4 h-4 text-white" />
-          </button>
-        </motion.div>
-
       </div>
     </section>
   );
@@ -2190,7 +2104,6 @@ export default function Home() {
         </div>
         <main>
           <Problem />
-          <Consequence />
           <Solution />
           <HowItWorks />
           <OfferBreakdown />
