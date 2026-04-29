@@ -269,7 +269,7 @@ function Logo({ light = false }: { light?: boolean }) {
         <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[42px] leading-none tracking-tight`}>a</span>
       </div>
       <div className="w-[105%] h-[2px] bg-[#008A45] my-1" />
-      <div className={`text-[11px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide`}>Technology Solutions India Pvt Ltd</div>
+      <div className={`text-[15px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide`}>Technology Solutions India Pvt Ltd</div>
     </div>
   );
 }
@@ -315,7 +315,7 @@ function Navigation() {
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
-            <MagneticButton className="btn-primary hidden sm:flex px-7 py-[13px] text-[13px] font-bold uppercase tracking-[0.14em] gap-2.5 group">
+            <MagneticButton className="btn-primary hidden sm:flex px-7 py-[13px] text-[15px] font-bold uppercase tracking-[0.14em] gap-2.5 group">
               Book a Free Call
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </MagneticButton>
@@ -357,13 +357,13 @@ function Navigation() {
                 {NAV_LINKS.map(link => (
                   <a key={link.label} href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="py-3.5 px-4 text-[11px] font-bold uppercase tracking-widest text-gray-800 hover:text-[#008A45] hover:bg-[#008A45]/5 rounded-xl transition-colors">
+                    className="py-3.5 px-4 text-[15px] font-bold uppercase tracking-widest text-gray-800 hover:text-[#008A45] hover:bg-[#008A45]/5 rounded-xl transition-colors">
                     {link.label}
                   </a>
                 ))}
               </nav>
               <div className="p-6 border-t border-gray-100">
-                <button className="w-full btn-primary py-3.5 text-sm font-bold gap-2 flex items-center justify-center">
+                <button className="w-full btn-primary py-3.5 text-[15px] font-bold gap-2 flex items-center justify-center">
                   Book a Free Call <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -505,7 +505,7 @@ function Hero() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#008A45] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#008A45]" />
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-700">
+                <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-700">
                   {SLIDES[current].sub}
                 </span>
               </div>
@@ -532,7 +532,7 @@ function Hero() {
 
               {/* CTA — template's sharp/bold button style */}
               <div className="flex items-center gap-4">
-                <MagneticButton className="btn-primary px-8 py-[18px] font-bold text-[11px] uppercase tracking-widest flex-shrink-0">
+                <MagneticButton className="btn-primary px-8 py-[18px] font-bold text-[15px] uppercase tracking-widest flex-shrink-0">
                   {SLIDES[current].cta}
                 </MagneticButton>
               </div>
@@ -589,7 +589,7 @@ function Hero() {
                   {/* Slide number badge */}
                   <div className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full
                     bg-white/20 backdrop-blur-md flex items-center justify-center
-                    border border-white/30 text-white text-[10px] font-extrabold shadow-md">
+                    border border-white/30 text-white text-[15px] font-extrabold shadow-md">
                     {String(idx + 1).padStart(2, '0')}
                   </div>
                 </div>
@@ -711,7 +711,7 @@ function ProblemCard({
         <div className="w-full h-full" style={{ background: CARD_FALLBACKS[index] }} />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-5 md:p-7">
-        <span className="text-[#008A45] font-mono text-[10px] md:text-xs mb-2 font-bold tracking-[0.2em] uppercase">
+        <span className="text-[#008A45] font-mono text-[15px] md:text-[15px] mb-2 font-bold tracking-[0.2em] uppercase">
           Phase {card.phase}
         </span>
         <p className="text-white font-semibold text-lg md:text-2xl leading-tight tracking-tight">
@@ -817,7 +817,7 @@ function Problem() {
           style={{ opacity: promptOpacity }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"
         >
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">Scroll</span>
+          <span className="text-[15px] font-bold tracking-[0.2em] uppercase text-gray-400">Scroll</span>
           <ArrowDown className="w-4 h-4 text-gray-400 animate-bounce" />
         </motion.div>
 
@@ -828,7 +828,7 @@ function Problem() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
+            <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-bold tracking-tighter text-gray-900 max-w-5xl text-center leading-[1.02]">
             Most Training<br className="hidden md:block" /> Doesn't Work
@@ -872,7 +872,7 @@ function Problem() {
             <div className="absolute -top-32 -right-32 w-72 h-72 bg-[#008A45]/8 rounded-full blur-[70px] pointer-events-none" />
             <div className="absolute -bottom-32 -left-32 w-72 h-72 bg-[#00558F]/8 rounded-full blur-[70px] pointer-events-none" />
 
-            <p className="relative z-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-5 md:mb-6">
+            <p className="relative z-10 text-[15px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5 md:mb-6">
               What goes wrong
             </p>
             <div className="relative z-10 space-y-3.5 md:space-y-5">
@@ -893,48 +893,48 @@ function Problem() {
           style={{ opacity: cnt4Opacity, y: cnt4Y }}
           className="absolute inset-0 z-40 flex items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
         >
-          <div className="w-full max-w-6xl flex flex-col gap-5 md:gap-7 lg:gap-9 pointer-events-auto">
+          <div className="w-full max-w-6xl flex flex-col gap-6 md:gap-8 lg:gap-10 pointer-events-auto">
             <div className="flex flex-col items-center text-center">
-              <div className="inline-flex items-center gap-2 mb-4">
+              <div className="inline-flex items-center gap-2 mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#008A45]">The Cost of Inaction</span>
+                <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#008A45]">The Cost of Inaction</span>
               </div>
-              <h2 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-sans tracking-tight leading-[1.05] mb-3 text-gray-900 max-w-3xl">
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-sans font-medium tracking-tight leading-[1.1] mb-4 text-gray-900 max-w-4xl">
                 If This Continues,{' '}
                 <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
               </h2>
-              <p className="text-gray-500 text-sm md:text-base max-w-xl">
+              <p className="text-gray-500 text-[15px] md:text-[17px] leading-relaxed max-w-xl">
                 When training fails, the consequences compound across your entire organization.
               </p>
             </div>
 
             <motion.div
               style={{ opacity: cnt4IconsOpacity, y: cnt4IconsY }}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-3 md:gap-x-4 gap-y-5 md:gap-y-6 max-w-5xl mx-auto w-full"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 md:gap-x-5 gap-y-6 md:gap-y-7 max-w-5xl mx-auto w-full"
             >
               {CONSEQUENCES.map((item, i) => (
-                <div key={i} className="flex flex-col items-center text-center gap-2">
-                  <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
-                    <item.icon className="w-4 h-4 text-[#008A45]" />
+                <div key={i} className="flex flex-col items-center text-center gap-3">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#008A45]" />
                   </div>
-                  <span className="text-[11px] md:text-xs text-gray-500 leading-snug">{item.text}</span>
+                  <span className="text-[15px] text-gray-600 leading-snug">{item.text}</span>
                 </div>
               ))}
             </motion.div>
 
             <motion.div
               style={{ opacity: cnt4BannerOpacity, y: cnt4BannerY }}
-              className="bg-[#0c1f13] rounded-xl flex items-center gap-3 sm:gap-4 md:gap-5 px-4 sm:px-5 md:px-7 py-4 md:py-6"
+              className="bg-[#0c1f13] rounded-xl flex items-center gap-4 sm:gap-5 md:gap-6 px-5 sm:px-6 md:px-8 py-5 md:py-7"
             >
-              <div className="shrink-0 w-9 h-9 md:w-11 md:h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-[#008A45]" />
+              <div className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#008A45]/50 flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-[#008A45]" />
               </div>
-              <p className="flex-1 text-white text-sm sm:text-base md:text-lg font-serif italic leading-snug">
+              <p className="flex-1 text-white text-[16px] sm:text-[17px] md:text-[19px] font-serif italic leading-snug">
                 This isn't a training problem.{' '}
                 <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
               </p>
-              <button className="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
-                <ArrowRight className="w-4 h-4 text-white" />
+              <button className="shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </button>
             </motion.div>
           </div>
@@ -1016,7 +1016,7 @@ function Solution() {
             <div className="absolute inset-0 opacity-[0.04]"
               style={{ backgroundImage: 'repeating-linear-gradient(45deg, #6ee89a 0, #6ee89a 1px, transparent 0, transparent 50%)', backgroundSize: '18px 18px' }} />
             <div className="relative z-10 flex flex-col gap-1">
-              <p className="text-[10px] uppercase font-bold tracking-widest text-[#6ee89a] mb-3">Every solution ensures:</p>
+              <p className="text-[15px] uppercase font-bold tracking-widest text-[#6ee89a] mb-3">Every solution ensures:</p>
               <p className="font-serif text-[2rem] italic leading-tight text-white">Learn → Apply</p>
               <p className="font-serif text-[2rem] italic leading-tight text-white/35">Improve → Perform</p>
             </div>
@@ -1087,7 +1087,7 @@ function HowItWorks() {
               )}
               {/* Step number badge */}
               <div className="relative z-10 w-11 h-11 rounded-xl bg-[#f2faf6] border border-[#008A45]/20 group-hover:bg-[#008A45]/20 group-hover:border-[#008A45]/40 flex items-center justify-center shrink-0 transition-colors duration-300">
-                <span className="text-[13px] font-bold text-[#008A45]">{step.num}</span>
+                <span className="text-[15px] font-bold text-[#008A45]">{step.num}</span>
               </div>
               <div className="relative z-10">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-white transition-colors duration-300">{step.title}</h3>
@@ -1170,7 +1170,7 @@ function OfferBreakdown() {
   return (
     <section className="py-28 px-8 md:px-16 lg:px-24 bg-white border-y border-gray-100">
       <SectionReveal className="mb-16">
-        <p className="text-[10px] font-bold tracking-[0.28em] uppercase text-[#008A45] mb-5 flex items-center gap-3">
+        <p className="text-[15px] font-bold tracking-[0.28em] uppercase text-[#008A45] mb-5 flex items-center gap-3">
           <span className="inline-block w-6 h-px bg-[#008A45]" />
           Full Capability Stack
         </p>
@@ -1202,7 +1202,7 @@ function OfferBreakdown() {
             </div>
             <div>
               <h3 className="text-3xl md:text-4xl font-sans font-medium tracking-tight text-white mb-2">{CARDS[0].title}</h3>
-              <p className="text-white/70 text-sm leading-relaxed max-w-sm mb-5">{CARDS[0].desc}</p>
+              <p className="text-white/70 text-[15px] leading-relaxed max-w-sm mb-5">{CARDS[0].desc}</p>
               <motion.div className="w-9 h-9 rounded-full flex items-center justify-center border border-white/30 bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/20"
                 whileHover={{ x: 4 }}>
                 <ArrowRight className="w-4 h-4 text-white" />
@@ -1232,7 +1232,7 @@ function OfferBreakdown() {
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-sans font-medium tracking-tight text-white mb-1">{card.title}</h3>
-                <p className="text-white/70 text-xs leading-relaxed mb-4">{card.desc}</p>
+                <p className="text-white/70 text-[15px] leading-relaxed mb-4">{card.desc}</p>
                 <motion.div className="w-8 h-8 rounded-full flex items-center justify-center border border-white/30 bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/20"
                   whileHover={{ x: 3 }}>
                   <ArrowRight className="w-3.5 h-3.5 text-white" />
@@ -1263,7 +1263,7 @@ function OfferBreakdown() {
             <div className="flex items-end justify-between gap-6">
               <div>
                 <h3 className="text-2xl md:text-3xl font-sans font-medium tracking-tight text-white mb-2">{CARDS[3].title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed max-w-md">{CARDS[3].desc}</p>
+                <p className="text-white/70 text-[15px] leading-relaxed max-w-md">{CARDS[3].desc}</p>
               </div>
               <motion.div className="w-9 h-9 rounded-full flex items-center justify-center border border-white/30 bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/20 shrink-0"
                 whileHover={{ x: 4 }}>
@@ -1293,7 +1293,7 @@ function OfferBreakdown() {
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-sans font-medium tracking-tight text-white mb-1">{CARDS[4].title}</h3>
-              <p className="text-white/70 text-xs leading-relaxed mb-4">{CARDS[4].desc}</p>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-4">{CARDS[4].desc}</p>
               <motion.div className="w-8 h-8 rounded-full flex items-center justify-center border border-white/30 bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/20"
                 whileHover={{ x: 3 }}>
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
@@ -1355,7 +1355,7 @@ function TestimonialsColumn({ testimonials, duration = 10, className }: {
                 key={`${pass}-${i}`}
                 className="p-6 rounded-2xl border border-white/80 shadow-md shadow-[rgba(0,138,69,0.06)] w-full bg-white/75 backdrop-blur-sm"
               >
-                <p className="text-gray-700 text-sm leading-relaxed">{text}</p>
+                <p className="text-gray-700 text-[15px] leading-relaxed">{text}</p>
                 <div className="flex items-center gap-3 mt-5 pt-4 border-t border-gray-100">
                   <img
                     src={image}
@@ -1363,8 +1363,8 @@ function TestimonialsColumn({ testimonials, duration = 10, className }: {
                     className="h-10 w-10 rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col min-w-0">
-                    <span className="font-semibold text-gray-900 text-sm tracking-tight leading-5 truncate">{name}</span>
-                    <span className="text-[11px] text-gray-400 leading-5 truncate">{role}</span>
+                    <span className="font-semibold text-gray-900 text-[15px] tracking-tight leading-5 truncate">{name}</span>
+                    <span className="text-[15px] text-gray-400 leading-5 truncate">{role}</span>
                   </div>
                 </div>
               </div>
@@ -1392,7 +1392,7 @@ function Testimonials() {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-xl mx-auto text-center"
         >
-          <span className="text-[#008A45] text-sm font-medium tracking-widest uppercase mb-4 block">Client Outcomes</span>
+          <span className="text-[#008A45] text-[15px] font-medium tracking-widest uppercase mb-4 block">Client Outcomes</span>
           <h2 className="text-3xl md:text-5xl font-sans tracking-tighter font-medium text-gray-900 mb-4">
             Built on Real Outcomes.
             <br />
@@ -1753,7 +1753,7 @@ function FinalCTA() {
             {["No forced programs", "No unnecessary upsells", "No one-size-fits-all approach"].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: 0.4 + i * 0.12 }}
-                className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                className="flex items-center gap-2 text-[15px] font-medium text-gray-700">
                 <div className="w-5 h-5 rounded-full bg-[#f0fdf4] border border-[#008A45]/20 flex items-center justify-center shrink-0">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#008A45]" />
                 </div>
@@ -1761,13 +1761,13 @@ function FinalCTA() {
               </motion.div>
             ))}
           </div>
-          <p className="text-xs text-gray-400 font-medium tracking-wide mb-8">You decide after complete clarity.</p>
+          <p className="text-[15px] text-gray-400 font-medium tracking-wide mb-8">You decide after complete clarity.</p>
 
           <MagneticButton className="btn-primary px-10 py-3.5 text-base shadow-xl gap-3 h-[52px] group mx-auto">
             Book Your Free Consultation
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </MagneticButton>
-          <p className="mt-6 text-[13px] text-gray-500 font-medium">Takes less than 2 minutes to get started.</p>
+          <p className="mt-6 text-[15px] text-gray-500 font-medium">Takes less than 2 minutes to get started.</p>
         </SectionReveal>
       </div>
     </section>
@@ -2069,33 +2069,33 @@ function ExitIntent() {
             <form className="space-y-4 mb-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                  <label className="block text-[15px] font-medium text-gray-700 mb-1">First Name</label>
                   <input type="text" className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45] transition-colors" placeholder="John" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                  <label className="block text-[15px] font-medium text-gray-700 mb-1">Last Name</label>
                   <input type="text" className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45] transition-colors" placeholder="Doe" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
+                  <label className="block text-[15px] font-medium text-gray-700 mb-1">Work Email</label>
                   <input type="email" className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45] transition-colors" placeholder="john@company.com" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                  <label className="block text-[15px] font-medium text-gray-700 mb-1">Company</label>
                   <input type="text" className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45] transition-colors" placeholder="Acme Corp" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">How can we help?</label>
+                <label className="block text-[15px] font-medium text-gray-700 mb-1">How can we help?</label>
                 <textarea className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45] transition-colors h-24 resize-none" placeholder="Tell us about your organization's learning goals..." />
               </div>
               <MagneticButton type="button" className="btn-primary w-full py-3.5 mt-2" onClick={() => setShow(false)}>
                 Send Enquiry
               </MagneticButton>
             </form>
-            <p className="text-center text-sm text-gray-500 font-medium">We typically reply within 24 hours.</p>
+            <p className="text-center text-[15px] text-gray-500 font-medium">We typically reply within 24 hours.</p>
           </motion.div>
         </motion.div>
       )}
