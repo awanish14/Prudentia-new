@@ -661,10 +661,10 @@ const CARD_POSITIONS = [
 const CARD_ROTATIONS = [-4, 4, -4, 4];
 
 const CARD_RANGES: { yRange: [number, number]; opIn: [number, number]; opOut: [number, number] }[] = [
-  { yRange: [0.04, 0.42], opIn: [0.04, 0.12], opOut: [0.36, 0.42] },
-  { yRange: [0.14, 0.50], opIn: [0.14, 0.22], opOut: [0.44, 0.50] },
-  { yRange: [0.24, 0.58], opIn: [0.24, 0.32], opOut: [0.52, 0.58] },
-  { yRange: [0.34, 0.66], opIn: [0.34, 0.42], opOut: [0.60, 0.66] },
+  { yRange: [0.00, 0.32], opIn: [0.00, 0.05], opOut: [0.27, 0.32] },
+  { yRange: [0.04, 0.36], opIn: [0.04, 0.09], opOut: [0.31, 0.36] },
+  { yRange: [0.08, 0.40], opIn: [0.08, 0.13], opOut: [0.35, 0.40] },
+  { yRange: [0.12, 0.44], opIn: [0.12, 0.17], opOut: [0.39, 0.44] },
 ];
 
 // Fallback gradient backgrounds per card while images load or are unavailable
@@ -773,9 +773,9 @@ function Problem() {
     return Math.max(0, Math.min(1, (y - top) / scrollDistance));
   });
 
-  // Phase 1: headline visible at entry, dims as Card 1 arrives
-  const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.28, 0.36], [1, 1, 0.35, 0]);
-  const cnt1Scale   = useTransform(scrollYProgress, [0, 0.28, 0.36], [1, 1, 1.06]);
+  // Phase 1: headline visible at entry, dims fast as Card 1 arrives
+  const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.16, 0.22], [1, 0.85, 0.25, 0]);
+  const cnt1Scale   = useTransform(scrollYProgress, [0, 0.16, 0.22], [1, 1, 1.06]);
 
   // Phase 3: "But after that?" + WHAT GOES WRONG panel
   const cnt3Opacity      = useTransform(scrollYProgress, [0.50, 0.58, 0.74, 0.80], [0, 1, 1, 0]);
