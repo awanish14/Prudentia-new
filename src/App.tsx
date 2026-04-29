@@ -255,21 +255,21 @@ function Logo({ light = false }: { light?: boolean }) {
   return (
     <div className="flex flex-col items-center w-fit select-none">
       <div className="flex items-end relative pb-1">
-        <span className="text-[#008A45] font-serif text-[42px] leading-none">P</span>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[42px] leading-none tracking-tight`}>rudent</span>
-        <div className="relative flex flex-col items-center justify-end h-[42px] mx-[1px]">
-          <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 w-[24px] h-[24px] rounded-full overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#4ade80] to-[#15803d]">
+        <span className="text-[#008A45] font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none">P</span>
+        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none tracking-tight`}>rudent</span>
+        <div className="relative flex flex-col items-center justify-end h-[26px] sm:h-[32px] lg:h-[42px] mx-[1px]">
+          <div className="absolute top-[-7px] sm:top-[-8px] lg:top-[-10px] left-1/2 -translate-x-1/2 w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] lg:w-[24px] lg:h-[24px] rounded-full overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#4ade80] to-[#15803d]">
             <svg viewBox="0 0 100 100" className="w-full h-full text-white/80 mix-blend-overlay">
               <path fill="currentColor" opacity="0.8" d="M30 40Q40 30 50 35T70 50Q60 60 40 55T30 40M60 20Q75 25 80 40T60 70Q40 50 60 20" />
               <path fill="none" stroke="currentColor" strokeWidth="0.5" d="M10 50A40 40 0 0 1 90 50A40 40 0 0 1 10 50M50 10A40 40 0 0 1 50 90M20 50A30 40 0 0 1 80 50A30 40 0 0 1 20 50M50 20A40 30 0 0 1 50 80" opacity="0.5" />
             </svg>
           </div>
-          <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[42px] leading-none`}>i</span>
+          <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none`}>i</span>
         </div>
-        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[42px] leading-none tracking-tight`}>a</span>
+        <span className={`${light ? 'text-white/90' : 'text-[#005A9C]'} font-serif text-[26px] sm:text-[32px] lg:text-[42px] leading-none tracking-tight`}>a</span>
       </div>
       <div className="w-[105%] h-[2px] bg-[#008A45] my-1" />
-      <div className={`text-[15px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide`}>Technology Solutions India Pvt Ltd</div>
+      <div className={`text-[15px] ${light ? 'text-white/40' : 'text-gray-500'} font-sans tracking-wide whitespace-nowrap`}>Technology Solutions India Pvt Ltd</div>
     </div>
   );
 }
@@ -339,32 +339,63 @@ function Navigation() {
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 bg-gray-900/55 backdrop-blur-sm z-[60] lg:hidden"
+              className="fixed inset-0 bg-[#071510]/70 backdrop-blur-md z-[60] lg:hidden"
             />
             <motion.div
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-[300px] max-w-[82vw] bg-white z-[70] shadow-2xl flex flex-col lg:hidden"
+              className="fixed top-0 right-0 bottom-0 w-[340px] max-w-[88vw] z-[70] shadow-2xl flex flex-col lg:hidden overflow-hidden"
+              style={{
+                backgroundImage:
+                  'linear-gradient(160deg, #071510 0%, #0a2218 45%, #00322a 100%)',
+              }}
             >
-              <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <div className="scale-[0.6] origin-left -ml-2"><Logo /></div>
+              {/* Ambient brand glow */}
+              <div className="absolute -top-32 -right-24 w-72 h-72 bg-[#008A45]/22 rounded-full blur-[80px] pointer-events-none" />
+              <div className="absolute -bottom-32 -left-24 w-72 h-72 bg-[#00558F]/24 rounded-full blur-[80px] pointer-events-none" />
+              {/* Left green accent bar */}
+              <div className="absolute inset-y-0 left-0 w-[3px] bg-[#008A45]" />
+
+              {/* Header */}
+              <div className="relative flex items-center justify-between px-6 py-5 border-b border-white/10">
+                <div className="scale-[0.7] origin-left -ml-2"><Logo light /></div>
                 <button onClick={() => setMobileOpen(false)}
-                  className="w-9 h-9 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 hover:bg-gray-200 transition-colors">
+                  aria-label="Close menu"
+                  className="w-10 h-10 flex items-center justify-center bg-white/8 border border-white/15 rounded-full text-white/85 hover:bg-white/15 hover:text-white transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              <nav className="flex flex-col px-4 py-5 gap-1 flex-1">
-                {NAV_LINKS.map(link => (
-                  <a key={link.label} href={link.href}
+
+              {/* Nav links */}
+              <nav className="relative flex flex-col px-4 py-6 gap-1.5 flex-1">
+                {NAV_LINKS.map((link, i) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="py-3.5 px-4 text-[15px] font-bold uppercase tracking-widest text-gray-800 hover:text-[#008A45] hover:bg-[#008A45]/5 rounded-xl transition-colors">
-                    {link.label}
-                  </a>
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.12 + i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative flex items-center justify-between gap-3 py-4 px-4 text-[16px] font-semibold tracking-tight text-white/85 hover:text-white rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 transition-all"
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="text-[15px] font-bold tracking-[0.2em] text-[#6ee89a]/70 group-hover:text-[#6ee89a] transition-colors">{String(i + 1).padStart(2, '0')}</span>
+                      <span>{link.label}</span>
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-white/35 group-hover:text-[#6ee89a] group-hover:translate-x-1 transition-all" />
+                  </motion.a>
                 ))}
               </nav>
-              <div className="p-6 border-t border-gray-100">
-                <button className="w-full btn-primary py-3.5 text-[15px] font-bold gap-2 flex items-center justify-center">
-                  Book a Free Call <ArrowRight className="w-4 h-4" />
+
+              {/* Contact strip + CTA */}
+              <div className="relative p-6 border-t border-white/10 flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#6ee89a]/80">Talk to us</span>
+                  <a href="mailto:hello@prudentia.com" className="text-[15px] text-white/85 hover:text-white transition-colors">hello@prudentia.com</a>
+                </div>
+                <button className="w-full bg-gradient-to-r from-[#008A45] to-[#00558F] text-white py-3.5 px-5 rounded-xl text-[15px] font-bold uppercase tracking-[0.15em] gap-2.5 flex items-center justify-center shadow-[0_18px_40px_-12px_rgba(0,138,69,0.55)] hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                  Book a Free Call
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
@@ -807,7 +838,8 @@ function Problem() {
   return (
     // Outer scroll spacer — 350 vh gives ~250 vh of pinned scroll travel.
     // Each phase transition fits in roughly one scroll wheel action.
-    <section ref={outerRef} className="w-full" style={{ height: '350vh' }}>
+    // Mobile uses a simpler stacked layout below — desktop only here.
+    <section ref={outerRef} className="hidden lg:block w-full" style={{ height: '350vh' }}>
       {/* Sticky viewport — fills full width/height, clips overflowing cards */}
       <div
         className="w-full bg-white relative"
@@ -943,6 +975,161 @@ function Problem() {
             </motion.div>
           </div>
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROBLEM (MOBILE) — simple stacked layout, no scroll-pinning
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ProblemMobile() {
+  return (
+    <section className="block lg:hidden bg-white px-6 sm:px-10 py-14 border-l-[3px] border-[#008A45]">
+      <div className="flex flex-col gap-12 sm:gap-14">
+
+        {/* Part 1 — heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
+            <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-sans font-bold tracking-tighter text-gray-900 max-w-2xl leading-[1.05]">
+            Most Training Doesn't Work
+          </h2>
+          <p className="font-serif italic text-2xl sm:text-3xl text-[#008A45]/90 mt-4 tracking-tight max-w-xl">
+            — And You Already Know It.
+          </p>
+        </motion.div>
+
+        {/* Part 2 — 2x2 grid of cards */}
+        <div className="grid grid-cols-2 gap-4 sm:gap-5">
+          {PROBLEM_CARDS.map((card, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-8%' }}
+              transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_18px_36px_-12px_rgba(0,0,0,0.3)] border border-white/10"
+            >
+              <img src={card.img} alt={card.text} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4">
+                <span className="text-[#6ee89a] font-mono text-[15px] mb-2 font-bold tracking-[0.2em] uppercase">
+                  Phase {card.phase}
+                </span>
+                <p className="text-white font-semibold text-[16px] leading-tight tracking-tight">
+                  {card.text}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Part 3 — But after that? + WHAT GOES WRONG bullets */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center gap-6 sm:gap-7"
+        >
+          <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#00558F] via-[#008A45] to-[#00558F] text-center leading-[0.95]">
+            But after that?
+          </h2>
+          <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-[0_24px_60px_-16px_rgba(0,0,0,0.08)] p-6 sm:p-8 relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-60 h-60 bg-[#008A45]/8 rounded-full blur-[60px] pointer-events-none" />
+            <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-[#00558F]/8 rounded-full blur-[60px] pointer-events-none" />
+            <p className="relative z-10 text-[15px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">What goes wrong</p>
+            <div className="relative z-10 space-y-4">
+              {PROBLEM_BULLETS.map((text, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-8%' }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className="flex items-start gap-4"
+                >
+                  <div className="shrink-0 mt-0.5 bg-red-50 border border-red-100 rounded-full p-2 shadow-sm">
+                    <X className="w-4 h-4 text-red-500" strokeWidth={2.5} />
+                  </div>
+                  <p className="text-[16px] sm:text-[17px] text-gray-700 font-medium leading-snug">
+                    {text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Part 4 — Cost of Inaction */}
+        <div className="flex flex-col gap-6 sm:gap-7">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center text-center"
+          >
+            <div className="inline-flex items-center gap-2 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
+              <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#008A45]">The Cost of Inaction</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-sans font-bold tracking-tight leading-[1.1] mb-3 text-gray-900">
+              If This Continues,{' '}
+              <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
+            </h2>
+            <p className="text-gray-500 text-[15px] sm:text-[16px] leading-relaxed max-w-md">
+              When training fails, the consequences compound across your entire organization.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6">
+            {CONSEQUENCES.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-8%' }}
+                transition={{ delay: i * 0.07, duration: 0.5 }}
+                className="flex flex-col items-center text-center gap-3"
+              >
+                <div className="w-12 h-12 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
+                  <item.icon className="w-5 h-5 text-[#008A45]" />
+                </div>
+                <span className="text-[15px] text-gray-600 leading-snug">{item.text}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-[#0c1f13] rounded-xl flex items-center gap-4 px-5 py-5"
+          >
+            <div className="shrink-0 w-11 h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-[#008A45]" />
+            </div>
+            <p className="flex-1 text-white text-[16px] sm:text-[17px] font-serif italic leading-snug">
+              This isn't a training problem.{' '}
+              <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
+            </p>
+            <button className="shrink-0 w-10 h-10 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
+              <ArrowRight className="w-4 h-4 text-white" />
+            </button>
+          </motion.div>
+        </div>
+
       </div>
     </section>
   );
@@ -2130,6 +2317,7 @@ export default function Home() {
         </div>
         <main>
           <Problem />
+          <ProblemMobile />
           <Solution />
           <HowItWorks />
           <OfferBreakdown />
