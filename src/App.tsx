@@ -779,18 +779,19 @@ function Problem() {
 
   // Phase 3: "But after that?" + panel + bullets — ALL appear simultaneously,
   // triggered when Card 4 has crossed 50% of viewport height (scroll progress 0.22).
-  const cnt3Opacity      = useTransform(scrollYProgress, [0.22, 0.30, 0.55, 0.62], [0, 1, 1, 0]);
+  // Hold tightened so the next scroll triggers Phase 4 (no double-scroll dead time).
+  const cnt3Opacity      = useTransform(scrollYProgress, [0.22, 0.30, 0.45, 0.55], [0, 1, 1, 0]);
   const cnt3HeadScale    = useTransform(scrollYProgress, [0.22, 0.30], [0.88, 1]);
   const cnt3PanelOpacity = useTransform(scrollYProgress, [0.22, 0.30], [0, 1]);
   const cnt3PanelY       = useTransform(scrollYProgress, [0.22, 0.30], ['32px', '0px']);
 
   // Phase 4: Cost of Inaction — ALL contents appear simultaneously (single ramp).
-  const cnt4Opacity       = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
-  const cnt4Y             = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
-  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
-  const cnt4IconsY        = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
-  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
-  const cnt4BannerY       = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
+  const cnt4Opacity       = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
+  const cnt4Y             = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
+  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
+  const cnt4IconsY        = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
+  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
+  const cnt4BannerY       = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
 
   // Scroll prompt vanishes quickly
   const promptOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
@@ -804,8 +805,9 @@ function Problem() {
   ];
 
   return (
-    // Outer scroll spacer — 500 vh gives ~400 vh of pinned scroll travel
-    <section ref={outerRef} className="w-full" style={{ height: '500vh' }}>
+    // Outer scroll spacer — 350 vh gives ~250 vh of pinned scroll travel.
+    // Each phase transition fits in roughly one scroll wheel action.
+    <section ref={outerRef} className="w-full" style={{ height: '350vh' }}>
       {/* Sticky viewport — fills full width/height, clips overflowing cards */}
       <div
         className="w-full bg-white relative"
