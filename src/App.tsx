@@ -777,29 +777,30 @@ function Problem() {
   const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.16, 0.22], [1, 0.85, 0.25, 0]);
   const cnt1Scale   = useTransform(scrollYProgress, [0, 0.16, 0.22], [1, 1, 1.06]);
 
-  // Phase 3: "But after that?" + WHAT GOES WRONG panel — both appear simultaneously,
-  // immediately after Card 4 reaches its position (opIn ends at 0.17).
-  const cnt3Opacity      = useTransform(scrollYProgress, [0.18, 0.28, 0.55, 0.62], [0, 1, 1, 0]);
-  const cnt3HeadScale    = useTransform(scrollYProgress, [0.18, 0.28], [0.88, 1]);
-  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.18, 0.28], [0, 1]);
-  const cnt3PanelY       = useTransform(scrollYProgress, [0.18, 0.28], ['32px', '0px']);
+  // Phase 3: "But after that?" + panel + bullets — ALL appear simultaneously,
+  // triggered when Card 4 has crossed 50% of viewport height (scroll progress 0.22).
+  const cnt3Opacity      = useTransform(scrollYProgress, [0.22, 0.30, 0.55, 0.62], [0, 1, 1, 0]);
+  const cnt3HeadScale    = useTransform(scrollYProgress, [0.22, 0.30], [0.88, 1]);
+  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.22, 0.30], [0, 1]);
+  const cnt3PanelY       = useTransform(scrollYProgress, [0.22, 0.30], ['32px', '0px']);
 
-  // Phase 4: Cost of Inaction — staggered entrance
+  // Phase 4: Cost of Inaction — ALL contents appear simultaneously (single ramp).
   const cnt4Opacity       = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
   const cnt4Y             = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
-  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.70, 0.78], [0, 1]);
-  const cnt4IconsY        = useTransform(scrollYProgress, [0.70, 0.78], ['20px', '0px']);
-  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.76, 0.84], [0, 1]);
-  const cnt4BannerY       = useTransform(scrollYProgress, [0.76, 0.84], ['20px', '0px']);
+  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
+  const cnt4IconsY        = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
+  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
+  const cnt4BannerY       = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
 
   // Scroll prompt vanishes quickly
   const promptOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
 
+  // Bullets all share the same range as the panel — no cascade.
   const bulletRanges: [number, number][] = [
-    [0.30, 0.36],
-    [0.32, 0.38],
-    [0.34, 0.40],
-    [0.36, 0.42],
+    [0.22, 0.30],
+    [0.22, 0.30],
+    [0.22, 0.30],
+    [0.22, 0.30],
   ];
 
   return (
