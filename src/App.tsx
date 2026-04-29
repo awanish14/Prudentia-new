@@ -514,7 +514,7 @@ function Hero() {
                   Font: Inter 800 (extrabold) for body words — loaded via Google Fonts
                   Font: Playfair Display italic for the accent word (Prudentia brand mix)
                   Template used: text-5xl lg:text-[4rem] font-extrabold tracking-tight  */}
-              <h1 className="font-sans font-semibold tracking-tight text-gray-900
+              <h1 className="font-sans font-bold tracking-tight text-gray-900
                 leading-[1.06] mb-6 max-w-2xl text-4xl sm:text-5xl lg:text-[3.8rem]">
                 {SLIDES[current].before}{' '}
                 <em className="font-serif not-italic italic font-light
@@ -661,10 +661,10 @@ const CARD_POSITIONS = [
 const CARD_ROTATIONS = [-4, 4, -4, 4];
 
 const CARD_RANGES: { yRange: [number, number]; opIn: [number, number]; opOut: [number, number] }[] = [
-  { yRange: [0.00, 0.32], opIn: [0.00, 0.05], opOut: [0.27, 0.32] },
-  { yRange: [0.04, 0.36], opIn: [0.04, 0.09], opOut: [0.31, 0.36] },
-  { yRange: [0.08, 0.40], opIn: [0.08, 0.13], opOut: [0.35, 0.40] },
-  { yRange: [0.12, 0.44], opIn: [0.12, 0.17], opOut: [0.39, 0.44] },
+  { yRange: [0.00, 0.32], opIn: [0.00, 0.05], opOut: [0.22, 0.28] },
+  { yRange: [0.04, 0.32], opIn: [0.04, 0.09], opOut: [0.22, 0.28] },
+  { yRange: [0.08, 0.32], opIn: [0.08, 0.13], opOut: [0.22, 0.28] },
+  { yRange: [0.12, 0.32], opIn: [0.12, 0.17], opOut: [0.22, 0.28] },
 ];
 
 // Fallback gradient backgrounds per card while images load or are unavailable
@@ -777,33 +777,34 @@ function Problem() {
   const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.16, 0.22], [1, 0.85, 0.25, 0]);
   const cnt1Scale   = useTransform(scrollYProgress, [0, 0.16, 0.22], [1, 1, 1.06]);
 
-  // Phase 3: "But after that?" + WHAT GOES WRONG panel
-  const cnt3Opacity      = useTransform(scrollYProgress, [0.50, 0.58, 0.74, 0.80], [0, 1, 1, 0]);
-  const cnt3HeadScale    = useTransform(scrollYProgress, [0.50, 0.58], [0.85, 1]);
-  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.58, 0.65], [0, 1]);
-  const cnt3PanelY       = useTransform(scrollYProgress, [0.58, 0.65], ['40px', '0px']);
+  // Phase 3: "But after that?" + WHAT GOES WRONG panel — both appear simultaneously,
+  // immediately after Card 4 reaches its position (opIn ends at 0.17).
+  const cnt3Opacity      = useTransform(scrollYProgress, [0.18, 0.28, 0.55, 0.62], [0, 1, 1, 0]);
+  const cnt3HeadScale    = useTransform(scrollYProgress, [0.18, 0.28], [0.88, 1]);
+  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.18, 0.28], [0, 1]);
+  const cnt3PanelY       = useTransform(scrollYProgress, [0.18, 0.28], ['32px', '0px']);
 
   // Phase 4: Cost of Inaction — staggered entrance
-  const cnt4Opacity       = useTransform(scrollYProgress, [0.80, 0.87], [0, 1]);
-  const cnt4Y             = useTransform(scrollYProgress, [0.80, 0.87], ['40px', '0px']);
-  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.85, 0.91], [0, 1]);
-  const cnt4IconsY        = useTransform(scrollYProgress, [0.85, 0.91], ['20px', '0px']);
-  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.89, 0.95], [0, 1]);
-  const cnt4BannerY       = useTransform(scrollYProgress, [0.89, 0.95], ['20px', '0px']);
+  const cnt4Opacity       = useTransform(scrollYProgress, [0.62, 0.72], [0, 1]);
+  const cnt4Y             = useTransform(scrollYProgress, [0.62, 0.72], ['40px', '0px']);
+  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.70, 0.78], [0, 1]);
+  const cnt4IconsY        = useTransform(scrollYProgress, [0.70, 0.78], ['20px', '0px']);
+  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.76, 0.84], [0, 1]);
+  const cnt4BannerY       = useTransform(scrollYProgress, [0.76, 0.84], ['20px', '0px']);
 
   // Scroll prompt vanishes quickly
   const promptOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
 
   const bulletRanges: [number, number][] = [
-    [0.62, 0.68],
-    [0.64, 0.70],
-    [0.66, 0.72],
-    [0.68, 0.74],
+    [0.30, 0.36],
+    [0.32, 0.38],
+    [0.34, 0.40],
+    [0.36, 0.42],
   ];
 
   return (
-    // Outer scroll spacer — 600 vh gives ~500 vh of pinned scroll travel
-    <section ref={outerRef} className="w-full" style={{ height: '600vh' }}>
+    // Outer scroll spacer — 500 vh gives ~400 vh of pinned scroll travel
+    <section ref={outerRef} className="w-full" style={{ height: '500vh' }}>
       {/* Sticky viewport — fills full width/height, clips overflowing cards */}
       <div
         className="w-full bg-white relative"
@@ -830,7 +831,7 @@ function Problem() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
             <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
           </div>
-          <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-bold tracking-tighter text-gray-900 max-w-5xl text-center leading-[1.02]">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tighter text-gray-900 max-w-5xl text-center leading-[1.02]">
             Most Training<br className="hidden md:block" /> Doesn't Work
           </h2>
           <p className="font-serif italic text-2xl md:text-4xl lg:text-5xl text-[#008A45]/90 mt-5 tracking-tight text-center max-w-3xl">
@@ -899,7 +900,7 @@ function Problem() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
                 <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#008A45]">The Cost of Inaction</span>
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-sans font-medium tracking-tight leading-[1.1] mb-4 text-gray-900 max-w-4xl">
+              <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tight leading-[1.1] mb-4 text-gray-900 max-w-4xl">
                 If This Continues,{' '}
                 <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
               </h2>
@@ -963,7 +964,7 @@ function Solution() {
 
         {/* Heading */}
         <SectionReveal className="text-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans text-gray-900 tracking-tight leading-[1.1] mb-4 font-medium">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans text-gray-900 tracking-tight leading-[1.1] mb-4 font-bold">
             Training Designed for{' '}
             <span className="italic font-serif text-[#008A45] font-normal">Real-World</span>{' '}
             Application.
@@ -1050,7 +1051,7 @@ function HowItWorks() {
 
         {/* Header — heading only, full breathing room */}
         <SectionReveal className="border-b border-gray-100 pb-10 md:pb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-sans font-medium text-gray-900 tracking-tight leading-[1.1] max-w-3xl">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold text-gray-900 tracking-tight leading-[1.1] max-w-3xl">
             <AnimatedWords text="A Structured Approach That" delay={0} />{' '}
             <span className="italic font-serif text-[#008A45] font-normal">
               <AnimatedWords text="Drives Real Results." delay={0.45} />
@@ -1174,7 +1175,7 @@ function OfferBreakdown() {
           <span className="inline-block w-6 h-px bg-[#008A45]" />
           Full Capability Stack
         </p>
-        <h2 className="text-4xl md:text-6xl font-sans font-medium tracking-tighter text-gray-900 max-w-3xl leading-[1.05]">
+        <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tighter text-gray-900 max-w-3xl leading-[1.05]">
           Everything Needed to Build a{' '}
           <span className="italic font-serif text-[#008A45] font-normal">High-Performing Workforce</span>
         </h2>
@@ -1393,7 +1394,7 @@ function Testimonials() {
           className="flex flex-col items-center justify-center max-w-xl mx-auto text-center"
         >
           <span className="text-[#008A45] text-[15px] font-medium tracking-widest uppercase mb-4 block">Client Outcomes</span>
-          <h2 className="text-3xl md:text-5xl font-sans tracking-tighter font-medium text-gray-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans tracking-tighter font-bold text-gray-900 mb-4">
             Built on Real Outcomes.
             <br />
             <span className="text-[#008A45] font-serif italic font-normal">Not Assumptions.</span>
@@ -1467,7 +1468,7 @@ function TrustAndDifferentiation() {
             <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-white/90">The Prudentia Difference</span>
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-medium tracking-tighter leading-[1.05] text-white">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tighter leading-[1.05] text-white">
             <motion.span
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -1737,7 +1738,7 @@ function FinalCTA() {
       <GLSLHills />
       <div className="max-w-3xl mx-auto relative z-10">
         <SectionReveal>
-          <h2 className="text-4xl md:text-6xl font-sans tracking-tight leading-tight mb-8 font-medium">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans tracking-tight leading-tight mb-8 font-bold">
             <AnimatedWords text="Your Workforce Performance" delay={0} />
             <br className="hidden md:block" />
             <span className="italic font-serif text-[#008A45] font-normal">
@@ -1851,7 +1852,7 @@ function Footer() {
               <p className="text-[15px] font-bold tracking-[0.18em] uppercase text-[#008A45] mb-5">
                 Stay Ahead. Stay Informed.
               </p>
-              <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.08]">
+              <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-bold text-gray-900 leading-[1.08]">
                 Insights that<br />drive{' '}
                 <span className="font-serif italic text-[#008A45] font-normal">performance.</span>
               </h2>
