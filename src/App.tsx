@@ -1411,147 +1411,164 @@ function Testimonials() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AUTHORITY
+// TRUST + DIFFERENTIATION (merged)
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Authority() {
-  return (
-    <section className="py-32 px-6 bg-white border-t border-gray-100">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 lg:gap-32 items-center">
-          <SectionReveal>
-            <h2 className="text-4xl md:text-5xl font-sans font-medium tracking-tighter leading-tight mb-8">
-              <AnimatedWords text="Why Organizations" delay={0} />{' '}
-              <span className="italic font-serif text-[#008A45] font-normal">
-                <AnimatedWords text="Trust Prudentia." delay={0.35} />
-              </span>
-            </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              We bring extensive experience in training, consultancy, and virtual learning solutions across industries globally. Our focus is absolute transparency, ROI-driven learning, and long-term client relationships.
-            </p>
-            <div className="flex flex-col gap-6">
-              {[
-                { icon: Building2, title: "Partner Network", desc: "Microsoft Learning Partner & SAP Education Partner." },
-                { icon: Target, title: "Authority Strategy", desc: "Programs designed using real-world scenarios and structured frameworks." },
-              ].map((item, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.2, duration: 0.7 }}
-                  className="flex items-center gap-4 border-t border-gray-100 pt-6">
-                  <motion.div whileHover={{ scale: 1.1, backgroundColor: '#00558F', color: '#fff' }}
-                    transition={{ duration: 0.2 }}
-                    className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#00558F] border border-gray-200 shadow-sm shrink-0">
-                    <item.icon className="w-6 h-6" />
-                  </motion.div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 text-lg mb-1">{item.title}</h4>
-                    <p className="text-sm text-gray-500">{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </SectionReveal>
+const DIFFERENTIATORS = [
+  "Real-world simulations instead of pure theory.",
+  "Structured learning paths, not fragmented sessions.",
+  "Hybrid delivery models designed for hyper-retention.",
+  "Certifications aligned strictly with industry demands.",
+  "Unwavering focus on measurable business impact.",
+];
 
-          <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2000&auto=format&fit=crop"
-              alt="Corporate Team" className="w-full h-full object-cover absolute inset-0" />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
-            <div className="absolute bottom-8 left-8 right-8 grid grid-cols-2 gap-4 text-center z-10">
-              <motion.div whileHover={{ y: -6 }} className="bg-white/95 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg">
-                <div className="text-3xl font-sans tracking-tight font-bold text-gray-900 mb-1">
-                  <CountUp to={500} suffix="+" />
-                </div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Global Orgs</div>
-              </motion.div>
-              <motion.div whileHover={{ y: -6 }} className="bg-gradient-to-br from-[#008A45] to-[#00558F] p-[1px] rounded-2xl shadow-lg">
-                <div className="bg-white w-full h-full p-6 rounded-[15px] flex flex-col justify-center">
-                  <div className="text-3xl font-sans tracking-tight font-bold text-[#008A45] mb-1">
-                    <CountUp to={100} suffix="%" />
-                  </div>
-                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">ROI-focused</div>
-                </div>
-              </motion.div>
-            </div>
+function TrustAndDifferentiation() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: '-12%' });
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative h-screen min-h-[860px] w-full overflow-hidden flex items-center px-8 md:px-16 lg:px-24 py-16 border-t border-white/5"
+    >
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2400&auto=format&fit=crop')",
+        }}
+      />
+      {/* Gradient overlays for legibility + brand wash */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#071510]/95 via-[#0a2218]/85 to-[#00558F]/55" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#071510]/85 via-transparent to-[#071510]/30" />
+      <div className="absolute -top-40 -right-40 w-[42vw] h-[42vw] bg-[#008A45]/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-[36vw] h-[36vw] bg-[#00558F]/22 rounded-full blur-[120px] pointer-events-none" />
+      {/* Left green accent bar — matches Hero / Problem */}
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#008A45] z-30" />
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8 lg:gap-10">
+
+        {/* Eyebrow + heading */}
+        <div className="flex flex-col items-start max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-6"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#6ee89a]" />
+            <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-white/90">The Prudentia Difference</span>
           </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DIFFERENTIATION
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Differentiation() {
-  const [scramble, setScramble] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-15%' });
-
-  useEffect(() => {
-    if (isInView) {
-      const t = setTimeout(() => setScramble(true), 200);
-      return () => clearTimeout(t);
-    }
-  }, [isInView]);
-
-  return (
-    <section className="py-32 px-6 bg-gradient-to-br from-[#f4fbf7] to-[#f0f7fb] overflow-hidden">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        <div ref={ref}>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans tracking-tighter text-gray-900 leading-tight mb-8">
-            <ScrambleText text="Why Most Training Fails" trigger={scramble} className="block font-semibold" />
-            <motion.span initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
-              animate={isInView ? { opacity: 1, filter: 'blur(0px)', y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 1.2, ease: 'easeOut' }}
-              className="italic font-serif text-[#008A45] font-normal block mt-2">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-medium tracking-tighter leading-[1.05] text-white">
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="block"
+            >
+              Why Most Training Fails
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+              animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+              transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="italic font-serif text-[#6ee89a] font-normal block mt-1"
+            >
               — And Why Prudentia Delivers.
             </motion.span>
           </h2>
-          <div className="text-xl text-gray-600 space-y-6">
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 1.5 }}>
-              Most providers focus on <strong>content delivery</strong>. They dump information and hope it sticks.
-            </motion.p>
-            <motion.div initial={{ opacity: 0, scale: 0.9, y: 10 }} whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ type: 'spring', stiffness: 100, damping: 15, delay: 1.8 }}>
-              <p className="text-[#008A45] font-medium text-2xl md:text-3xl font-serif bg-white inline-block px-5 py-3 rounded-xl shadow-sm border border-[#008A45]/20">
-                Prudentia focuses on performance outcomes.
-              </p>
-            </motion.div>
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 2.1 }}
-              className="text-base text-gray-500 max-w-lg">
-              We architect learning experiences that change behavior and drive measurable business impact.
-            </motion.p>
-          </div>
         </div>
 
-        <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>
-          <Card3D className="card-premium p-8 md:p-12 relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00558F]/5 rounded-full blur-2xl transform translate-x-10 -translate-y-10" />
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#00558F] mb-8 relative z-10">What makes the difference</h3>
-            <ul className="space-y-6 relative z-10">
-              {[
-                "Real-world simulations instead of pure theory.",
-                "Structured learning paths, not fragmented sessions.",
-                "Hybrid delivery models designed for hyper-retention.",
-                "Certifications aligned strictly with industry demands.",
-                "Unwavering focus on measurable business impact.",
-              ].map((point, i) => (
-                <motion.li key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.5 }}
-                  className="flex items-start gap-4">
-                  <motion.div whileHover={{ scale: 1.2, rotate: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
-                    <CheckCircle2 className="w-6 h-6 text-[#008A45] shrink-0" />
-                  </motion.div>
-                  <span className="text-lg text-gray-800 font-medium">{point}</span>
+        {/* Two-column body */}
+        <div className="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14">
+          {/* Left — framing + outcome callout */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col gap-6"
+          >
+            <p className="text-white/85 text-[17px] md:text-[18px] leading-relaxed max-w-xl">
+              We bring extensive experience in training, consultancy, and virtual learning across industries globally. While most providers focus on{' '}
+              <span className="text-white font-semibold">content delivery</span> — dumping information and hoping it sticks — we deliver something different.
+            </p>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ type: 'spring', stiffness: 110, damping: 16, delay: 0.95 }}
+              className="inline-flex"
+            >
+              <p className="font-serif italic text-2xl md:text-3xl leading-tight text-white bg-gradient-to-br from-[#008A45]/95 to-[#00558F]/95 px-6 py-4 rounded-xl shadow-[0_20px_50px_-12px_rgba(0,138,69,0.55)] border border-[#6ee89a]/30">
+                Prudentia focuses on{' '}
+                <span className="not-italic font-sans font-semibold">performance outcomes.</span>
+              </p>
+            </motion.div>
+
+            <p className="text-white/65 text-[15px] md:text-[16px] leading-relaxed max-w-md">
+              We architect learning experiences that change behavior and drive measurable business impact.
+            </p>
+          </motion.div>
+
+          {/* Right — differentiator checklist */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="relative bg-white/5 backdrop-blur-xl border border-white/15 rounded-2xl p-6 md:p-8 lg:p-10 overflow-hidden"
+          >
+            <div className="absolute -top-24 -right-24 w-56 h-56 bg-[#008A45]/15 rounded-full blur-[60px] pointer-events-none" />
+            <p className="relative z-10 text-[15px] font-bold uppercase tracking-[0.18em] text-[#6ee89a] mb-5 md:mb-6">
+              What makes the difference
+            </p>
+            <ul className="relative z-10 space-y-4 md:space-y-5">
+              {DIFFERENTIATORS.map((point, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: 18 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 1.0 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-start gap-3 md:gap-4"
+                >
+                  <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-[#6ee89a] shrink-0 mt-0.5" strokeWidth={2.25} />
+                  <span className="text-[17px] md:text-[18px] text-white/90 font-medium leading-snug">{point}</span>
                 </motion.li>
               ))}
             </ul>
-          </Card3D>
+          </motion.div>
+        </div>
+
+        {/* Bottom stats / partners strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6 border-t border-white/15 pt-6 md:pt-7"
+        >
+          <div className="flex items-baseline gap-3 md:gap-4">
+            <CountUp to={500} suffix="+" className="text-4xl md:text-5xl font-sans font-bold tracking-tight text-white" />
+            <span className="text-[15px] uppercase tracking-[0.15em] font-semibold text-white/70 leading-tight">
+              Global<br />Organizations
+            </span>
+          </div>
+          <div className="flex items-baseline gap-3 md:gap-4">
+            <CountUp to={100} suffix="%" className="text-4xl md:text-5xl font-sans font-bold tracking-tight text-[#6ee89a]" />
+            <span className="text-[15px] uppercase tracking-[0.15em] font-semibold text-white/70 leading-tight">
+              ROI<br />Focused
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 rounded-xl border border-[#6ee89a]/40 bg-white/5 backdrop-blur-md flex items-center justify-center shrink-0">
+              <Building2 className="w-5 h-5 text-[#6ee89a]" />
+            </div>
+            <div>
+              <div className="text-[17px] font-semibold text-white leading-tight">Microsoft Learning Partner</div>
+              <div className="text-[15px] text-white/65 leading-tight mt-0.5">SAP Education Partner</div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -2108,8 +2125,7 @@ export default function Home() {
           <HowItWorks />
           <OfferBreakdown />
           <Testimonials />
-          <Authority />
-          <Differentiation />
+          <TrustAndDifferentiation />
           <FinalCTA />
         </main>
       </div>
