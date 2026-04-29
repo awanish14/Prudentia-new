@@ -1237,10 +1237,10 @@ function HowItWorks() {
   ];
   return (
     <section className="bg-white min-h-screen flex items-center overflow-hidden">
-      <div className="w-full px-8 md:px-16 lg:px-24 py-16 flex flex-col gap-14">
+      <div className="w-full px-6 sm:px-8 md:px-16 lg:px-24 py-10 sm:py-14 lg:py-16 flex flex-col gap-8 sm:gap-10 lg:gap-14">
 
         {/* Header — heading only, full breathing room */}
-        <SectionReveal className="border-b border-gray-100 pb-10 md:pb-12">
+        <SectionReveal className="border-b border-gray-100 pb-5 sm:pb-8 lg:pb-12">
           <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold text-gray-900 tracking-tight leading-[1.1] max-w-3xl">
             <AnimatedWords text="A Structured Approach That" delay={0} />{' '}
             <span className="italic font-serif text-[#008A45] font-normal">
