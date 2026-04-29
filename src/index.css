@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-brand-50: #f0f7ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-600: #00558F; /* Prudentia Blue */
+  --color-brand-800: #003e6b; 
+  --color-brand-900: #002747;
+  
+  --color-accent-50: #f0fdf4;
+  --color-accent-100: #dcfce7;
+  --color-accent-600: #068140; /* Prudentia Green */
+  --color-accent-800: #045228;
+  --color-accent-900: #022c15;
+  
+  --color-prudentia-green-light: #10a858;
+  --color-prudentia-green: #068140; /* Logo Green */
+  --color-prudentia-green-dark: #045c2d;
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center overflow-hidden bg-gradient-to-r from-[#008A45] to-[#00558F] text-white font-medium rounded-[2px] transition-all duration-300;
+    box-shadow: 0 4px 14px 0 rgba(0, 85, 143, 0.2);
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: translateX(-110%);
+    transition: transform 0.65s ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .btn-primary:hover::before {
+    transform: translateX(110%);
+  }
+  .btn-primary > * {
+    position: relative;
+    z-index: 2;
+  }
+  .btn-primary:hover {
+    @apply shadow-[0_6px_22px_rgba(0,85,143,0.4)] scale-[1.02] -translate-y-0.5;
+  }
+  .btn-primary:active {
+    @apply scale-[0.98] translate-y-0;
+  }
+  .pill-label {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-white text-gray-700 rounded-full text-[10px] font-bold uppercase tracking-widest border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)];
+  }
+  .card-premium {
+    @apply bg-white border border-gray-200 rounded-2xl shadow-[0_2px_16px_-2px_rgba(0,0,0,0.10)] hover:shadow-[0_8px_28px_-6px_rgba(0,0,0,0.15)] transition-all duration-300;
+  }
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --primary: 151 100% 27%;        /* #008A45 Prudentia green */
+  --primary-foreground: 0 0% 100%;
+  --muted: 210 20% 98%;
+  --muted-foreground: 215 16% 47%;
+  --border: 214 32% 91%;
+  --ring: 151 100% 27%;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900 font-sans antialiased overflow-x-hidden selection:bg-brand-100 selection:text-brand-900;
+  }
+
+  /* Only decorative/non-hero headings default to serif */
+  h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight text-brand-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translateX(-33.333%); }
+  to   { transform: translateX(0); }
+}
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-track-reverse {
+  animation: marquee-reverse 42s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
