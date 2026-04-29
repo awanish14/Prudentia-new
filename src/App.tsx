@@ -2028,14 +2028,14 @@ function Footer() {
           mixBlendMode: 'overlay',
         }}
       />
-      <motion.div style={{ scale, opacity, filter: blurStyle }} className="h-full flex flex-col origin-bottom relative z-10">
+      <motion.div style={{ scale, opacity, filter: blurStyle }} className="lg:h-full flex flex-col origin-bottom relative z-10">
 
         {/* ── TOP: Newsletter — white/light gradient zone ── */}
         <div
-          className="flex-[5] flex items-center border-b border-gray-200/60 px-8 md:px-16 lg:px-24"
+          className="lg:flex-[5] flex items-center border-b border-gray-200/60 px-6 sm:px-8 md:px-16 lg:px-24 py-12 lg:py-0"
           style={{ background: 'linear-gradient(135deg, #f4fbf7 0%, #f0f7fb 60%, #ffffff 100%)' }}
         >
-          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-28 items-center">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-28 items-center">
 
             {/* Left — headline */}
             <div>
@@ -2053,14 +2053,14 @@ function Footer() {
               <p className="text-gray-500 text-[17px] leading-relaxed max-w-sm">
                 Subscribe to our newsletter and get the latest insights, trends, and updates delivered to your inbox.
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="flex-1 rounded-full px-6 py-4 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none bg-white border border-gray-200 shadow-sm transition-all focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45]/40"
+                  className="w-full sm:flex-1 rounded-full px-6 py-4 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none bg-white border border-gray-200 shadow-sm transition-all focus:ring-2 focus:ring-[#008A45]/20 focus:border-[#008A45]/40"
                 />
                 <MagneticButton
-                  className="relative inline-flex items-center justify-center overflow-hidden text-white font-medium rounded-[2px] transition-all duration-300 px-7 py-4 text-[15px] gap-2 group shrink-0 hover:opacity-90 hover:scale-[1.02]"
+                  className="relative inline-flex items-center justify-center overflow-hidden text-white font-medium rounded-[2px] transition-all duration-300 px-7 py-4 text-[15px] gap-2 group shrink-0 hover:opacity-90 hover:scale-[1.02] w-full sm:w-auto"
                   style={{ background: 'linear-gradient(90deg, #008A45 0%, #00558F 100%)' }}
                 >
                   Subscribe
@@ -2077,7 +2077,7 @@ function Footer() {
 
         {/* ── MARQUEE DIVIDER ── */}
         <div
-          className="relative overflow-hidden border-y border-white/10 py-5 shrink-0 flex flex-col gap-3"
+          className="relative overflow-hidden border-y border-white/10 py-4 sm:py-5 shrink-0 flex flex-col gap-2 sm:gap-3"
           style={{
             maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
@@ -2086,27 +2086,27 @@ function Footer() {
           <div className="marquee-track flex items-center w-max">
             {[...MARQUEE_ROW1, ...MARQUEE_ROW1, ...MARQUEE_ROW1].map((item, i) => (
               <span key={i} className="inline-flex items-center shrink-0">
-                <span className={`text-3xl font-black tracking-[0.12em] uppercase px-8 whitespace-nowrap ${item.green ? 'text-[#1DBF73]' : 'text-white/70'}`}>
+                <span className={`text-lg sm:text-2xl lg:text-3xl font-black tracking-[0.12em] uppercase px-5 sm:px-8 whitespace-nowrap ${item.green ? 'text-[#1DBF73]' : 'text-white/70'}`}>
                   {item.text}
                 </span>
-                <span className="text-white/20 text-xl">•</span>
+                <span className="text-white/20 text-base sm:text-xl">•</span>
               </span>
             ))}
           </div>
           <div className="marquee-track-reverse flex items-center w-max">
             {[...MARQUEE_ROW2, ...MARQUEE_ROW2, ...MARQUEE_ROW2].map((item, i) => (
               <span key={i} className="inline-flex items-center shrink-0">
-                <span className={`text-3xl font-black tracking-[0.12em] uppercase px-8 whitespace-nowrap ${item.green ? 'text-[#1DBF73]' : 'text-white/70'}`}>
+                <span className={`text-lg sm:text-2xl lg:text-3xl font-black tracking-[0.12em] uppercase px-5 sm:px-8 whitespace-nowrap ${item.green ? 'text-[#1DBF73]' : 'text-white/70'}`}>
                   {item.text}
                 </span>
-                <span className="text-white/20 text-xl">•</span>
+                <span className="text-white/20 text-base sm:text-xl">•</span>
               </span>
             ))}
           </div>
         </div>
 
         {/* ── BOTTOM: Links grid ── */}
-        <div className="flex-[4] flex flex-col justify-between px-8 md:px-16 lg:px-24 py-10">
+        <div className="lg:flex-[4] flex flex-col justify-between px-6 sm:px-8 md:px-16 lg:px-24 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-10">
 
             {/* Brand col */}
