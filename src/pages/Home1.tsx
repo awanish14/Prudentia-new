@@ -3,7 +3,7 @@ import { ReactLenis } from 'lenis/react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
-  BarChart3, Building2, Layout, TrendingUp, CheckCircle2,
+  BarChart3, Building2, Layout, TrendingUp, CheckCircle2, Shield, Languages,
 } from 'lucide-react';
 import { useRef, useState, useEffect, type ElementType, type ReactNode } from 'react';
 
@@ -173,72 +173,89 @@ function SectionTag({ children }: { children: ReactNode }) {
   );
 }
 
+// ── Navbar data ───────────────────────────────────────────────────────────────
+
+const megaColumns = [
+  {
+    heading: 'Learning Solutions',
+    items: [
+      { icon: Users,     title: 'Corporate Training',     desc: 'ILT, VILT, blended learning & leadership programmes' },
+      { icon: BookOpen,  title: 'eLearning Development',  desc: 'SCORM, microlearning, gamification & custom LXP builds' },
+      { icon: Target,    title: 'Workshops & Bootcamps',  desc: 'Immersive, hands-on skill-building intensives' },
+    ],
+  },
+  {
+    heading: 'Specialisations',
+    items: [
+      { icon: Languages, title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content' },
+      { icon: Shield,    title: 'Certification Programmes',   desc: 'EC-Council, industry-recognised credentials & compliance' },
+    ],
+  },
+];
+
 // ── Navbar ────────────────────────────────────────────────────────────────────
 
 function Navbar() {
   const scrolled = useScrolled(40);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
+  const [mobileServices, setMobileServices] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openDropdown = (key: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setDropdown(key);
+  };
+  const closeDropdown = () => {
+    closeTimer.current = setTimeout(() => setDropdown(null), 80);
+  };
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/95 backdrop-blur-sm shadow-[0_1px_12px_rgba(0,0,0,0.07)]' : 'bg-transparent'
+        scrolled ? 'bg-white/97 backdrop-blur-sm shadow-[0_1px_12px_rgba(0,0,0,0.07)]' : 'bg-transparent'
       }`}
     >
+      {/* ── Main bar ── */}
       <div className="max-w-[1280px] mx-auto px-6 h-[72px] flex items-center justify-between">
         <a href="/" className="shrink-0">
           <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-10 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">
+          {/* Home dropdown */}
           <div
             className="relative"
-            onMouseEnter={() => setDropdown('home')}
-            onMouseLeave={() => setDropdown(null)}
+            onMouseEnter={() => openDropdown('home')}
+            onMouseLeave={closeDropdown}
           >
             <button className="flex items-center gap-1 text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">
-              Home <ChevronDown size={14} />
+              Home <ChevronDown size={14} className={`transition-transform duration-200 ${dropdown === 'home' ? 'rotate-180' : ''}`} />
             </button>
             <AnimatePresence>
               {dropdown === 'home' && (
                 <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }} transition={{ duration: 0.15 }}
+                  className="absolute top-full left-0 mt-3 w-44 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
+                  onMouseEnter={() => openDropdown('home')}
+                  onMouseLeave={closeDropdown}
                 >
-                  <a href="/"          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">Home Original</a>
+                  <a href="/"           className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">Home Original</a>
                   <a href="/home1.html" className="block px-4 py-2.5 text-sm text-[#068140] font-semibold hover:bg-gray-50">Home 1 (New)</a>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
+          {/* Services mega menu trigger */}
           <div
-            className="relative"
-            onMouseEnter={() => setDropdown('services')}
-            onMouseLeave={() => setDropdown(null)}
+            onMouseEnter={() => openDropdown('services')}
+            onMouseLeave={closeDropdown}
           >
-            <button className="flex items-center gap-1 text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">
-              Services <ChevronDown size={14} />
+            <button className={`flex items-center gap-1 text-sm font-medium transition-colors ${dropdown === 'services' ? 'text-[#00558F]' : 'text-[#002747] hover:text-[#00558F]'}`}>
+              Services <ChevronDown size={14} className={`transition-transform duration-200 ${dropdown === 'services' ? 'rotate-180' : ''}`} />
             </button>
-            <AnimatePresence>
-              {dropdown === 'services' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
-                >
-                  <a href="#services" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">Corporate Training</a>
-                  <a href="#services" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">eLearning Development</a>
-                  <a href="#services" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">Translation & Localisation</a>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
 
           <a href="#process"      className="text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">How We Work</a>
@@ -255,6 +272,91 @@ function Navbar() {
         </div>
       </div>
 
+      {/* ── Mega menu panel (full-width) ── */}
+      <AnimatePresence>
+        {dropdown === 'services' && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-[0_20px_60px_-12px_rgba(0,0,0,0.15)]"
+            onMouseEnter={() => openDropdown('services')}
+            onMouseLeave={closeDropdown}
+          >
+            {/* Green top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#068140] via-[#00558F] to-transparent" />
+
+            <div className="max-w-[1280px] mx-auto px-6 py-8 grid grid-cols-[1fr_1fr_300px] gap-10">
+
+              {/* Service columns */}
+              {megaColumns.map(col => (
+                <div key={col.heading}>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">{col.heading}</p>
+                  <div className="space-y-1">
+                    {col.items.map(item => (
+                      <a
+                        key={item.title}
+                        href="#services"
+                        className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#F8F7F3] transition-colors"
+                      >
+                        <div className="w-9 h-9 rounded-lg bg-[#068140]/8 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/15 transition-colors">
+                          <item.icon size={17} className="text-[#068140]" />
+                        </div>
+                        <div>
+                          <p className="text-[14px] font-semibold text-[#002747] group-hover:text-[#00558F] transition-colors leading-tight">{item.title}</p>
+                          <p className="text-[12px] text-gray-400 mt-0.5 leading-snug">{item.desc}</p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Featured panel */}
+              <div className="bg-[#002747] rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-3">Why Prudentia</p>
+                  <h3 className="font-serif text-white text-[22px] leading-[1.2] mb-3">
+                    500+ organisations<br />
+                    <em className="italic text-[#6ee89a]">trust us globally.</em>
+                  </h3>
+                  <p className="text-white/55 text-[12px] leading-relaxed">
+                    From onboarding to advanced defence — learning that drives real performance, not just certificates.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="grid grid-cols-3 gap-2 mt-5 mb-5">
+                    {[{ v: '15+', l: 'Years' }, { v: '40+', l: 'Languages' }, { v: '25+', l: 'Countries' }].map(s => (
+                      <div key={s.l} className="text-center">
+                        <p className="font-serif text-white text-[20px] leading-none font-bold">{s.v}</p>
+                        <p className="text-white/45 text-[10px] uppercase tracking-wider mt-1">{s.l}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <a href="#contact" className="btn-primary w-full text-center text-sm font-bold py-2.5 rounded-xl block">
+                    <span>Book a Free Call</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom bar: explore all */}
+            <div className="border-t border-gray-100 bg-[#F8F7F3]">
+              <div className="max-w-[1280px] mx-auto px-6 py-3 flex items-center justify-between">
+                <p className="text-[12px] text-gray-400">Trusted by TechServe Global, Meridian Financial, Novaris Pharmaceuticals and 500+ more.</p>
+                <a href="#services" className="text-[12px] font-semibold text-[#00558F] hover:text-[#002747] flex items-center gap-1 transition-colors">
+                  Explore all services <ArrowRight size={12} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Mobile menu ── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -266,8 +368,41 @@ function Navbar() {
             <div className="px-6 py-4 space-y-1">
               <a href="/"           className="block text-sm text-gray-700 py-2">Home Original</a>
               <a href="/home1.html" className="block text-sm text-[#068140] font-semibold py-2">Home 1 (New)</a>
-              <a href="#services"   className="block text-sm text-gray-700 py-2">Services</a>
-              <a href="#process"    className="block text-sm text-gray-700 py-2">How We Work</a>
+
+              {/* Mobile services accordion */}
+              <div>
+                <button
+                  onClick={() => setMobileServices(!mobileServices)}
+                  className="w-full flex items-center justify-between text-sm text-gray-700 py-2"
+                >
+                  Services
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${mobileServices ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {mobileServices && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden pl-3 border-l-2 border-[#068140]/20 ml-1 mb-1"
+                    >
+                      {megaColumns.flatMap(c => c.items).map(item => (
+                        <a
+                          key={item.title}
+                          href="#services"
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 py-2.5"
+                        >
+                          <item.icon size={14} className="text-[#068140] shrink-0" />
+                          <span className="text-sm text-gray-700">{item.title}</span>
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <a href="#process"      className="block text-sm text-gray-700 py-2">How We Work</a>
               <a href="#testimonials" className="block text-sm text-gray-700 py-2">Testimonials</a>
               <div className="pt-2">
                 <a href="#contact" className="btn-primary inline-flex px-5 py-2.5 text-sm rounded-full">
