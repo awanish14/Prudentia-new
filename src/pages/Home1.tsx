@@ -793,12 +793,7 @@ function ProblemSection() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section className="relative bg-[#002747] overflow-hidden" ref={ref}>
-      {/* Subtle grid */}
-      <div className="absolute inset-0 opacity-[0.04]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
-      {/* Green glow bottom-left */}
-      <div className="absolute -bottom-32 -left-24 w-[40vw] h-[40vw] bg-[#068140]/12 rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative bg-white overflow-hidden" ref={ref}>
 
       {/* Top half: headline block */}
       <div className="relative max-w-[1280px] mx-auto px-6 pt-20 pb-16">
@@ -808,22 +803,20 @@ function ProblemSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/8 border border-white/15 rounded-full mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F8F7F3] border border-gray-200 rounded-full mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">The Problem</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#068140]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">The Problem</span>
             </motion.div>
 
             <motion.h2
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.75, delay: 0.08 }}
-              className="font-serif text-[52px] lg:text-[72px] xl:text-[84px] leading-[1.0] text-white"
+              className="font-serif text-[52px] lg:text-[72px] xl:text-[80px] leading-[1.0] text-[#002747]"
             >
               Most Training<br />
-              <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300">
-                Doesn't Work.
-              </em>
+              <em className="italic text-[#068140]">Doesn't Work.</em>
             </motion.h2>
           </div>
 
@@ -831,33 +824,33 @@ function ProblemSection() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/50 text-lg leading-relaxed max-w-sm lg:text-right lg:mb-2"
+            className="text-gray-400 text-lg leading-relaxed max-w-sm lg:text-right lg:mb-2"
           >
             Organizations invest. Employees attend. Certificates get issued.<br />
-            <strong className="text-white/80 font-semibold">But nothing changes.</strong>
+            <strong className="text-gray-700 font-semibold">But nothing changes.</strong>
           </motion.p>
         </div>
 
         {/* What goes wrong — horizontal numbered list */}
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/10 border border-white/10 rounded-2xl overflow-hidden">
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-gray-100 border border-gray-100 rounded-2xl overflow-hidden bg-[#F8F7F3]">
           {problemBullets.map((text, i) => (
             <motion.div
               key={text}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-              className="p-6 lg:p-8 hover:bg-white/4 transition-colors"
+              className="p-6 lg:p-8 hover:bg-white transition-colors"
             >
-              <span className="font-serif text-[44px] font-bold text-white/10 leading-none block mb-4">
+              <span className="font-serif text-[44px] font-bold text-[#002747]/10 leading-none block mb-4">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <p className="text-white/75 text-[15px] leading-snug">{text}</p>
+              <p className="text-gray-600 text-[15px] leading-snug">{text}</p>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Bottom half: cost of inaction — contrasting cream band */}
+      {/* Bottom half: cost of inaction */}
       <div className="relative bg-[#F8F7F3]">
         <div className="max-w-[1280px] mx-auto px-6 py-16">
           <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
@@ -866,7 +859,7 @@ function ProblemSection() {
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">The cost of inaction</p>
               <h3 className="font-serif text-[28px] text-[#002747] leading-snug">
                 If This Continues,{' '}
-                <em className="italic text-red-500">It Gets Expensive.</em>
+                <em className="italic text-[#068140]">It Gets Expensive.</em>
               </h3>
             </div>
 
@@ -879,8 +872,8 @@ function ProblemSection() {
                   transition={{ duration: 0.45, delay: 0.3 + i * 0.07 }}
                   className="flex flex-col items-center text-center gap-2.5 p-4 bg-white rounded-xl border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]"
                 >
-                  <div className="w-10 h-10 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
-                    <item.icon size={17} className="text-red-400" />
+                  <div className="w-10 h-10 rounded-full bg-[#F8F7F3] border border-gray-100 flex items-center justify-center">
+                    <item.icon size={17} className="text-[#068140]" />
                   </div>
                   <span className="text-xs text-gray-600 leading-snug font-medium">{item.text}</span>
                 </motion.div>
