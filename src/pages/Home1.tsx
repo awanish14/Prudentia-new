@@ -83,7 +83,7 @@ interface WhyFeature {
 
 const whyFeatures: WhyFeature[] = [
   { icon: Award,    title: 'ISO 9001:2015 Certified', desc: 'Quality management at every stage of delivery.' },
-  { icon: Globe,    title: 'Global Reach',             desc: '25+ countries, 40+ languages, one trusted partner.' },
+  { icon: Globe,    title: 'Global Reach',             desc: '25+ countries, 15+ industries, one trusted partner.' },
   { icon: Users,    title: '500+ Clients',             desc: 'Trusted by Fortune 500s and fast-growing businesses.' },
   { icon: Clock,    title: '15+ Years Experience',     desc: 'Deep domain expertise across industries.' },
   { icon: Target,   title: 'Outcome-Focused',          desc: 'Every programme tied to measurable KPIs.' },
@@ -328,7 +328,7 @@ function Navbar() {
 
                 <div>
                   <div className="grid grid-cols-3 gap-2 mt-5 mb-5">
-                    {[{ v: '15+', l: 'Years' }, { v: '40+', l: 'Languages' }, { v: '25+', l: 'Countries' }].map(s => (
+                    {[{ v: '15+', l: 'Years' }, { v: '15+', l: 'Industries' }, { v: '25+', l: 'Countries' }].map(s => (
                       <div key={s.l} className="text-center">
                         <p className="font-serif text-white text-[20px] leading-none font-bold">{s.v}</p>
                         <p className="text-white/45 text-[10px] uppercase tracking-wider mt-1">{s.l}</p>
@@ -580,7 +580,7 @@ function HeroSection() {
               {[
                 { val: '500+', label: 'Companies Served' },
                 { val: '15+',  label: 'Years Experience' },
-                { val: '40+',  label: 'Languages' },
+                { val: '15+',  label: 'Industries Served' },
               ].map(b => (
                 <div key={b.label}>
                   <div className="font-serif text-[28px] font-bold text-[#002747] leading-none">{b.val}</div>
@@ -647,7 +647,7 @@ function StatsStrip() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x divide-white/10">
           <StatCounter target={500} label="Companies Served" />
           <StatCounter target={15}  label="Years Experience"  />
-          <StatCounter target={40}  label="Languages Supported" />
+          <StatCounter target={15}  label="Industries Served" />
           <StatCounter target={25}  label="Countries Reached" />
         </div>
       </div>
