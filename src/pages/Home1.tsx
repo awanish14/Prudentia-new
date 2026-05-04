@@ -419,38 +419,98 @@ function ServicesSection() {
 function ProcessSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [active, setActive] = useState(0);
+
+  const descriptions: Record<string, string> = {
+    '01': 'We assess skill gaps, roles, and business outcomes before creating a single slide.',
+    '02': 'Learning strategies are meticulously aligned to real-world business use cases.',
+    '03': 'Hybrid delivery combining instructor-led, virtual, video-based, and interactive modules.',
+    '04': 'Real-world scenarios, business simulations, and case-based learning embedded throughout.',
+    '05': 'Strict focus on post-training performance gains — not mere attendance numbers.',
+  };
 
   return (
-    <section id="process" className="bg-white py-24">
+    <section id="process" className="bg-white py-24 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6" ref={ref}>
-        <div className="text-center mb-14">
-          <SectionTag>Our Approach</SectionTag>
-          <h2 className="mt-4 font-serif text-[42px] text-[#002747]">How We Work</h2>
+
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div>
+            <SectionTag>Our Approach</SectionTag>
+            <h2 className="mt-4 font-serif text-[42px] text-[#002747] leading-[1.1]">
+              A Structured Path<br />
+              <em className="italic text-[#00558F]">to Real Results.</em>
+            </h2>
+          </div>
+          <p className="text-gray-500 text-sm max-w-xs leading-relaxed md:text-right">
+            Every engagement follows the same rigorous five-stage methodology — no shortcuts.
+          </p>
         </div>
 
-        <div className="relative flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-          <div className="hidden md:block absolute top-[58px] left-[9%] right-[9%] h-px bg-[#E8EEF4]" />
-
+        {/* Step tabs */}
+        <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-none">
           {processSteps.map((step, i) => (
-            <motion.div
+            <button
               key={step.num}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="relative flex flex-col items-center text-center flex-1"
+              onClick={() => setActive(i)}
+              className={`shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                active === i
+                  ? 'bg-[#002747] text-white shadow-md'
+                  : 'bg-[#F8F7F3] text-gray-500 hover:text-[#002747]'
+              }`}
             >
-              <div className="relative">
-                <div className="w-[116px] h-[116px] rounded-full overflow-hidden border-4 border-white shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
-                  <img src={step.image} alt={step.label} className="w-full h-full object-cover" />
-                </div>
-                <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#068140] text-white text-xs font-bold flex items-center justify-center shadow-md">
-                  {step.num}
-                </span>
-              </div>
-              <p className="mt-4 font-serif text-lg text-[#002747]">{step.label}</p>
-            </motion.div>
+              <span className={`text-xs font-bold ${active === i ? 'text-[#068140]' : 'text-gray-400'}`}>{step.num}</span>
+              {step.label}
+            </button>
           ))}
         </div>
+
+        {/* Active step card */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35 }}
+            className="grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,39,71,0.14)]"
+          >
+            <div className="relative h-64 md:h-auto min-h-[320px]">
+              <img
+                src={processSteps[active].image}
+                alt={processSteps[active].label}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#002747]/20" />
+              <div className="absolute top-6 left-6">
+                <span className="font-serif text-[72px] font-bold text-white/20 leading-none select-none">
+                  {processSteps[active].num}
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-[#F8F7F3] p-10 lg:p-14 flex flex-col justify-center">
+              <SectionTag>Step {processSteps[active].num}</SectionTag>
+              <h3 className="mt-4 font-serif text-[36px] text-[#002747] leading-tight">
+                {processSteps[active].label}
+              </h3>
+              <p className="mt-4 text-gray-600 text-[17px] leading-relaxed">
+                {descriptions[processSteps[active].num]}
+              </p>
+              <div className="mt-8 flex gap-2">
+                {processSteps.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActive(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === active ? 'bg-[#068140] w-8' : 'bg-[#002747]/15 w-1.5'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
       </div>
     </section>
   );
@@ -507,43 +567,65 @@ function WhySection() {
 // ── Bento Gallery ─────────────────────────────────────────────────────────────
 
 function BentoGallery() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
   return (
-    <section className="bg-white py-24">
+    <section className="bg-[#F8F7F3] py-24" ref={ref}>
       <div className="max-w-[1280px] mx-auto px-6">
-        <div className="text-center mb-12">
-          <SectionTag>Our Work</SectionTag>
-          <h2 className="mt-4 font-serif text-[42px] text-[#002747]">Explore Our Programmes</h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <SectionTag>Our Programmes</SectionTag>
+            <h2 className="mt-4 font-serif text-[42px] text-[#002747] leading-[1.1]">
+              Everything You Need<br />
+              <em className="italic text-[#00558F]">Under One Roof.</em>
+            </h2>
+          </div>
+          <a href="#contact" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[#068140] border border-[#068140]/30 px-5 py-2.5 rounded-full hover:bg-[#068140]/5 transition-colors shrink-0">
+            View All Services <ArrowRight size={14} />
+          </a>
         </div>
 
         <div
-          className="grid gap-4"
+          className="grid gap-3"
           style={{
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(2, 220px)',
+            gridTemplateRows: 'repeat(2, 240px)',
           }}
+          ref={ref}
         >
           {bentoItems.map((item, i) => (
-            <div
+            <motion.div
               key={item.image}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="relative rounded-2xl overflow-hidden group cursor-pointer"
               style={item.large ? { gridColumn: 'span 2', gridRow: 'span 2' } : {}}
             >
               <img
                 src={item.image}
                 alt={item.label}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#002747]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <motion.div
-                initial={false}
-                className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
-              >
-                <span className="inline-flex items-center gap-1.5 text-white text-sm font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#068140] shrink-0" />
-                  {item.label}
-                </span>
-              </motion.div>
-            </div>
+              {/* Always-on gradient — stronger at bottom */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#001d37]/85 via-[#001d37]/20 to-transparent" />
+              {/* Hover brightens the overlay slightly */}
+              <div className="absolute inset-0 bg-[#068140]/0 group-hover:bg-[#068140]/10 transition-colors duration-400" />
+
+              {/* Label — always visible */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+                <div>
+                  <span className="inline-flex items-center gap-2 text-white font-semibold text-sm leading-tight">
+                    <span className="w-2 h-2 rounded-full bg-[#068140] shrink-0" />
+                    {item.label}
+                  </span>
+                </div>
+                <div className="w-8 h-8 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+                  <ArrowRight size={13} className="text-white" />
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -1061,7 +1143,6 @@ export default function Home1() {
         <HeroSection />
         <StatsStrip />
         <ProblemSection />
-        <ServicesSection />
         <ProcessSection />
         <WhySection />
         <TrustSection />
