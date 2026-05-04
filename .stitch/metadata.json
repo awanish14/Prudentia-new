@@ -1,0 +1,27 @@
+{
+  "name": "projects/18219485933790099597",
+  "projectId": "18219485933790099597",
+  "title": "Prudentia Technology Solutions - Homepage",
+  "visibility": "PRIVATE",
+  "deviceType": "DESKTOP",
+  "designTheme": {
+    "colorMode": "LIGHT",
+    "font": "PLAYFAIR_DISPLAY",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#002747",
+    "saturation": 3
+  },
+  "screens": {
+    "home1": {
+      "id": "134b4f1721f141e1a675cf146504693f",
+      "sourceScreen": "projects/18219485933790099597/screens/134b4f1721f141e1a675cf146504693f",
+      "x": 0,
+      "y": 0,
+      "width": 2560,
+      "height": 2830
+    }
+  },
+  "metadata": {
+    "userRole": "OWNER"
+  }
+}

@@ -7,6 +7,9 @@ coverage/
 .env*
 !.env.example
 
+# Stitch design screenshots (binary, large)
+.stitch/designs/*.png
+
 # Cortex intelligence files (auto-generated)
 .cortex-context.md
 NEXT_SESSION_PROMPT.md

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prudentia Technology Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#f7f9ff",
+                        "tertiary-fixed": "#91f8a9",
+                        "secondary-container": "#83bdfd",
+                        "secondary-fixed-dim": "#9ecaff",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#718fb4",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "inverse-primary": "#aac9f1",
+                        "on-surface-variant": "#43474e",
+                        "on-surface": "#0f1d29",
+                        "tertiary": "#001506",
+                        "on-secondary-fixed": "#001d36",
+                        "surface-container": "#e3efff",
+                        "on-tertiary-container": "#37a05b",
+                        "secondary-fixed": "#d1e4ff",
+                        "inverse-on-surface": "#e8f2ff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-secondary-fixed-variant": "#00497c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#dbeafb",
+                        "on-tertiary-fixed": "#00210b",
+                        "primary-fixed-dim": "#aac9f1",
+                        "surface-dim": "#cddbed",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#d5e4f6",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#002747",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#001225",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d5e4f6",
+                        "on-background": "#0f1d29",
+                        "on-secondary-container": "#004c80",
+                        "surface-tint": "#426083",
+                        "inverse-surface": "#24323f",
+                        "outline-variant": "#c3c6cf",
+                        "outline": "#73777f",
+                        "surface": "#f7f9ff",
+                        "surface-container-low": "#edf4ff",
+                        "tertiary-container": "#002d12",
+                        "on-primary-fixed": "#001d36",
+                        "on-primary-fixed-variant": "#2a496a",
+                        "tertiary-fixed-dim": "#75db8f",
+                        "background": "#f7f9ff",
+                        "secondary": "#1c619c"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "28": "112px"
+                    },
+                    fontFamily: {
+                        "h2": ["Playfair Display"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h3": ["Playfair Display"],
+                        "section-tag": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    fontSize: {
+                        "h2": ["36px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h3": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "section-tag": ["11px", { "lineHeight": "1", "letterSpacing": "0.16em", "fontWeight": "700" }],
+                        "button": ["15px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .gradient-btn {
+            background: linear-gradient(135deg, #068140, #00558F);
+        }
+        .section-tag-line::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 2px;
+            background-color: #068140;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-[#F8F7F3] text-on-surface antialiased selection:bg-[#068140] selection:text-white">
+<!-- TopNavBar -->
+<nav class="bg-[#F8F7F3] dark:bg-slate-950 flex justify-between items-center px-8 py-5 max-w-[1280px] mx-auto w-full h-[72px] border-b border-[#E8EEF4] dark:border-slate-800">
+<a class="text-xl font-serif font-black text-[#002747] dark:text-white shrink-0" href="#">Prudentia Technology Solutions</a>
+<div class="hidden md:flex space-x-8 items-center">
+<a class="text-[#068140] border-b-2 border-[#068140] pb-1 font-bold" href="#">Home</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#00558F] dark:hover:text-blue-400 transition-colors duration-200" href="#">About Us</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#00558F] dark:hover:text-blue-400 transition-colors duration-200" href="#">Services</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#00558F] dark:hover:text-blue-400 transition-colors duration-200" href="#">Testimonials</a>
+</div>
+<a class="gradient-btn text-white px-6 py-2.5 rounded-full font-button text-button hidden md:inline-flex items-center space-x-2 transition-transform hover:scale-105" href="#">
+<span>Contact Us</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</nav>
+<!-- Hero -->
+<section class="min-h-[calc(100vh-72px)] flex items-center py-20 px-8">
+<div class="max-w-[1280px] mx-auto w-full grid md:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="flex items-center text-[#068140] font-section-tag text-section-tag uppercase tracking-widest section-tag-line">
+                    Corporate Training · eLearning · Translation
+                </div>
+<h1 class="font-h1 text-[56px] lg:text-[72px] leading-[1.1] tracking-tight text-primary-container">
+                    Unlock Your<br/>
+<span class="italic text-secondary">Team's True Potential</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Empowering organizations globally through innovative learning solutions and specialized expertise tailored to your unique workforce needs.
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a class="gradient-btn text-white px-8 py-4 rounded-full font-button text-button transition-transform hover:scale-105 inline-flex items-center" href="#">
+                        Get a Free Consultation
+                    </a>
+<a class="px-8 py-4 rounded-full font-button text-button text-primary-container border border-outline hover:border-primary-container transition-colors inline-flex items-center" href="#">
+                        Explore Services
+                    </a>
+</div>
+<div class="pt-12 border-t border-[#E8EEF4] flex flex-wrap gap-6 text-sm font-medium text-primary-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#068140] text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        ISO 9001:2015 Certified
+                    </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#068140] text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        98% Client Retention
+                    </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#068140] text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        500+ Companies Served
+                    </div>
+</div>
+</div>
+<div class="relative w-full aspect-[4/5] lg:aspect-square rounded-[32px] overflow-hidden shadow-xl">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="A modern corporate training room with large windows letting in natural daylight. A diverse team of professionals is gathered around a sleek wooden conference table, actively engaged in a discussion. The atmosphere is bright, focused, and collaborative. The color palette emphasizes warm light-mode aesthetics with subtle green and navy blue accents in their attire and room details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVww6cjAbtbTYVN8OatXE1CVjr0q_smVvseLvQhdgTVgYS0IgfIi1Utel-jA0YnA2YuOyd6foY_mQD6-GoD8m1jz0gLyKmlWNtau_HgW7uCyrZY60I6piF0H3HeCar-NAQIOdkXzaafBbn2ZUO6Rt8vQXkt-Suxa8O9YOCdBMxFnmIIP0Ei6SV9ta97tQed6tN40br3UAbHow4-eOueWfCiepFbjUIvw3x2di6NFccyjgvNpR9JMrp159LdO8NGTrC-PjyHEcoVRQ"/>
+</div>
+</div>
+</section>
+<!-- Stats Strip -->
+<section class="bg-primary-container text-white py-16">
+<div class="max-w-[1280px] mx-auto px-8 w-full">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x divide-white/20 text-center">
+<div class="px-4">
+<div class="font-h1 text-[52px] mb-2">500+</div>
+<div class="font-body-sm text-body-sm text-surface-variant uppercase tracking-wider">Companies Served</div>
+</div>
+<div class="px-4">
+<div class="font-h1 text-[52px] mb-2">15+</div>
+<div class="font-body-sm text-body-sm text-surface-variant uppercase tracking-wider">Years Experience</div>
+</div>
+<div class="px-4">
+<div class="font-h1 text-[52px] mb-2">40+</div>
+<div class="font-body-sm text-body-sm text-surface-variant uppercase tracking-wider">Languages Supported</div>
+</div>
+<div class="px-4">
+<div class="font-h1 text-[52px] mb-2">25+</div>
+<div class="font-body-sm text-body-sm text-surface-variant uppercase tracking-wider">Countries Reached</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#002747] dark:bg-black text-white py-16">
+<div class="max-w-[1280px] mx-auto px-8 w-full flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-lg font-serif font-bold text-white shrink-0">
+                Prudentia Technology Solutions
+            </div>
+<div class="flex flex-wrap gap-6 text-sm tracking-wide justify-center">
+<a class="text-slate-300 dark:text-slate-500 hover:text-[#068140] transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-slate-300 dark:text-slate-500 hover:text-[#068140] transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-slate-300 dark:text-slate-500 hover:text-[#068140] transition-colors duration-200" href="#">Cookie Policy</a>
+<a class="text-slate-300 dark:text-slate-500 hover:text-[#068140] transition-colors duration-200" href="#">Global Offices</a>
+</div>
+<div class="text-slate-300 text-sm whitespace-nowrap text-center md:text-right">
+                © 2024 Prudentia Technology Solutions. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>
