@@ -838,65 +838,87 @@ function ECCouncilSection() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-24 bg-[#002747]">
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#e63946]" />
-      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#e63946]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="relative max-w-[1280px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/15 border border-[#e63946]/30 rounded-full mb-8"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#e63946]" />
-          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#e67a7f]">In Partnership with EC-Council</span>
-        </motion.div>
+    <section ref={ref} className="relative overflow-hidden bg-[#0d0d0d]" style={{ minHeight: '560px' }}>
+      {/* Dramatic red radial glow — top right */}
+      <div className="absolute top-0 right-0 w-[55vw] h-[55vw] bg-[#e63946]/18 rounded-full blur-[140px] pointer-events-none translate-x-1/4 -translate-y-1/4" />
+      {/* Subtle grid texture */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '48px 48px' }} />
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="relative max-w-[1280px] mx-auto px-6 py-20 lg:py-28">
+
+        {/* Top row: badge left, large decorative word right */}
+        <div className="flex items-start justify-between mb-12 lg:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#e63946]/15 border border-[#e63946]/35 rounded-full"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#e63946]" />
+            <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#e67a7f]">In Partnership with EC-Council</span>
+          </motion.div>
+          <span className="hidden lg:block font-serif text-[7rem] font-bold leading-none text-white/4 select-none tracking-tighter -mt-4">
+            CYBER
+          </span>
+        </div>
+
+        {/* Main 2-col */}
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+
+          {/* Left: heading + desc + CTA */}
           <div>
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+              className="font-serif text-[44px] lg:text-[58px] leading-[1.05] text-white mb-6"
             >
-              From Awareness to<br />
-              <em className="italic text-[#e67a7f]">Advanced Defense.</em>
+              From Awareness<br />
+              to{' '}
+              <em className="italic" style={{ color: '#e67a7f' }}>Advanced Defense.</em>
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg"
+              transition={{ duration: 0.6, delay: 0.22 }}
+              className="text-[17px] text-white/55 leading-relaxed mb-10 max-w-md"
             >
-              Certified cybersecurity capability for your entire workforce — spanning training, certifications, enterprise awareness, and continuous threat readiness.
+              Certified cybersecurity capability for your entire workforce — from first-line awareness to advanced threat response.
             </motion.p>
             <motion.a
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.35 }}
+              transition={{ duration: 0.5, delay: 0.38 }}
               href="#contact"
-              className="inline-flex items-center gap-2 bg-[#e63946] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#c62d39] transition-colors text-sm"
+              className="inline-flex items-center gap-2.5 bg-[#e63946] text-white font-bold px-8 py-4 rounded-full hover:bg-[#c62d39] transition-colors text-sm tracking-wide group"
             >
-              Explore Cybersecurity Training <ArrowRight size={16} />
+              Explore Cybersecurity Training
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </motion.a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Right: numbered editorial list */}
+          <div className="space-y-0 divide-y divide-white/8">
             {ecFeatures.map((f, i) => (
               <motion.div
                 key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors"
+                initial={{ opacity: 0, x: 20 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.2 + i * 0.1 }}
+                className="flex items-start gap-6 py-6 group hover:bg-white/3 px-2 -mx-2 rounded-xl transition-colors"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-[#e63946] mb-3" />
-                <h4 className="text-white font-semibold text-sm mb-1.5 leading-snug">{f.title}</h4>
-                <p className="text-white/55 text-xs leading-relaxed">{f.desc}</p>
+                <span className="font-serif text-[28px] font-bold text-[#e63946]/40 group-hover:text-[#e63946]/70 transition-colors leading-none mt-0.5 shrink-0 w-8">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h4 className="text-white font-semibold text-[15px] mb-1 leading-snug">{f.title}</h4>
+                  <p className="text-white/45 text-sm leading-relaxed">{f.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
+
         </div>
       </div>
     </section>
@@ -909,66 +931,102 @@ function SkillsoftSection() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
+  const platformStats = [
+    { value: '200K+', label: 'Learning Assets' },
+    { value: 'AI',    label: 'Personalized Paths' },
+    { value: '8 wks', label: 'Avg. Time to Deploy' },
+    { value: '100%',  label: 'Cloud-Managed' },
+  ];
+
   return (
-    <section ref={ref} className="relative overflow-hidden py-24 bg-[#001d37]">
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#00a3e0]" />
-      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#00a3e0]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="relative max-w-[1280px] mx-auto px-6">
+    <section ref={ref} className="relative overflow-hidden bg-[#F8F7F3] py-20 lg:py-28">
+      {/* Cyan accent bar — top */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00a3e0] via-[#00558F] to-transparent" />
+
+      <div className="max-w-[1280px] mx-auto px-6">
+
+        {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00a3e0]/15 border border-[#00a3e0]/30 rounded-full mb-8"
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#00a3e0]/10 border border-[#00a3e0]/25 rounded-full mb-10"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00a3e0]" />
-          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#00a3e0]">Powered by Skillsoft Percipio</span>
+          <span className="w-2 h-2 rounded-full bg-[#00a3e0]" />
+          <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#00558F]">Powered by Skillsoft Percipio</span>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Main grid */}
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-start">
+
+          {/* Left: heading + description + CTA */}
           <div>
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+              className="font-serif text-[44px] lg:text-[58px] leading-[1.05] text-[#002747] mb-6"
             >
               Enterprise Learning<br />
-              <em className="italic text-[#00a3e0]">as a Subscription.</em>
+              <em className="italic text-[#00558F]">as a Subscription.</em>
             </motion.h2>
             <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.22 }}
+              className="text-[17px] text-gray-500 leading-relaxed mb-10 max-w-md"
+            >
+              A fully managed LXP deployed in weeks. AI-personalized learning journeys, 200,000+ assets, and real-time skill intelligence — zero infrastructure required.
+            </motion.p>
+
+            {/* Platform stats row */}
+            <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg"
+              transition={{ duration: 0.6, delay: 0.32 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10"
             >
-              A fully managed Learning Experience Platform deployed in weeks — AI-personalized journeys, 200,000+ assets, and measurable skill intelligence built in.
-            </motion.p>
+              {platformStats.map((s, i) => (
+                <div key={s.label} className="bg-white rounded-xl p-4 border border-[#002747]/8 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.06)]">
+                  <div className="font-serif text-[26px] font-bold text-[#00558F] leading-none mb-1">{s.value}</div>
+                  <div className="text-[11px] uppercase tracking-widest text-gray-400 leading-snug">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
+
             <motion.a
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.35 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
               href="#contact"
-              className="inline-flex items-center gap-2 bg-[#00a3e0] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#008bbf] transition-colors text-sm"
+              className="inline-flex items-center gap-2.5 bg-[#002747] text-white font-bold px-8 py-4 rounded-full hover:bg-[#00558F] transition-colors text-sm tracking-wide group"
             >
-              Explore LXP Platform <ArrowRight size={16} />
+              Explore the LXP Platform
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </motion.a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Right: features as clean rows */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.25 }}
+            className="bg-white rounded-3xl border border-[#002747]/8 shadow-[0_8px_40px_-8px_rgba(0,39,71,0.1)] overflow-hidden"
+          >
             {skillsoftFeatures.map((f, i) => (
-              <motion.div
+              <div
                 key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors"
+                className={`flex items-start gap-5 px-7 py-6 ${i < skillsoftFeatures.length - 1 ? 'border-b border-gray-100' : ''} hover:bg-[#f0f9ff] transition-colors group`}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-[#00a3e0] mb-3" />
-                <h4 className="text-white font-semibold text-sm mb-1.5 leading-snug">{f.title}</h4>
-                <p className="text-white/55 text-xs leading-relaxed">{f.desc}</p>
-              </motion.div>
+                <div className="w-1 self-stretch rounded-full bg-[#00a3e0]/20 group-hover:bg-[#00a3e0] transition-colors shrink-0 mt-1" />
+                <div>
+                  <h4 className="text-[#002747] font-semibold text-sm mb-1 leading-snug">{f.title}</h4>
+                  <p className="text-gray-400 text-[13px] leading-relaxed">{f.desc}</p>
+                </div>
+              </div>
             ))}
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </section>
