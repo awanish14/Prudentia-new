@@ -418,7 +418,7 @@ function HeroSection() {
               </span>
             </div>
 
-            <h1 className="font-serif text-[52px] lg:text-[68px] xl:text-[76px] leading-[1.04] tracking-tight text-[#002747]">
+            <h1 className="font-serif text-[36px] sm:text-[46px] lg:text-[68px] xl:text-[76px] leading-[1.04] tracking-tight text-[#002747]">
               Empower Your<br />
               Team.{' '}
               <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#068140] to-[#00558F]">
@@ -427,7 +427,7 @@ function HeroSection() {
               Your Business.
             </h1>
 
-            <p className="mt-7 text-[18px] text-gray-500 leading-relaxed max-w-[500px]">
+            <p className="mt-7 text-[16px] md:text-[18px] text-gray-500 leading-relaxed max-w-[500px]">
               Prudentia partners with global organisations to design and deliver learning experiences that drive real, measurable performance improvement.
             </p>
 
@@ -499,7 +499,7 @@ function StatCounter({ target, suffix = '+', label }: { target: number; suffix?:
   const count = useCountUp(target, inView);
   return (
     <div ref={ref} className="px-4 text-center">
-      <div className="font-serif text-[52px] leading-none text-white mb-2">{count}{suffix}</div>
+      <div className="font-serif text-[36px] md:text-[52px] leading-none text-white mb-2">{count}{suffix}</div>
       <div className="text-[11px] uppercase tracking-widest text-white/60">{label}</div>
     </div>
   );
@@ -530,7 +530,7 @@ function ServicesSection() {
     <section id="services" className="bg-[#F8F7F3] py-24">
       <div className="max-w-[1280px] mx-auto px-6" ref={ref}>
         <SectionTag>What We Do</SectionTag>
-        <h2 className="mt-4 font-serif text-[42px] leading-[1.2] text-[#002747] max-w-lg">
+        <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] text-[#002747] max-w-lg">
           Learning Solutions Built for the Real World
         </h2>
 
@@ -595,7 +595,7 @@ function ProcessSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <SectionTag>Our Approach</SectionTag>
-            <h2 className="mt-4 font-serif text-[42px] text-[#002747] leading-[1.1]">
+            <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] text-[#002747] leading-[1.1]">
               A Structured Path<br />
               <em className="italic text-[#00558F]">to Real Results.</em>
             </h2>
@@ -687,7 +687,7 @@ function WhySection() {
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <div>
             <SectionTag>Why Prudentia</SectionTag>
-            <h2 className="mt-4 font-serif text-[42px] leading-[1.2] text-[#002747]">
+            <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] text-[#002747]">
               The Partner That Delivers on Its Promises
             </h2>
             <p className="mt-6 text-gray-600 leading-relaxed">
@@ -698,7 +698,7 @@ function WhySection() {
             </blockquote>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {whyFeatures.map((feature, i) => (
               <motion.div
                 key={feature.title}
@@ -735,7 +735,7 @@ function BentoGallery() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <SectionTag>Our Programmes</SectionTag>
-            <h2 className="mt-4 font-serif text-[42px] text-[#002747] leading-[1.1]">
+            <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] text-[#002747] leading-[1.1]">
               Everything You Need<br />
               <em className="italic text-[#00558F]">Under One Roof.</em>
             </h2>
@@ -746,11 +746,7 @@ function BentoGallery() {
         </div>
 
         <div
-          className="grid gap-3"
-          style={{
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(2, 240px)',
-          }}
+          className="grid gap-3 grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[240px]"
           ref={ref}
         >
           {bentoItems.map((item, i) => (
@@ -759,8 +755,7 @@ function BentoGallery() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="relative rounded-2xl overflow-hidden group cursor-pointer"
-              style={item.large ? { gridColumn: 'span 2', gridRow: 'span 2' } : {}}
+              className={`relative rounded-2xl overflow-hidden group cursor-pointer${item.large ? ' col-span-2 row-span-2' : ''}`}
             >
               <img
                 src={item.image}
@@ -819,7 +814,7 @@ function ProblemSection() {
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.75, delay: 0.08 }}
-              className="font-serif text-[52px] lg:text-[72px] xl:text-[80px] leading-[1.0] text-[#002747]"
+              className="font-serif text-[36px] sm:text-[48px] lg:text-[72px] xl:text-[80px] leading-[1.0] text-[#002747]"
             >
               Most Training<br />
               <em className="italic text-[#068140]">Doesn't Work.</em>
@@ -838,19 +833,19 @@ function ProblemSection() {
         </div>
 
         {/* What goes wrong — horizontal numbered list */}
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-gray-100 border border-gray-100 rounded-2xl overflow-hidden bg-[#F8F7F3]">
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100 rounded-2xl overflow-hidden">
           {problemBullets.map((text, i) => (
             <motion.div
               key={text}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-              className="p-6 lg:p-8 hover:bg-white transition-colors"
+              className="p-5 md:p-8 hover:bg-white transition-colors bg-[#F8F7F3]"
             >
-              <span className="font-serif text-[44px] font-bold text-[#002747]/10 leading-none block mb-4">
+              <span className="font-serif text-[32px] md:text-[44px] font-bold text-[#002747]/10 leading-none block mb-3">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <p className="text-gray-600 text-[15px] leading-snug">{text}</p>
+              <p className="text-gray-600 text-[13px] md:text-[15px] leading-snug">{text}</p>
             </motion.div>
           ))}
         </div>
@@ -941,7 +936,7 @@ function TrustSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+              className="font-serif text-[28px] sm:text-[36px] lg:text-[52px] leading-[1.1] text-white mb-6"
             >
               Why Most Training Fails<br />
               <em className="italic text-[#6ee89a]">— And Why Prudentia Delivers.</em>
@@ -1051,7 +1046,7 @@ function ECCouncilSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-[44px] lg:text-[58px] leading-[1.05] text-white mb-6"
+              className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] text-white mb-6"
             >
               From Awareness<br />
               to{' '}
@@ -1144,7 +1139,7 @@ function SkillsoftSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-serif text-[44px] lg:text-[58px] leading-[1.05] text-[#002747] mb-6"
+              className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] text-[#002747] mb-6"
             >
               Enterprise Learning<br />
               <em className="italic text-[#00558F]">as a Subscription.</em>
@@ -1256,7 +1251,7 @@ function TestimonialsSection() {
           {/* Left — label + heading + navigation */}
           <div>
             <SectionTag>Client Stories</SectionTag>
-            <h2 className="mt-5 font-serif text-[42px] lg:text-[50px] leading-[1.1] text-[#002747]">
+            <h2 className="mt-5 font-serif text-[28px] sm:text-[36px] lg:text-[50px] leading-[1.1] text-[#002747]">
               Outcomes,<br />
               <em className="italic text-[#068140]">not just stories.</em>
             </h2>
@@ -1353,7 +1348,7 @@ function CTASection() {
       </div>
       <div className="relative z-10 max-w-[760px] mx-auto px-6 text-center">
         <SectionTag>Let's Work Together</SectionTag>
-        <h2 className="mt-4 font-serif text-[48px] leading-[1.15] text-white">
+        <h2 className="mt-4 font-serif text-[32px] sm:text-[40px] md:text-[48px] leading-[1.15] text-white">
           Ready to Transform Your<br /><em className="italic">Learning Culture?</em>
         </h2>
         <p className="mt-6 text-white/65 text-lg max-w-lg mx-auto leading-relaxed">
