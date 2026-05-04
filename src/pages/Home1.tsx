@@ -3,6 +3,7 @@ import { ReactLenis } from 'lenis/react';
 import {
   ChevronDown, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
+  BarChart3, Building2, Layout, TrendingUp, CheckCircle2,
 } from 'lucide-react';
 import { useRef, useState, useEffect, type ElementType, type ReactNode } from 'react';
 
@@ -95,6 +96,29 @@ const bentoItems = [
   { image: '/images/bento-localization.jpg',       label: 'Translation & Localisation', large: false },
   { image: '/images/bento-workshops.jpg',          label: 'Workshops & Bootcamps',    large: false },
   { image: '/images/bento-certification.jpg',      label: 'Certification Programmes', large: false },
+];
+
+const problemBullets = [
+  'Skills don\'t translate into performance',
+  'Employees forget what they learned',
+  'Teams struggle with real-world execution',
+  'ROI remains completely unclear',
+];
+
+const consequences = [
+  { icon: Clock,     text: 'Slower project delivery' },
+  { icon: Building2, text: 'Increased operational errors' },
+  { icon: BarChart3, text: 'Low employee productivity' },
+  { icon: Layout,    text: 'Poor adoption of new technologies' },
+  { icon: Users,     text: 'Higher attrition due to lack of growth' },
+];
+
+const differentiators = [
+  'Real-world simulations instead of pure theory.',
+  'Structured learning paths, not fragmented sessions.',
+  'Hybrid delivery models designed for hyper-retention.',
+  'Certifications aligned strictly with industry demands.',
+  'Unwavering focus on measurable business impact.',
 ];
 
 const ecFeatures = [
@@ -527,6 +551,204 @@ function BentoGallery() {
   );
 }
 
+// ── Problem ───────────────────────────────────────────────────────────────────
+
+function ProblemSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <section className="bg-white py-24" ref={ref}>
+      <div className="max-w-[1280px] mx-auto px-6">
+
+        {/* Headline */}
+        <div className="text-center mb-16">
+          <SectionTag>The Problem</SectionTag>
+          <h2 className="mt-4 font-serif text-[42px] lg:text-[52px] leading-[1.1] text-[#002747]">
+            Most Training<br /><em className="italic text-[#068140]">Doesn't Work.</em>
+          </h2>
+          <p className="mt-4 text-lg text-gray-500 max-w-lg mx-auto">
+            Organizations invest. Employees attend. Certificates get issued. But nothing changes.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
+
+          {/* What goes wrong */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="bg-[#F8F7F3] rounded-2xl p-8 border border-[#002747]/8"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">What goes wrong</p>
+            <ul className="space-y-4">
+              {problemBullets.map((text, i) => (
+                <motion.li
+                  key={text}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <span className="mt-1 w-5 h-5 rounded-full bg-red-50 border border-red-200 flex items-center justify-center shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                  </span>
+                  <span className="text-gray-700 text-[16px] leading-snug">{text}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Cost of inaction */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="flex flex-col gap-6"
+          >
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">The cost of inaction</p>
+              <h3 className="font-serif text-[26px] text-[#002747] leading-snug mb-2">
+                If This Continues,{' '}
+                <em className="italic text-[#068140]">It Gets Expensive.</em>
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                When training fails, the consequences compound across your entire organization.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {consequences.map((item, i) => (
+                <motion.div
+                  key={item.text}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.45, delay: 0.25 + i * 0.08 }}
+                  className="flex flex-col items-center text-center gap-2 p-4 bg-[#F8F7F3] rounded-xl border border-[#002747]/6"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white border border-[#068140]/20 flex items-center justify-center">
+                    <item.icon size={18} className="text-[#068140]" />
+                  </div>
+                  <span className="text-xs text-gray-600 leading-snug">{item.text}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="bg-[#002747] rounded-xl flex items-center gap-4 px-6 py-5">
+              <TrendingUp size={20} className="text-[#068140] shrink-0" />
+              <p className="flex-1 text-white text-[16px] font-serif italic leading-snug">
+                This isn't a training problem.{' '}
+                <span className="not-italic font-sans font-semibold text-sm">It's a performance gap.</span>
+              </p>
+              <ArrowRight size={16} className="text-white/50 shrink-0" />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Trust & Differentiation ───────────────────────────────────────────────────
+
+function TrustSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <section className="bg-[#002747] py-24 relative overflow-hidden" ref={ref}>
+      <div className="absolute -top-40 -right-40 w-[40vw] h-[40vw] bg-[#068140]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-[36vw] h-[36vw] bg-[#00558F]/15 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="relative max-w-[1280px] mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-14 items-start">
+
+          {/* Left */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 border border-white/20 rounded-full mb-6"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#068140]" />
+              <span className="text-[12px] font-bold uppercase tracking-[0.18em] text-white/90">The Prudentia Difference</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+            >
+              Why Most Training Fails<br />
+              <em className="italic text-[#6ee89a]">— And Why Prudentia Delivers.</em>
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-white/75 text-[17px] leading-relaxed mb-8 max-w-lg"
+            >
+              While most providers focus on content delivery — dumping information and hoping it sticks — we deliver something different.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ type: 'spring', stiffness: 110, damping: 16, delay: 0.4 }}
+              className="inline-block"
+            >
+              <p className="font-serif italic text-xl leading-tight text-white bg-gradient-to-br from-[#068140]/90 to-[#00558F]/90 px-6 py-4 rounded-xl border border-[#068140]/30 shadow-[0_20px_50px_-12px_rgba(6,129,64,0.4)]">
+                Prudentia focuses on{' '}
+                <span className="not-italic font-sans font-semibold">performance outcomes.</span>
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Right — differentiators */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="bg-white/5 backdrop-blur-xl border border-white/15 rounded-2xl p-8 lg:p-10"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#068140] mb-6">What makes the difference</p>
+            <ul className="space-y-5">
+              {differentiators.map((point, i) => (
+                <motion.li
+                  key={point}
+                  initial={{ opacity: 0, x: 18 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
+                  className="flex items-start gap-4"
+                >
+                  <CheckCircle2 size={20} className="text-[#6ee89a] shrink-0 mt-0.5" strokeWidth={2.25} />
+                  <span className="text-[17px] text-white/90 font-medium leading-snug">{point}</span>
+                </motion.li>
+              ))}
+            </ul>
+
+            <div className="mt-8 pt-8 border-t border-white/15 grid grid-cols-2 gap-6">
+              <div className="flex items-baseline gap-2">
+                <span className="font-serif text-[42px] text-white leading-none">500+</span>
+                <span className="text-[11px] uppercase tracking-widest text-white/55 leading-tight">Global<br />Organizations</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-serif text-[42px] text-[#6ee89a] leading-none">100%</span>
+                <span className="text-[11px] uppercase tracking-widest text-white/55 leading-tight">ROI<br />Focused</span>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── EC-Council Partnership ────────────────────────────────────────────────────
 
 function ECCouncilSection() {
@@ -838,9 +1060,11 @@ export default function Home1() {
         <Navbar />
         <HeroSection />
         <StatsStrip />
+        <ProblemSection />
         <ServicesSection />
         <ProcessSection />
         <WhySection />
+        <TrustSection />
         <BentoGallery />
         <ECCouncilSection />
         <SkillsoftSection />
