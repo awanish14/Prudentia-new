@@ -278,55 +278,208 @@ function Navbar() {
 
 // ── Hero ──────────────────────────────────────────────────────────────────────
 
+function EnquiryForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', service: '', message: '' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+        <div className="w-14 h-14 rounded-full bg-[#068140]/10 border border-[#068140]/30 flex items-center justify-center mb-4">
+          <Check size={24} className="text-[#068140]" />
+        </div>
+        <h4 className="font-serif text-xl text-[#002747] mb-2">Thank You!</h4>
+        <p className="text-sm text-gray-500 leading-relaxed max-w-[220px]">Our team will reach out within 24 hours.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3.5">
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">Name *</label>
+          <input
+            required
+            value={form.name}
+            onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+            placeholder="Your name"
+            className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 placeholder:text-gray-300 text-gray-800 transition"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">Company</label>
+          <input
+            value={form.company}
+            onChange={e => setForm(f => ({ ...f, company: e.target.value }))}
+            placeholder="Organisation"
+            className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 placeholder:text-gray-300 text-gray-800 transition"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">Email *</label>
+        <input
+          required type="email"
+          value={form.email}
+          onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+          placeholder="work@company.com"
+          className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 placeholder:text-gray-300 text-gray-800 transition"
+        />
+      </div>
+      <div>
+        <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">Phone</label>
+        <input
+          type="tel"
+          value={form.phone}
+          onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+          placeholder="+91 XXXXX XXXXX"
+          className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 placeholder:text-gray-300 text-gray-800 transition"
+        />
+      </div>
+      <div>
+        <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">I'm interested in</label>
+        <select
+          value={form.service}
+          onChange={e => setForm(f => ({ ...f, service: e.target.value }))}
+          className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 text-gray-500 transition"
+        >
+          <option value="">Select a service…</option>
+          <option>Corporate Training</option>
+          <option>eLearning Development</option>
+          <option>Translation & Localisation</option>
+          <option>Certification Programme</option>
+          <option>Cybersecurity (EC-Council)</option>
+          <option>LXP Platform (Skillsoft)</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1.5">Message</label>
+        <textarea
+          rows={2}
+          value={form.message}
+          onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+          placeholder="Tell us about your training needs…"
+          className="w-full px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] focus:ring-1 focus:ring-[#068140]/20 placeholder:text-gray-300 text-gray-800 transition resize-none"
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group"
+      >
+        Request Free Consultation
+        <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+      </button>
+      <p className="text-center text-[11px] text-gray-400">No commitment · Response within 24 hours</p>
+    </form>
+  );
+}
+
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: 'url(/images/hero-slide-1.jpg)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#F8F7F3] via-[#F8F7F3]/92 to-[#F8F7F3]/25" />
+      {/* Strong left-heavy overlay — legible text on left, visible photo on right */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#F8F7F3]/98 via-[#F8F7F3]/90 to-[#F8F7F3]/40" />
+      {/* Green left accent bar */}
+      <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-b from-[#068140] via-[#00558F] to-[#068140] z-20" />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-24 pb-16 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[600px]"
-        >
-          <SectionTag>Corporate Training · eLearning · Translation</SectionTag>
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-28 pb-16 w-full">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-12 xl:gap-20 items-center">
 
-          <h1 className="mt-6 font-serif text-[52px] lg:text-[64px] leading-[1.08] tracking-tight text-[#002747]">
-            Empower Your Team.<br />
-            <em className="italic text-[#00558F]">Transform Your Business.</em>
-          </h1>
+          {/* ── Left: headline + trust badges ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="inline-flex items-center gap-2 mb-6">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#068140] opacity-60" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#068140]" />
+              </span>
+              <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#068140]">
+                Corporate Training · eLearning · Translation
+              </span>
+            </div>
 
-          <p className="mt-6 text-lg text-gray-600 leading-relaxed max-w-[480px]">
-            Prudentia partners with global organisations to design and deliver learning experiences that drive real, measurable performance improvement.
-          </p>
+            <h1 className="font-serif text-[52px] lg:text-[68px] xl:text-[76px] leading-[1.04] tracking-tight text-[#002747]">
+              Empower Your<br />
+              Team.{' '}
+              <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#068140] to-[#00558F]">
+                Transform
+              </em><br />
+              Your Business.
+            </h1>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a href="#contact" className="btn-primary px-7 py-3.5 text-sm rounded-full">
-              <span>Get Free Consultation</span>
-              <ArrowRight size={16} className="ml-2" />
-            </a>
-            <a
-              href="#services"
-              className="inline-flex items-center px-7 py-3.5 text-sm font-medium text-[#002747] border border-[#002747]/30 rounded-full hover:border-[#002747]/70 transition-colors bg-white/60 backdrop-blur-sm"
-            >
-              Explore Services
-            </a>
-          </div>
+            <p className="mt-7 text-[18px] text-gray-500 leading-relaxed max-w-[500px]">
+              Prudentia partners with global organisations to design and deliver learning experiences that drive real, measurable performance improvement.
+            </p>
 
-          <div className="mt-12 pt-8 border-t border-[#002747]/10 flex flex-wrap gap-6 text-sm font-medium text-[#002747]">
-            {['ISO 9001:2015 Certified', '98% Client Retention', '500+ Companies Served'].map(badge => (
-              <div key={badge} className="flex items-center gap-2">
-                <Check size={15} className="text-[#068140] shrink-0" />
-                {badge}
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a href="#process" className="inline-flex items-center px-6 py-3 text-sm font-semibold text-[#002747] border-2 border-[#002747]/20 rounded-full hover:border-[#002747]/50 transition-colors bg-white/70 backdrop-blur-sm gap-2">
+                How We Work <ArrowRight size={14} />
+              </a>
+              <a href="#testimonials" className="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-500 hover:text-[#002747] transition-colors">
+                See Client Results →
+              </a>
+            </div>
+
+            {/* Trust badges */}
+            <div className="mt-12 pt-8 border-t border-[#002747]/10 grid grid-cols-3 gap-6 max-w-[480px]">
+              {[
+                { val: '500+', label: 'Companies Served' },
+                { val: '15+',  label: 'Years Experience' },
+                { val: '40+',  label: 'Languages' },
+              ].map(b => (
+                <div key={b.label}>
+                  <div className="font-serif text-[28px] font-bold text-[#002747] leading-none">{b.val}</div>
+                  <div className="text-[11px] uppercase tracking-widest text-gray-400 mt-1 leading-snug">{b.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-5 text-[13px] font-medium text-gray-500">
+              {['ISO 9001:2015 Certified', '98% Client Retention', 'Microsoft & SAP Partner'].map(badge => (
+                <span key={badge} className="flex items-center gap-1.5">
+                  <Check size={13} className="text-[#068140]" />
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── Right: enquiry form card ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 32, y: 16 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:block"
+          >
+            <div className="bg-white rounded-2xl shadow-[0_24px_64px_-12px_rgba(0,39,71,0.18)] border border-gray-100 overflow-hidden">
+              {/* Card header */}
+              <div className="bg-[#002747] px-6 py-5">
+                <h3 className="font-serif text-[20px] text-white leading-tight">Get a Free Consultation</h3>
+                <p className="text-white/55 text-xs mt-1">We'll design a solution tailored to your goals.</p>
               </div>
-            ))}
-          </div>
-        </motion.div>
+              {/* Green top accent */}
+              <div className="h-[3px] bg-gradient-to-r from-[#068140] to-[#00558F]" />
+              <div className="px-6 py-6">
+                <EnquiryForm />
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
@@ -640,91 +793,118 @@ function ProblemSection() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section className="bg-white py-24" ref={ref}>
-      <div className="max-w-[1280px] mx-auto px-6">
+    <section className="relative bg-[#002747] overflow-hidden" ref={ref}>
+      {/* Subtle grid */}
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
+      {/* Green glow bottom-left */}
+      <div className="absolute -bottom-32 -left-24 w-[40vw] h-[40vw] bg-[#068140]/12 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* Headline */}
-        <div className="text-center mb-16">
-          <SectionTag>The Problem</SectionTag>
-          <h2 className="mt-4 font-serif text-[42px] lg:text-[52px] leading-[1.1] text-[#002747]">
-            Most Training<br /><em className="italic text-[#068140]">Doesn't Work.</em>
-          </h2>
-          <p className="mt-4 text-lg text-gray-500 max-w-lg mx-auto">
-            Organizations invest. Employees attend. Certificates get issued. But nothing changes.
-          </p>
+      {/* Top half: headline block */}
+      <div className="relative max-w-[1280px] mx-auto px-6 pt-20 pb-16">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/8 border border-white/15 rounded-full mb-8"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">The Problem</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 28 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.75, delay: 0.08 }}
+              className="font-serif text-[52px] lg:text-[72px] xl:text-[84px] leading-[1.0] text-white"
+            >
+              Most Training<br />
+              <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300">
+                Doesn't Work.
+              </em>
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/50 text-lg leading-relaxed max-w-sm lg:text-right lg:mb-2"
+          >
+            Organizations invest. Employees attend. Certificates get issued.<br />
+            <strong className="text-white/80 font-semibold">But nothing changes.</strong>
+          </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        {/* What goes wrong — horizontal numbered list */}
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/10 border border-white/10 rounded-2xl overflow-hidden">
+          {problemBullets.map((text, i) => (
+            <motion.div
+              key={text}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+              className="p-6 lg:p-8 hover:bg-white/4 transition-colors"
+            >
+              <span className="font-serif text-[44px] font-bold text-white/10 leading-none block mb-4">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p className="text-white/75 text-[15px] leading-snug">{text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
-          {/* What goes wrong */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="bg-[#F8F7F3] rounded-2xl p-8 border border-[#002747]/8"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">What goes wrong</p>
-            <ul className="space-y-4">
-              {problemBullets.map((text, i) => (
-                <motion.li
-                  key={text}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-                  className="flex items-start gap-3"
-                >
-                  <span className="mt-1 w-5 h-5 rounded-full bg-red-50 border border-red-200 flex items-center justify-center shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                  </span>
-                  <span className="text-gray-700 text-[16px] leading-snug">{text}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+      {/* Bottom half: cost of inaction — contrasting cream band */}
+      <div className="relative bg-[#F8F7F3]">
+        <div className="max-w-[1280px] mx-auto px-6 py-16">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
 
-          {/* Cost of inaction */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col gap-6"
-          >
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">The cost of inaction</p>
-              <h3 className="font-serif text-[26px] text-[#002747] leading-snug mb-2">
+            <div className="lg:w-72 shrink-0">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">The cost of inaction</p>
+              <h3 className="font-serif text-[28px] text-[#002747] leading-snug">
                 If This Continues,{' '}
-                <em className="italic text-[#068140]">It Gets Expensive.</em>
+                <em className="italic text-red-500">It Gets Expensive.</em>
               </h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                When training fails, the consequences compound across your entire organization.
-              </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {consequences.map((item, i) => (
                 <motion.div
                   key={item.text}
                   initial={{ opacity: 0, y: 16 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.45, delay: 0.25 + i * 0.08 }}
-                  className="flex flex-col items-center text-center gap-2 p-4 bg-[#F8F7F3] rounded-xl border border-[#002747]/6"
+                  transition={{ duration: 0.45, delay: 0.3 + i * 0.07 }}
+                  className="flex flex-col items-center text-center gap-2.5 p-4 bg-white rounded-xl border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]"
                 >
-                  <div className="w-10 h-10 rounded-full bg-white border border-[#068140]/20 flex items-center justify-center">
-                    <item.icon size={18} className="text-[#068140]" />
+                  <div className="w-10 h-10 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
+                    <item.icon size={17} className="text-red-400" />
                   </div>
-                  <span className="text-xs text-gray-600 leading-snug">{item.text}</span>
+                  <span className="text-xs text-gray-600 leading-snug font-medium">{item.text}</span>
                 </motion.div>
               ))}
             </div>
+          </div>
 
-            <div className="bg-[#002747] rounded-xl flex items-center gap-4 px-6 py-5">
-              <TrendingUp size={20} className="text-[#068140] shrink-0" />
-              <p className="flex-1 text-white text-[16px] font-serif italic leading-snug">
+          {/* Performance gap banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="mt-8 bg-[#002747] rounded-xl flex items-center justify-between gap-6 px-8 py-5"
+          >
+            <div className="flex items-center gap-4">
+              <TrendingUp size={22} className="text-[#068140] shrink-0" />
+              <p className="text-white font-serif italic text-lg leading-snug">
                 This isn't a training problem.{' '}
-                <span className="not-italic font-sans font-semibold text-sm">It's a performance gap.</span>
+                <span className="not-italic font-sans font-semibold text-base">It's a performance gap.</span>
               </p>
-              <ArrowRight size={16} className="text-white/50 shrink-0" />
             </div>
+            <a href="#contact" className="shrink-0 inline-flex items-center gap-2 bg-[#068140] text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-[#056b35] transition-colors group">
+              Fix It Now <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
           </motion.div>
         </div>
       </div>
