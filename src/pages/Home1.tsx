@@ -895,7 +895,7 @@ function ProblemSection() {
                 <span className="not-italic font-sans font-semibold text-base">It's a performance gap.</span>
               </p>
             </div>
-            <a href="#contact" className="shrink-0 inline-flex items-center gap-2 bg-[#068140] text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-[#056b35] transition-colors group">
+            <a href="#contact" className="shrink-0 btn-primary inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full group">
               Fix It Now <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
@@ -1064,7 +1064,7 @@ function ECCouncilSection() {
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.38 }}
               href="#contact"
-              className="inline-flex items-center gap-2.5 bg-[#068140] text-white font-bold px-8 py-4 rounded-full hover:bg-[#056b35] transition-colors text-sm tracking-wide group"
+              className="btn-primary inline-flex items-center gap-2.5 font-bold px-8 py-4 rounded-full text-sm tracking-wide group"
             >
               Explore Cybersecurity Training
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
