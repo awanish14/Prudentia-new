@@ -971,7 +971,7 @@ function TrustSection() {
             className="bg-white/5 backdrop-blur-xl border border-white/15 rounded-2xl p-8 lg:p-10"
           >
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#068140] mb-6">What makes the difference</p>
-            <ul className="space-y-5">
+            <ul className="space-y-4">
               {differentiators.map((point, i) => (
                 <motion.li
                   key={point}
@@ -981,7 +981,7 @@ function TrustSection() {
                   className="flex items-start gap-4"
                 >
                   <CheckCircle2 size={20} className="text-[#6ee89a] shrink-0 mt-0.5" strokeWidth={2.25} />
-                  <span className="text-[17px] text-white/90 font-medium leading-snug">{point}</span>
+                  <span className="text-[16px] text-white/85 leading-relaxed">{point}</span>
                 </motion.li>
               ))}
             </ul>
