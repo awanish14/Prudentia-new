@@ -12,7 +12,7 @@ import {
   useInView,
   type MotionValue,
 } from 'motion/react';
-import { ArrowRight, ArrowDown, CheckCircle2, BarChart3, Clock, Users, Building2, Layout, Target, X, TrendingUp, BookOpen, Globe, Linkedin, Twitter } from 'lucide-react';
+import { ArrowRight, ArrowDown, CheckCircle2, BarChart3, Clock, Users, Building2, Layout, Target, X, TrendingUp, BookOpen, Globe, Linkedin, Twitter, ChevronDown } from 'lucide-react';
 import * as THREE from 'three';
 import { cn } from './lib/utils';
 import { ReactLenis } from 'lenis/react';
@@ -267,8 +267,6 @@ function Logo({ light = false }: { light?: boolean }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Home 1', href: '/home1.html' },
   { label: 'Corporate Training', href: '#' },
   { label: 'eLearning', href: '#' },
   { label: 'About Us', href: '#' },
@@ -278,6 +276,7 @@ const NAV_LINKS = [
 
 function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [homeDropdown, setHomeDropdown] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -296,6 +295,30 @@ function Navigation() {
             className="hidden lg:flex items-center gap-0.5 px-3 py-1.5 rounded-full border backdrop-blur-md"
             style={{ backgroundColor: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.22)' }}
           >
+            {/* Home dropdown */}
+            <div className="relative"
+              onMouseEnter={() => setHomeDropdown(true)}
+              onMouseLeave={() => setHomeDropdown(false)}
+            >
+              <button className="px-4 py-2 rounded-full text-[14px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20 flex items-center gap-1">
+                Home <ChevronDown size={12} />
+              </button>
+              <AnimatePresence>
+                {homeDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-2 w-44 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/10"
+                    style={{ background: '#07111d' }}
+                  >
+                    <a href="/" className="block px-4 py-3 text-[13px] font-semibold text-white/90 hover:bg-white/10 uppercase tracking-wider">Home (Original)</a>
+                    <a href="/home1.html" className="block px-4 py-3 text-[13px] font-semibold text-[#6ee89a] hover:bg-white/10 uppercase tracking-wider">Home 1 →</a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             {NAV_LINKS.map(link => (
               <a key={link.label} href={link.href}
                 className="px-4 py-2 rounded-full text-[14px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20">
@@ -329,7 +352,7 @@ function Navigation() {
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 bg-[#071510]/70 backdrop-blur-md z-[60] lg:hidden"
+              className="fixed inset-0 bg-[#07111d]/70 backdrop-blur-md z-[60] lg:hidden"
             />
             <motion.div
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
@@ -337,7 +360,7 @@ function Navigation() {
               className="fixed top-0 right-0 bottom-0 w-[340px] max-w-[88vw] z-[70] shadow-2xl flex flex-col lg:hidden overflow-hidden"
               style={{
                 backgroundImage:
-                  'linear-gradient(160deg, #071510 0%, #0a2218 45%, #00322a 100%)',
+                  'linear-gradient(160deg, #07111d 0%, #001530 45%, #001220 100%)',
               }}
             >
               {/* Ambient brand glow */}
@@ -358,7 +381,7 @@ function Navigation() {
 
               {/* Nav links */}
               <nav className="relative flex flex-col px-4 py-6 gap-1.5 flex-1">
-                {NAV_LINKS.map((link, i) => (
+                {[{ label: 'Home (Original)', href: '/' }, { label: 'Home 1', href: '/home1.html' }, ...NAV_LINKS].map((link, i) => (
                   <motion.a
                     key={link.label}
                     href={link.href}
@@ -498,9 +521,9 @@ function Hero() {
         </motion.div>
       ))}
 
-      {/* White gradient overlay — left-heavy for text legibility */}
+      {/* Dark navy overlay — left-heavy for text legibility */}
       <div className="absolute inset-0 z-10 pointer-events-none
-        bg-gradient-to-r from-white via-white/80 to-transparent" />
+        bg-gradient-to-r from-[#001829]/96 via-[#001829]/82 to-[#001829]/20" />
       {/* Prudentia green left accent bar */}
       <div className="absolute inset-y-0 left-0 w-[3px] z-20 bg-[#008A45]" />
 
@@ -520,13 +543,13 @@ function Hero() {
 
               {/* Sub-label — Prudentia pill */}
               <div className="inline-flex items-center gap-3 px-3 py-1.5
-                bg-white/90 backdrop-blur-sm border border-gray-200/60 rounded-full
-                w-fit mb-6 shadow-sm">
+                bg-white/10 backdrop-blur-sm border border-white/20 rounded-full
+                w-fit mb-6">
                 <span className="relative flex h-2 w-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#008A45] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#008A45]" />
                 </span>
-                <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-700">
+                <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-white/85">
                   {SLIDES[current].sub}
                 </span>
               </div>
@@ -535,7 +558,7 @@ function Hero() {
                   Font: Inter 800 (extrabold) for body words — loaded via Google Fonts
                   Font: Playfair Display italic for the accent word (Prudentia brand mix)
                   Template used: text-5xl lg:text-[4rem] font-extrabold tracking-tight  */}
-              <h1 className="font-sans font-bold tracking-tight text-gray-900
+              <h1 className="font-sans font-bold tracking-tight text-white
                 leading-[1.06] mb-6 max-w-2xl text-4xl sm:text-5xl lg:text-[3.8rem]">
                 {SLIDES[current].before}{' '}
                 <em className="font-serif not-italic italic font-light
@@ -547,7 +570,7 @@ function Hero() {
               </h1>
 
               {/* Description */}
-              <p className="text-lg text-gray-600 leading-relaxed max-w-xl mb-10 font-medium">
+              <p className="text-lg text-white/75 leading-relaxed max-w-xl mb-10 font-medium">
                 {SLIDES[current].desc}
               </p>
 
@@ -570,7 +593,7 @@ function Hero() {
             <button key={idx} onClick={() => goTo(idx)}
               className={cn(
                 'transition-all duration-500 rounded-none',
-                idx === current ? 'w-8 h-[3px] bg-[#008A45]' : 'w-[10px] h-[3px] bg-gray-300 hover:bg-[#008A45]/50'
+                idx === current ? 'w-8 h-[3px] bg-[#008A45]' : 'w-[10px] h-[3px] bg-white/30 hover:bg-[#008A45]/50'
               )}
               aria-label={`Go to slide ${idx + 1}`} />
           ))}
@@ -950,7 +973,7 @@ function Problem() {
 
             <motion.div
               style={{ opacity: cnt4BannerOpacity, y: cnt4BannerY }}
-              className="bg-[#0c1f13] rounded-xl flex items-center gap-4 sm:gap-5 md:gap-6 px-5 sm:px-6 md:px-8 py-5 md:py-7"
+              className="bg-[#001829] rounded-xl flex items-center gap-4 sm:gap-5 md:gap-6 px-5 sm:px-6 md:px-8 py-5 md:py-7"
             >
               <div className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#008A45]/50 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-[#008A45]" />
@@ -1105,7 +1128,7 @@ function ProblemMobile() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-[#0c1f13] rounded-xl flex items-center gap-4 px-5 py-5"
+            className="bg-[#001829] rounded-xl flex items-center gap-4 px-5 py-5"
           >
             <div className="shrink-0 w-11 h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-[#008A45]" />
@@ -1192,7 +1215,7 @@ function Solution() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.55, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-[#0c1f13] rounded-2xl flex flex-col justify-between p-8 overflow-hidden relative"
+            className="bg-[#001829] rounded-2xl flex flex-col justify-between p-8 overflow-hidden relative"
           >
             <div className="absolute inset-0 opacity-[0.04]"
               style={{ backgroundImage: 'repeating-linear-gradient(45deg, #6ee89a 0, #6ee89a 1px, transparent 0, transparent 50%)', backgroundSize: '18px 18px' }} />
@@ -1489,6 +1512,134 @@ function OfferBreakdown() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// EC-COUNCIL PARTNERSHIP
+// ─────────────────────────────────────────────────────────────────────────────
+
+const EC_FEATURES = [
+  { title: 'Certified Ethical Hacker (CEH)',           desc: 'Industry gold-standard offensive security certification' },
+  { title: 'SOC Analyst (CSA)',                         desc: 'Blue-team operations and threat detection skills' },
+  { title: 'Enterprise Cyber Awareness',                desc: 'Organisation-wide security culture programs' },
+  { title: 'Continuous Threat Exposure Management',     desc: 'Ongoing adversarial readiness and risk reduction' },
+];
+
+function ECCouncilSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10%' });
+  return (
+    <section ref={ref} className="relative overflow-hidden px-6 sm:px-10 lg:px-16 xl:px-20 py-20 lg:py-28"
+      style={{ background: 'linear-gradient(135deg, #001220 0%, #001829 60%, #0a1628 100%)' }}>
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#e63946]" />
+      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#e63946]/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto w-full">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/15 border border-[#e63946]/30 rounded-full mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#e63946]" />
+          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#e67a7f]">In Partnership with EC-Council</span>
+        </motion.div>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold tracking-tight text-white leading-[1.1] mb-6">
+              From Awareness to<br />
+              <span className="italic font-serif font-normal text-[#e67a7f]">Advanced Defense.</span>
+            </motion.h2>
+            <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg">
+              Certified cybersecurity capability for your entire workforce — spanning training, certifications, enterprise awareness, and continuous threat readiness.
+            </motion.p>
+            <motion.a initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              href="#" className="btn-primary inline-flex px-8 py-[16px] text-[15px] font-bold uppercase tracking-widest gap-2 group">
+              Explore Cybersecurity Training
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {EC_FEATURES.map((f, i) => (
+              <motion.div key={f.title}
+                initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#e63946] mb-3" />
+                <h4 className="text-white font-semibold text-[15px] mb-1.5 leading-snug">{f.title}</h4>
+                <p className="text-white/55 text-[13px] leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SKILLSOFT PERCIPIO PLATFORM
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SKILLSOFT_FEATURES = [
+  { title: 'AI-Driven Personalization Engine',   desc: 'Adaptive journeys that match every learner\'s role and pace' },
+  { title: '200,000+ Digital Learning Assets',   desc: 'Courses, videos, books, and labs across every domain' },
+  { title: 'Skill Intelligence & Analytics',      desc: 'Real-time skill gap visibility and workforce benchmarks' },
+  { title: 'No Infrastructure Investment',        desc: 'Fully managed SaaS — live in weeks, not months' },
+];
+
+function SkillsoftSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10%' });
+  return (
+    <section ref={ref} className="relative overflow-hidden px-6 sm:px-10 lg:px-16 xl:px-20 py-20 lg:py-28"
+      style={{ background: 'linear-gradient(135deg, #001530 0%, #001829 50%, #07111d 100%)' }}>
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#00a3e0]" />
+      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#00a3e0]/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto w-full">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00a3e0]/15 border border-[#00a3e0]/30 rounded-full mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00a3e0]" />
+          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#00a3e0]">Powered by Skillsoft Percipio</span>
+        </motion.div>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold tracking-tight text-white leading-[1.1] mb-6">
+              Enterprise Learning<br />
+              <span className="italic font-serif font-normal text-[#00a3e0]">as a Subscription.</span>
+            </motion.h2>
+            <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg">
+              A fully managed Learning Experience Platform deployed in weeks — AI-personalized journeys, 200,000+ assets, and measurable skill intelligence built in.
+            </motion.p>
+            <motion.a initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              href="#" className="btn-primary inline-flex px-8 py-[16px] text-[15px] font-bold uppercase tracking-widest gap-2 group">
+              Explore LXP Platform
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {SKILLSOFT_FEATURES.map((f, i) => (
+              <motion.div key={f.title}
+                initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#00a3e0] mb-3" />
+                <h4 className="text-white font-semibold text-[15px] mb-1.5 leading-snug">{f.title}</h4>
+                <p className="text-white/55 text-[13px] leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // TESTIMONIALS — scrolling columns
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -1626,8 +1777,8 @@ function TrustAndDifferentiation() {
         }}
       />
       {/* Gradient overlays for legibility + brand wash */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#071510]/95 via-[#0a2218]/85 to-[#00558F]/55" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#071510]/85 via-transparent to-[#071510]/30" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#07111d]/95 via-[#001530]/85 to-[#00558F]/55" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#07111d]/85 via-transparent to-[#07111d]/30" />
       <div className="absolute -top-40 -right-40 w-[42vw] h-[42vw] bg-[#008A45]/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-40 -left-40 w-[36vw] h-[36vw] bg-[#00558F]/22 rounded-full blur-[120px] pointer-events-none" />
       {/* Left green accent bar — matches Hero / Problem */}
@@ -2317,6 +2468,8 @@ export default function Home() {
           <Solution />
           <HowItWorks />
           <OfferBreakdown />
+          <ECCouncilSection />
+          <SkillsoftSection />
           <Testimonials />
           <TrustAndDifferentiation />
           <FinalCTA />
