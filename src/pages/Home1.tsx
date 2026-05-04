@@ -97,6 +97,20 @@ const bentoItems = [
   { image: '/images/bento-certification.jpg',      label: 'Certification Programmes', large: false },
 ];
 
+const ecFeatures = [
+  { title: 'Certified Ethical Hacker (CEH)',       desc: 'Industry gold-standard offensive security certification' },
+  { title: 'SOC Analyst (CSA)',                     desc: 'Blue-team operations and threat detection skills' },
+  { title: 'Enterprise Cyber Awareness',            desc: 'Organisation-wide security culture programs' },
+  { title: 'Continuous Threat Exposure Management', desc: 'Ongoing adversarial readiness and risk reduction' },
+];
+
+const skillsoftFeatures = [
+  { title: 'AI-Driven Personalization Engine',  desc: "Adaptive journeys that match every learner's role and pace" },
+  { title: '200,000+ Digital Learning Assets',  desc: 'Courses, videos, books, and labs across every domain' },
+  { title: 'Skill Intelligence & Analytics',    desc: 'Real-time skill gap visibility and workforce benchmarks' },
+  { title: 'No Infrastructure Investment',      desc: 'Fully managed SaaS — live in weeks, not months' },
+];
+
 const testimonials = [
   {
     quote: 'Prudentia transformed our onboarding programme. New hires reach full productivity 40% faster and report significantly higher job satisfaction from day one.',
@@ -513,6 +527,150 @@ function BentoGallery() {
   );
 }
 
+// ── EC-Council Partnership ────────────────────────────────────────────────────
+
+function ECCouncilSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
+  return (
+    <section ref={ref} className="relative overflow-hidden py-24 bg-[#002747]">
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#e63946]" />
+      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#e63946]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="relative max-w-[1280px] mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/15 border border-[#e63946]/30 rounded-full mb-8"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#e63946]" />
+          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#e67a7f]">In Partnership with EC-Council</span>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+            >
+              From Awareness to<br />
+              <em className="italic text-[#e67a7f]">Advanced Defense.</em>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg"
+            >
+              Certified cybersecurity capability for your entire workforce — spanning training, certifications, enterprise awareness, and continuous threat readiness.
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              href="#contact"
+              className="inline-flex items-center gap-2 bg-[#e63946] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#c62d39] transition-colors text-sm"
+            >
+              Explore Cybersecurity Training <ArrowRight size={16} />
+            </motion.a>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {ecFeatures.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-[#e63946] mb-3" />
+                <h4 className="text-white font-semibold text-sm mb-1.5 leading-snug">{f.title}</h4>
+                <p className="text-white/55 text-xs leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Skillsoft Percipio ────────────────────────────────────────────────────────
+
+function SkillsoftSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
+  return (
+    <section ref={ref} className="relative overflow-hidden py-24 bg-[#001d37]">
+      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#00a3e0]" />
+      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#00a3e0]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="relative max-w-[1280px] mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00a3e0]/15 border border-[#00a3e0]/30 rounded-full mb-8"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00a3e0]" />
+          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#00a3e0]">Powered by Skillsoft Percipio</span>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-serif text-[42px] lg:text-[52px] leading-[1.1] text-white mb-6"
+            >
+              Enterprise Learning<br />
+              <em className="italic text-[#00a3e0]">as a Subscription.</em>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg"
+            >
+              A fully managed Learning Experience Platform deployed in weeks — AI-personalized journeys, 200,000+ assets, and measurable skill intelligence built in.
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              href="#contact"
+              className="inline-flex items-center gap-2 bg-[#00a3e0] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#008bbf] transition-colors text-sm"
+            >
+              Explore LXP Platform <ArrowRight size={16} />
+            </motion.a>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {skillsoftFeatures.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-[#00a3e0] mb-3" />
+                <h4 className="text-white font-semibold text-sm mb-1.5 leading-snug">{f.title}</h4>
+                <p className="text-white/55 text-xs leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Testimonials ──────────────────────────────────────────────────────────────
 
 function TestimonialsSection() {
@@ -684,6 +842,8 @@ export default function Home1() {
         <ProcessSection />
         <WhySection />
         <BentoGallery />
+        <ECCouncilSection />
+        <SkillsoftSection />
         <TestimonialsSection />
         <CTASection />
         <Footer />
