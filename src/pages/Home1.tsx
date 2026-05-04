@@ -1572,12 +1572,259 @@ function Footer() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
+// ── Hero Variant 1 — Split-screen ────────────────────────────────────────────
+
+function HeroVariant1() {
+  return (
+    <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden">
+      {/* Variant label */}
+      <div className="absolute top-20 left-6 z-30">
+        <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#068140] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full shadow-lg">
+          ✦ Hero Variant 1
+        </span>
+      </div>
+
+      {/* ── Left: cream content panel ── */}
+      <div className="relative z-10 flex flex-col justify-center w-full lg:w-1/2 bg-white px-8 sm:px-14 xl:px-20 pt-36 pb-16 lg:pt-28">
+        {/* Green left accent bar */}
+        <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-b from-[#068140] via-[#00558F] to-[#068140]" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="inline-flex items-center gap-2 mb-6">
+            <span className="w-6 h-0.5 bg-[#068140]" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#068140]">Corporate Training · eLearning · Translation</span>
+          </div>
+
+          <h1 className="font-serif text-[38px] sm:text-[50px] xl:text-[62px] leading-[1.06] tracking-tight text-[#002747]">
+            Empower Your Team.<br />
+            <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#068140] to-[#00558F]">
+              Transform Your Business.
+            </em>
+          </h1>
+
+          <p className="mt-5 text-[15px] text-gray-500 leading-relaxed max-w-[420px]">
+            Prudentia partners with global organisations to design learning experiences that drive real, measurable performance improvement.
+          </p>
+
+          {/* Compact trust badges */}
+          <div className="mt-8 flex flex-wrap gap-4 text-[12px] font-medium text-gray-500">
+            {['ISO 9001:2015 Certified', '98% Client Retention', '500+ Companies'].map(b => (
+              <span key={b} className="flex items-center gap-1.5">
+                <Check size={12} className="text-[#068140]" />
+                {b}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Enquiry form — inlined below headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 bg-[#F8F7F3] rounded-2xl border border-gray-100 p-6"
+        >
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-4">Get a Free Consultation</p>
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <input placeholder="Your name" className="px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
+            <input placeholder="Organisation" className="px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
+          </div>
+          <input placeholder="work@company.com" type="email" className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800 mb-3" />
+          <select className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] text-gray-400 mb-3">
+            <option value="">Select a service…</option>
+            <option>Corporate Training</option>
+            <option>eLearning Development</option>
+            <option>Translation & Localisation</option>
+            <option>Certification Programme</option>
+          </select>
+          <button className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
+            Request Free Consultation
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+          <p className="text-center text-[11px] text-gray-400 mt-2">No commitment · Response within 24 hours</p>
+        </motion.div>
+      </div>
+
+      {/* ── Right: raw photo, no overlay ── */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.04 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full lg:w-1/2 min-h-[50vh] lg:min-h-screen relative"
+      >
+        <img
+          src="/images/hero-slide-2.jpg"
+          alt="Prudentia Training"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Subtle stat overlay — bottom-left of photo */}
+        <div className="absolute bottom-8 left-8 right-8 lg:right-auto lg:max-w-[280px]">
+          <div className="bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/50">
+            <div className="grid grid-cols-3 divide-x divide-gray-200">
+              {[{ v: '500+', l: 'Companies' }, { v: '15+', l: 'Years' }, { v: '25+', l: 'Countries' }].map(s => (
+                <div key={s.l} className="text-center px-3">
+                  <p className="font-serif text-[22px] font-bold text-[#002747] leading-none">{s.v}</p>
+                  <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-1">{s.l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+// ── Hero Variant 5 — Asymmetric grid ─────────────────────────────────────────
+
+function HeroVariant5() {
+  return (
+    <section className="relative min-h-screen bg-[#F8F7F3] overflow-hidden pt-24 pb-12 px-6 sm:px-10 xl:px-16">
+      {/* Variant label */}
+      <div className="absolute top-20 left-6 z-30">
+        <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00558F] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full shadow-lg">
+          ✦ Hero Variant 5
+        </span>
+      </div>
+
+      {/* Subtle grid texture */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: 'linear-gradient(#002747 1px,transparent 1px),linear-gradient(90deg,#002747 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
+
+      <div className="relative max-w-[1280px] mx-auto h-full">
+        <div
+          className="grid gap-4 lg:gap-5"
+          style={{
+            gridTemplateColumns: '1fr 380px',
+            gridTemplateRows: 'auto auto',
+          }}
+        >
+          {/* ── Top-left: oversized headline ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 36 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col justify-end pb-4 col-span-2 lg:col-span-1"
+          >
+            <div className="inline-flex items-center gap-2 mb-5">
+              <span className="w-6 h-0.5 bg-[#068140]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#068140]">Global Learning Partner</span>
+            </div>
+            <h1 className="font-serif text-[44px] sm:text-[60px] xl:text-[78px] leading-[1.0] tracking-tight text-[#002747]">
+              Learning That<br />
+              Actually{' '}
+              <em className="italic text-transparent bg-clip-text bg-gradient-to-br from-[#068140] to-[#00558F]">
+                Changes
+              </em><br />
+              Behaviour.
+            </h1>
+            <p className="mt-5 text-[15px] text-gray-500 leading-relaxed max-w-[480px]">
+              We design training, eLearning and localisation programmes that drive real performance — not just attendance records.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="#process" className="btn-primary inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-full">
+                <span>See How It Works</span>
+                <ArrowRight size={14} />
+              </a>
+              <a href="#testimonials" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-500 hover:text-[#002747] transition-colors">
+                Client Stories →
+              </a>
+            </div>
+          </motion.div>
+
+          {/* ── Top-right: tilted stat card ── */}
+          <motion.div
+            initial={{ opacity: 0, rotate: -6, scale: 0.92 }}
+            animate={{ opacity: 1, rotate: -3, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:flex flex-col justify-between bg-[#002747] rounded-3xl p-7 shadow-[0_20px_60px_-12px_rgba(0,39,71,0.35)] self-end"
+            style={{ transformOrigin: 'bottom right' }}
+          >
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-4">Our Track Record</p>
+              <div className="space-y-5">
+                {[
+                  { v: '500+', l: 'Companies Trained' },
+                  { v: '15+',  l: 'Industries Served' },
+                  { v: '25+',  l: 'Countries Reached' },
+                ].map(s => (
+                  <div key={s.l} className="flex items-baseline gap-3">
+                    <span className="font-serif text-[42px] text-white leading-none font-bold">{s.v}</span>
+                    <span className="text-[11px] uppercase tracking-wider text-white/45 leading-tight">{s.l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="text-white/45 text-[11px] leading-relaxed">ISO 9001:2015 · Microsoft Partner · EC-Council</p>
+            </div>
+          </motion.div>
+
+          {/* ── Bottom-left: compact form ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_32px_-4px_rgba(0,0,0,0.08)] p-6 col-span-2 lg:col-span-1"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-4">Start the Conversation</p>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input placeholder="Your name" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
+              <input placeholder="work@company.com" type="email" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input placeholder="Organisation" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
+              <select className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] text-gray-400">
+                <option value="">Service…</option>
+                <option>Corporate Training</option>
+                <option>eLearning Development</option>
+                <option>Translation & Localisation</option>
+                <option>Certification Programme</option>
+              </select>
+            </div>
+            <button className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
+              Request Free Consultation
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
+
+          {/* ── Bottom-right: photo with diagonal clip ── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:block rounded-3xl overflow-hidden relative"
+            style={{
+              clipPath: 'polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%)',
+              minHeight: '320px',
+            }}
+          >
+            <img
+              src="/images/hero-slide-3.jpg"
+              alt="Prudentia Training"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#002747]/40 to-transparent" />
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home1() {
   return (
     <ReactLenis root>
       <div className="min-h-screen bg-[#F8F7F3]">
         <Navbar />
         <HeroSection />
+        <HeroVariant1 />
+        <HeroVariant5 />
         <StatsStrip />
         <ProblemSection />
         <ProcessSection />
