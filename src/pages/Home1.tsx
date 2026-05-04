@@ -1018,11 +1018,11 @@ function ECCouncilSection() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[#0d0d0d]" style={{ minHeight: '560px' }}>
-      {/* Dramatic red radial glow — top right */}
-      <div className="absolute top-0 right-0 w-[55vw] h-[55vw] bg-[#e63946]/18 rounded-full blur-[140px] pointer-events-none translate-x-1/4 -translate-y-1/4" />
+    <section ref={ref} className="relative overflow-hidden bg-[#002747]" style={{ minHeight: '560px' }}>
+      {/* Green glow — top right */}
+      <div className="absolute top-0 right-0 w-[55vw] h-[55vw] bg-[#068140]/12 rounded-full blur-[140px] pointer-events-none translate-x-1/4 -translate-y-1/4" />
       {/* Subtle grid texture */}
-      <div className="absolute inset-0 opacity-[0.03]"
+      <div className="absolute inset-0 opacity-[0.04]"
         style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '48px 48px' }} />
 
       <div className="relative max-w-[1280px] mx-auto px-6 py-20 lg:py-28">
@@ -1033,10 +1033,10 @@ function ECCouncilSection() {
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#e63946]/15 border border-[#e63946]/35 rounded-full"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#068140]/15 border border-[#068140]/30 rounded-full"
           >
-            <span className="w-2 h-2 rounded-full bg-[#e63946]" />
-            <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#e67a7f]">In Partnership with EC-Council</span>
+            <span className="w-2 h-2 rounded-full bg-[#068140]" />
+            <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]">In Partnership with EC-Council</span>
           </motion.div>
           <span className="hidden lg:block font-serif text-[7rem] font-bold leading-none text-white/4 select-none tracking-tighter -mt-4">
             CYBER
@@ -1056,7 +1056,7 @@ function ECCouncilSection() {
             >
               From Awareness<br />
               to{' '}
-              <em className="italic" style={{ color: '#e67a7f' }}>Advanced Defense.</em>
+              <em className="italic text-[#6ee89a]">Advanced Defense.</em>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 14 }}
@@ -1071,7 +1071,7 @@ function ECCouncilSection() {
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.38 }}
               href="#contact"
-              className="inline-flex items-center gap-2.5 bg-[#e63946] text-white font-bold px-8 py-4 rounded-full hover:bg-[#c62d39] transition-colors text-sm tracking-wide group"
+              className="inline-flex items-center gap-2.5 bg-[#068140] text-white font-bold px-8 py-4 rounded-full hover:bg-[#056b35] transition-colors text-sm tracking-wide group"
             >
               Explore Cybersecurity Training
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
@@ -1088,7 +1088,7 @@ function ECCouncilSection() {
                 transition={{ duration: 0.55, delay: 0.2 + i * 0.1 }}
                 className="flex items-start gap-6 py-6 group hover:bg-white/3 px-2 -mx-2 rounded-xl transition-colors"
               >
-                <span className="font-serif text-[28px] font-bold text-[#e63946]/40 group-hover:text-[#e63946]/70 transition-colors leading-none mt-0.5 shrink-0 w-8">
+                <span className="font-serif text-[28px] font-bold text-[#068140]/40 group-hover:text-[#068140]/80 transition-colors leading-none mt-0.5 shrink-0 w-8">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div>
