@@ -267,6 +267,8 @@ function Logo({ light = false }: { light?: boolean }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Home 1', href: '/home1.html' },
   { label: 'Corporate Training', href: '#' },
   { label: 'eLearning', href: '#' },
   { label: 'About Us', href: '#' },
