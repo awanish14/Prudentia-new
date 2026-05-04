@@ -1,7 +1,7 @@
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
 import {
-  ChevronDown, ArrowRight, Check, Menu, X,
+  ChevronDown, ChevronLeft, ChevronRight, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
   BarChart3, Building2, Layout, TrendingUp, CheckCircle2,
 } from 'lucide-react';
@@ -154,6 +154,12 @@ const testimonials = [
     title: 'Head of Global Operations',
     company: 'Novaris Pharmaceuticals',
   },
+];
+
+const testimonialMetrics = [
+  { value: '40%',  label: 'faster onboarding' },
+  { value: '18',   label: 'countries, zero issues' },
+  { value: '12',   label: 'languages delivered' },
 ];
 
 // ── Primitives ────────────────────────────────────────────────────────────────
@@ -1210,57 +1216,127 @@ function SkillsoftSection() {
 
 function TestimonialsSection() {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const DURATION = 5000;
+
+  const go = (idx: number) => { setActive(idx); setProgress(0); };
+  const prev = () => go((active - 1 + testimonials.length) % testimonials.length);
+  const next = () => go((active + 1) % testimonials.length);
 
   useEffect(() => {
-    const timer = setInterval(() => setActive(a => (a + 1) % testimonials.length), 5000);
+    if (paused) return;
+    const step = 40;
+    let elapsed = 0;
+    const timer = setInterval(() => {
+      elapsed += step;
+      setProgress(Math.min((elapsed / DURATION) * 100, 100));
+      if (elapsed >= DURATION) {
+        elapsed = 0;
+        setActive(a => (a + 1) % testimonials.length);
+        setProgress(0);
+      }
+    }, step);
     return () => clearInterval(timer);
-  }, []);
+  }, [paused, active]);
 
   const t = testimonials[active];
+  const m = testimonialMetrics[active];
 
   return (
-    <section id="testimonials" className="bg-[#F8F7F3] py-24">
-      <div className="max-w-[760px] mx-auto px-6 text-center">
-        <SectionTag>Testimonials</SectionTag>
-        <h2 className="mt-4 font-serif text-[42px] text-[#002747]">What Our Clients Say</h2>
+    <section
+      id="testimonials"
+      className="bg-white py-24 overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="max-w-[1280px] mx-auto px-6">
+        <div className="grid lg:grid-cols-[340px_1fr] gap-16 lg:gap-24 items-center">
 
-        <div className="mt-12 relative">
-          <div className="absolute -top-4 left-4 font-serif text-[100px] leading-none text-[#068140]/12 select-none pointer-events-none">
-            "
+          {/* Left — label + heading + navigation */}
+          <div>
+            <SectionTag>Client Stories</SectionTag>
+            <h2 className="mt-5 font-serif text-[42px] lg:text-[50px] leading-[1.1] text-[#002747]">
+              Outcomes,<br />
+              <em className="italic text-[#068140]">not just stories.</em>
+            </h2>
+            <p className="mt-5 text-gray-400 text-[15px] leading-relaxed max-w-[260px]">
+              Every engagement measured against real business impact — not certificates issued.
+            </p>
+
+            {/* Arrow nav + counter */}
+            <div className="mt-10 flex items-center gap-4">
+              <button
+                onClick={prev}
+                className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={next}
+                className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200"
+              >
+                <ChevronRight size={18} />
+              </button>
+              <span className="ml-2 font-serif text-[#002747]">
+                <span className="text-[22px] font-bold">{String(active + 1).padStart(2, '0')}</span>
+                <span className="text-gray-300 mx-1.5">/</span>
+                <span className="text-sm text-gray-400">{String(testimonials.length).padStart(2, '0')}</span>
+              </span>
+            </div>
+
+            {/* Progress bar */}
+            <div className="mt-5 w-[180px] h-[2px] bg-gray-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#068140] rounded-full"
+                style={{ width: `${progress}%`, transition: paused ? 'none' : 'width 40ms linear' }}
+              />
+            </div>
           </div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4 }}
-              className="relative bg-white rounded-2xl p-10 shadow-[0_4px_32px_-4px_rgba(0,0,0,0.10)]"
-            >
-              <p className="text-lg text-gray-700 leading-relaxed italic">"{t.quote}"</p>
-              <div className="mt-6 flex items-center justify-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#002747]/10 flex items-center justify-center shrink-0">
-                  <MessageSquare size={16} className="text-[#002747]" />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold text-sm text-[#002747]">{t.name}</p>
-                  <p className="text-xs text-gray-500">{t.title}, {t.company}</p>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
 
-        <div className="mt-6 flex justify-center gap-2">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === active ? 'bg-[#068140] w-6' : 'bg-gray-300 w-2'
-              }`}
-            />
-          ))}
+          {/* Right — quote */}
+          <div className="relative min-h-[280px] flex items-center">
+            {/* Decorative large quote */}
+            <span className="absolute -top-6 -left-2 font-serif text-[140px] leading-none text-[#068140]/8 select-none pointer-events-none">
+              "
+            </span>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: 28 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -28 }}
+                transition={{ duration: 0.42, ease: [0.25, 0.1, 0.25, 1] }}
+                className="relative w-full"
+              >
+                <blockquote className="font-serif italic text-[22px] lg:text-[27px] text-[#002747] leading-[1.5]">
+                  "{t.quote}"
+                </blockquote>
+
+                <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-[#002747] flex items-center justify-center shrink-0">
+                      <span className="font-serif text-white text-[18px] font-bold leading-none">
+                        {t.name[0]}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[#002747] text-[15px]">{t.name}</p>
+                      <p className="text-gray-400 text-sm">{t.title}, {t.company}</p>
+                    </div>
+                  </div>
+
+                  {/* Metric callout */}
+                  <div className="sm:pl-8 sm:border-l sm:border-gray-100 shrink-0">
+                    <p className="font-serif text-[#068140] text-[36px] leading-none font-bold">{m.value}</p>
+                    <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">{m.label}</p>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
         </div>
       </div>
     </section>
