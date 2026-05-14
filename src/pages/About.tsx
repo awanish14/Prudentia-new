@@ -182,8 +182,8 @@ function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <a href="/#contact" className="inline-flex items-center gap-2 px-6 py-3 bg-[#068140] hover:bg-[#057035] text-white text-sm font-semibold rounded-full transition-colors">
-              Work With Us <ArrowRight size={14} />
+            <a href="/#contact" className="btn-primary inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-full">
+              <span>Work With Us</span> <ArrowRight size={14} />
             </a>
             <a href="/#services" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/60 hover:text-white border border-white/15 rounded-full hover:border-white/35 transition-all">
               Our Services <ArrowRight size={14} />
