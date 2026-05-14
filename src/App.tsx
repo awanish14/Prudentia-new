@@ -980,126 +980,209 @@ function OfferBreakdown() {
 // EC-COUNCIL PARTNERSHIP
 // ─────────────────────────────────────────────────────────────────────────────
 
-const EC_FEATURES = [
-  { title: 'Certified Ethical Hacker (CEH)',           desc: 'Industry gold-standard offensive security certification' },
-  { title: 'SOC Analyst (CSA)',                         desc: 'Blue-team operations and threat detection skills' },
-  { title: 'Enterprise Cyber Awareness',                desc: 'Organisation-wide security culture programs' },
-  { title: 'Continuous Threat Exposure Management',     desc: 'Ongoing adversarial readiness and risk reduction' },
+// ─────────────────────────────────────────────────────────────────────────────
+// PARTNERSHIPS — Sticky Tab Bar (EC-Council · Skillsoft · SAP)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const PARTNER_FEATURES = {
+  ec: [
+    { title: 'Certified Ethical Hacker (CEH)',           desc: 'Industry gold-standard offensive security certification' },
+    { title: 'SOC Analyst (CSA)',                         desc: 'Blue-team operations and threat detection skills' },
+    { title: 'Certified Cloud Security Engineer (CCSE)', desc: 'Advanced cloud security architecture and compliance' },
+    { title: 'EC-Council Incident Handler (ECIH)',       desc: 'Incident response, digital forensics, and recovery' },
+  ],
+  skillsoft: [
+    { title: 'AI-Driven Personalization Engine',  desc: "Adaptive journeys that match every learner's role and pace" },
+    { title: '200,000+ Digital Learning Assets',  desc: 'Courses, videos, books, and labs across every domain' },
+    { title: 'Skill Intelligence & Analytics',    desc: 'Real-time skill gap visibility and workforce benchmarks' },
+    { title: 'No Infrastructure Investment',      desc: 'Fully managed SaaS — live in weeks, not months' },
+  ],
+  sap: [
+    { title: 'Curriculum Development',     desc: 'Collaborating with universities to design comprehensive, industry-aligned SAP training courses.' },
+    { title: 'Hands-On ERP Training',      desc: 'Real-life scenarios and practical exercises inside live SAP enterprise environments.' },
+    { title: 'Full Tool Proficiency',      desc: 'Deep expertise across all SAP modules, tools, and end-to-end business workflows.' },
+    { title: 'Professional Certification', desc: 'Industry-recognised SAP credentials that validate real-world competency and career readiness.' },
+  ],
+};
+
+const PARTNERS_TABS = [
+  {
+    id: 'ec-council',
+    label: 'EC-Council',
+    sub: 'Cybersecurity Certifications',
+    accentColor: '#068140',
+    badge: 'In Partnership with EC-Council',
+    badgeBg: 'rgba(6,129,64,0.08)',
+    badgeBorder: 'rgba(6,129,64,0.20)',
+    badgeText: '#068140',
+    headlineTop: 'From Awareness',
+    headlineBottom: 'to Advanced Defense.',
+    italicColor: '#068140',
+    desc: 'Certified cybersecurity capability for your entire workforce — from first-line awareness to advanced threat response.',
+    features: PARTNER_FEATURES.ec,
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(6,129,64,0.30)',
+    cta: 'Explore Cybersecurity Training',
+    ctaBg: '#068140',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
+  {
+    id: 'skillsoft',
+    label: 'Skillsoft',
+    sub: 'Learning Experience Platform',
+    accentColor: '#00a3e0',
+    badge: 'Powered by Skillsoft Percipio',
+    badgeBg: 'rgba(0,163,224,0.10)',
+    badgeBorder: 'rgba(0,163,224,0.25)',
+    badgeText: '#00558F',
+    headlineTop: 'Enterprise Learning',
+    headlineBottom: 'as a Subscription.',
+    italicColor: '#00558F',
+    desc: 'A fully managed LXP deployed in weeks. AI-personalized learning journeys, 200,000+ assets, and real-time skill intelligence — zero infrastructure required.',
+    features: PARTNER_FEATURES.skillsoft,
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(0,163,224,0.4)',
+    cta: 'Explore the LXP Platform',
+    ctaBg: '#002747',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
+  {
+    id: 'sap',
+    label: 'SAP Academy',
+    sub: 'ERP & Enterprise Training',
+    accentColor: '#0070D2',
+    badge: 'In Partnership with SAP Academy',
+    badgeBg: 'rgba(0,112,210,0.08)',
+    badgeBorder: 'rgba(0,112,210,0.20)',
+    badgeText: '#0070D2',
+    headlineTop: 'Bridging Academia',
+    headlineBottom: '& Enterprise.',
+    italicColor: '#0070D2',
+    desc: 'As an authorised SAP Academy partner, Prudentia helps universities and enterprises build comprehensive SAP curricula — closing the gap between academic theory and real-world ERP practice.',
+    features: PARTNER_FEATURES.sap,
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(0,112,210,0.30)',
+    cta: 'Explore SAP Training',
+    ctaBg: '#0070D2',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
 ];
 
-function ECCouncilSection() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10%' });
+function PartnershipsSection() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const p = PARTNERS_TABS[activeTab];
+
+  const switchTab = (i: number) => {
+    setDir(i > activeTab ? 1 : -1);
+    setActiveTab(i);
+  };
+
   return (
-    <section ref={ref} className="relative overflow-hidden px-6 sm:px-10 lg:px-16 xl:px-20 py-20 lg:py-28"
-      style={{ background: 'linear-gradient(135deg, #001220 0%, #001829 60%, #0a1628 100%)' }}>
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#e63946]" />
-      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#e63946]/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="max-w-7xl mx-auto w-full">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/15 border border-[#e63946]/30 rounded-full mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#e63946]" />
-          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#e67a7f]">In Partnership with EC-Council</span>
-        </motion.div>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold tracking-tight text-white leading-[1.1] mb-6">
-              From Awareness to<br />
-              <span className="italic font-serif font-normal text-[#e67a7f]">Advanced Defense.</span>
-            </motion.h2>
-            <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg">
-              Certified cybersecurity capability for your entire workforce — spanning training, certifications, enterprise awareness, and continuous threat readiness.
-            </motion.p>
-            <motion.a initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.35 }}
-              href="#" className="btn-primary inline-flex px-8 py-[16px] text-[15px] font-bold uppercase tracking-widest gap-2 group">
-              Explore Cybersecurity Training
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.a>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {EC_FEATURES.map((f, i) => (
-              <motion.div key={f.title}
-                initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#e63946] mb-3" />
-                <h4 className="text-white font-semibold text-[15px] mb-1.5 leading-snug">{f.title}</h4>
-                <p className="text-white/55 text-[13px] leading-relaxed">{f.desc}</p>
-              </motion.div>
+    <section className="overflow-hidden">
+      {/* Dark aurora header */}
+      <div className="relative bg-[#002747] overflow-hidden">
+        <div className="absolute top-[-10%] right-[-5%] w-[700px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.32) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-float-1 16s ease-in-out infinite' }} />
+        <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[420px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(0,85,143,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-float-2 22s ease-in-out infinite' }} />
+        <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-14 pb-10 text-center">
+          <span className="inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.16em] text-[#4ade80]">
+            <span className="inline-block w-6 h-0.5 bg-[#4ade80] shrink-0" />
+            Our Partnerships
+          </span>
+          <h2 className="mt-4 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-white">
+            Backed by World-Class Partners
+          </h2>
+          <p className="mt-3 text-white/50 text-[16px] max-w-xl mx-auto leading-relaxed">
+            Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+          </p>
+        </div>
+      </div>
+
+      {/* Sticky tab bar */}
+      <div className="sticky top-[80px] z-20 bg-[#EDECEA] border-b border-[#D8D5CF]">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="grid grid-cols-3 gap-3 py-4">
+            {PARTNERS_TABS.map((tab, i) => (
+              <button
+                key={tab.id}
+                onClick={() => switchTab(i)}
+                className={`relative text-left rounded-xl px-4 sm:px-6 py-4 sm:py-5 transition-all duration-300 ${
+                  activeTab === i
+                    ? 'bg-white shadow-[0_4px_20px_-4px_rgba(0,39,71,0.14)]'
+                    : 'bg-white/50 hover:bg-white/80'
+                }`}
+              >
+                {activeTab === i && (
+                  <motion.div layoutId="partner-tab-indicator" className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full" style={{ backgroundColor: tab.accentColor }} transition={{ type: 'spring', stiffness: 500, damping: 40 }} />
+                )}
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: activeTab === i ? tab.accentColor : '#d1d5db' }} />
+                  <div>
+                    <span className={`block text-[13px] sm:text-[15px] font-semibold leading-tight ${activeTab === i ? 'text-[#002747]' : 'text-gray-500'}`}>{tab.label}</span>
+                    <span className="hidden sm:block text-[12px] text-gray-400 mt-1">{tab.sub}</span>
+                  </div>
+                </div>
+              </button>
             ))}
           </div>
         </div>
       </div>
-    </section>
-  );
-}
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SKILLSOFT PERCIPIO PLATFORM
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SKILLSOFT_FEATURES = [
-  { title: 'AI-Driven Personalization Engine',   desc: 'Adaptive journeys that match every learner\'s role and pace' },
-  { title: '200,000+ Digital Learning Assets',   desc: 'Courses, videos, books, and labs across every domain' },
-  { title: 'Skill Intelligence & Analytics',      desc: 'Real-time skill gap visibility and workforce benchmarks' },
-  { title: 'No Infrastructure Investment',        desc: 'Fully managed SaaS — live in weeks, not months' },
-];
-
-function SkillsoftSection() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10%' });
-  return (
-    <section ref={ref} className="relative overflow-hidden px-6 sm:px-10 lg:px-16 xl:px-20 py-20 lg:py-28"
-      style={{ background: 'linear-gradient(135deg, #001530 0%, #001829 50%, #07111d 100%)' }}>
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-[#00a3e0]" />
-      <div className="absolute -top-40 -right-24 w-[40vw] h-[40vw] bg-[#00a3e0]/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="max-w-7xl mx-auto w-full">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00a3e0]/15 border border-[#00a3e0]/30 rounded-full mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00a3e0]" />
-          <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#00a3e0]">Powered by Skillsoft Percipio</span>
+      {/* Content panel */}
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={activeTab}
+          custom={dir}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{ backgroundColor: p.panelBg }}
+        >
+          <div className="max-w-[1280px] mx-auto px-6 py-10 lg:py-14">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ backgroundColor: p.badgeBg, border: `1px solid ${p.badgeBorder}` }}>
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.accentColor }} />
+              <span className="text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: p.badgeText }}>{p.badge}</span>
+            </div>
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+              <div>
+                <h2 className="font-serif text-[28px] sm:text-[38px] lg:text-[52px] leading-[1.05] mb-6" style={{ color: p.headlineColor }}>
+                  {p.headlineTop}<br />
+                  <em className="italic" style={{ color: p.italicColor }}>{p.headlineBottom}</em>
+                </h2>
+                <p className="text-[17px] leading-relaxed mb-10 max-w-md" style={{ color: p.descColor }}>{p.desc}</p>
+                <a href="#contact" className="inline-flex items-center gap-2.5 text-white font-bold px-8 py-4 rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide group" style={{ backgroundColor: p.ctaBg }}>
+                  {p.cta}
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+              <div className="rounded-2xl overflow-hidden self-start -mt-2 bg-white border border-[#002747]/8 shadow-[0_8px_40px_-8px_rgba(0,39,71,0.10)]">
+                {p.features.map((f, fi) => (
+                  <div key={f.title} className={`flex items-start gap-6 px-6 py-5 ${fi > 0 ? 'border-t' : ''} hover:bg-[#f5f9ff] transition-colors`} style={{ borderColor: p.featureDivider }}>
+                    <span className="font-serif text-[26px] font-bold leading-none mt-0.5 shrink-0 w-8" style={{ color: p.featureNumBase }}>{String(fi + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h4 className="font-semibold text-[16px] mb-1 leading-snug" style={{ color: '#002747' }}>{f.title}</h4>
+                      <p className="text-[14px] leading-relaxed text-gray-400">{f.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold tracking-tight text-white leading-[1.1] mb-6">
-              Enterprise Learning<br />
-              <span className="italic font-serif font-normal text-[#00a3e0]">as a Subscription.</span>
-            </motion.h2>
-            <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-white/65 leading-relaxed mb-8 max-w-lg">
-              A fully managed Learning Experience Platform deployed in weeks — AI-personalized journeys, 200,000+ assets, and measurable skill intelligence built in.
-            </motion.p>
-            <motion.a initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.35 }}
-              href="#" className="btn-primary inline-flex px-8 py-[16px] text-[15px] font-bold uppercase tracking-widest gap-2 group">
-              Explore LXP Platform
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.a>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {SKILLSOFT_FEATURES.map((f, i) => (
-              <motion.div key={f.title}
-                initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.15 + i * 0.09 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#00a3e0] mb-3" />
-                <h4 className="text-white font-semibold text-[15px] mb-1.5 leading-snug">{f.title}</h4>
-                <p className="text-white/55 text-[13px] leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
+      </AnimatePresence>
     </section>
   );
 }
@@ -1927,8 +2010,7 @@ export default function Home() {
           <Outcomes />
           <HowItWorks />
           <OfferBreakdown />
-          <ECCouncilSection />
-          <SkillsoftSection />
+          <PartnershipsSection />
           <Testimonials />
           <TrustAndDifferentiation />
           <FinalCTA />
