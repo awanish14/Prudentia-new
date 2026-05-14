@@ -18,7 +18,7 @@ export default defineConfig(({mode}) => {
     build: {
       rollupOptions: {
         input: {
-          'main-v49':          path.resolve(__dirname, 'index.html'),
+          'main-v50':          path.resolve(__dirname, 'index.html'),
           'home-original-v1':  path.resolve(__dirname, 'home-original.html'),
         },
         output: {
