@@ -3,7 +3,7 @@ import { ReactLenis } from 'lenis/react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
-  BarChart3, Building2, Layout, TrendingUp, CheckCircle2, Shield, Languages,
+  CheckCircle2, Shield, Languages,
   Mail, Phone, MapPin, Linkedin, Twitter, Youtube, GraduationCap, Monitor,
 } from 'lucide-react';
 import { useRef, useState, useEffect, type ElementType, type ReactNode } from 'react';
@@ -112,19 +112,11 @@ const bentoItems = [
   { image: '/images/bento-certification.jpg',      label: 'Certification Programmes', large: false },
 ];
 
-const problemBullets = [
-  'Skills don\'t translate into performance',
-  'Employees forget what they learned',
-  'Teams struggle with real-world execution',
-  'ROI remains completely unclear',
-];
-
-const consequences = [
-  { icon: Clock,     text: 'Slower project delivery' },
-  { icon: Building2, text: 'Increased operational errors' },
-  { icon: BarChart3, text: 'Low employee productivity' },
-  { icon: Layout,    text: 'Poor adoption of new technologies' },
-  { icon: Users,     text: 'Higher attrition due to lack of growth' },
+const outcomeBullets = [
+  'Skills that translate directly into performance',
+  'Learning designed to stick — not just to pass',
+  'Teams equipped for real-world execution',
+  'Clear, measurable ROI from every engagement',
 ];
 
 const differentiators = [
@@ -1107,15 +1099,13 @@ export function BentoGallery() {
 
 // ── Problem ───────────────────────────────────────────────────────────────────
 
-export function ProblemSection() {
+export function OutcomesSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
     <section className="relative bg-white overflow-hidden" ref={ref}>
-
-      {/* Top half: headline block */}
-      <div className="relative max-w-[1280px] mx-auto px-6 pt-20 pb-16">
+      <div className="relative max-w-[1280px] mx-auto px-6 pt-20 pb-24">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <div>
             <motion.div
@@ -1125,7 +1115,7 @@ export function ProblemSection() {
               className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F8F7F3] border border-gray-200 rounded-full mb-8"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#068140]" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">The Problem</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">What We Deliver</span>
             </motion.div>
 
             <motion.h2
@@ -1134,8 +1124,8 @@ export function ProblemSection() {
               transition={{ duration: 0.75, delay: 0.08 }}
               className="font-serif text-[36px] sm:text-[48px] lg:text-[72px] xl:text-[80px] leading-[1.0] text-[#002747]"
             >
-              Conventional Training<br />
-              <em className="italic text-[#068140]">Falls Short.</em>
+              Learning that actually<br />
+              <em className="italic text-[#068140]">moves the needle.</em>
             </motion.h2>
           </div>
 
@@ -1145,14 +1135,14 @@ export function ProblemSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-gray-400 text-lg leading-relaxed max-w-sm lg:text-right lg:mb-2"
           >
-            Organizations invest. Employees attend. Certificates get issued.<br />
-            <strong className="text-gray-700 font-semibold">But nothing changes.</strong>
+            Great learning transfers knowledge, builds capability, and drives real change<br />
+            <strong className="text-gray-700 font-semibold">in how people actually work.</strong>
           </motion.p>
         </div>
 
-        {/* What goes wrong — horizontal numbered list */}
+        {/* Positive outcomes — horizontal numbered grid */}
         <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100 rounded-2xl overflow-hidden">
-          {problemBullets.map((text, i) => (
+          {outcomeBullets.map((text, i) => (
             <motion.div
               key={text}
               initial={{ opacity: 0, y: 20 }}
@@ -1160,77 +1150,12 @@ export function ProblemSection() {
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
               className="p-5 md:p-8 hover:bg-white transition-colors bg-[#F8F7F3]"
             >
-              <span className="font-serif text-[32px] md:text-[44px] font-bold text-[#002747]/10 leading-none block mb-3">
+              <span className="font-serif text-[32px] md:text-[44px] font-bold text-[#068140]/20 leading-none block mb-3">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p className="text-gray-600 text-[13px] md:text-[15px] leading-snug">{text}</p>
             </motion.div>
           ))}
-        </div>
-      </div>
-
-      {/* Bottom half: cost of inaction — navy bg for clear visual break */}
-      <div className="relative bg-[#002747] overflow-hidden">
-        {/* Aurora blobs — subtle atmospheric glow */}
-        <div className="absolute top-[-10%] right-[-5%] w-[700px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.32) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-float-1 16s ease-in-out infinite' }} />
-        <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[420px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse, rgba(0,85,143,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-float-2 22s ease-in-out infinite' }} />
-        <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
-
-        <div className="max-w-[1280px] mx-auto px-6 py-16">
-
-          {/* Header row */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-3">The cost of inaction</p>
-              <h3 className="font-serif text-[28px] sm:text-[34px] text-white leading-snug">
-                If This Continues,{' '}
-                <em className="italic text-[#6ee89a]">It Gets Expensive.</em>
-              </h3>
-            </div>
-            <p className="text-white/50 text-[15px] leading-relaxed max-w-xs md:text-right">
-              Every month without a structured learning system is a month of compounding loss.
-            </p>
-          </div>
-
-          {/* Consequence cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {consequences.map((item, i) => (
-              <motion.div
-                key={item.text}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.45, delay: 0.3 + i * 0.07 }}
-                className="flex items-start gap-4 p-5 bg-white/[0.05] border border-white/10 rounded-2xl hover:bg-white/[0.08] transition-colors"
-              >
-                <div className="w-10 h-10 rounded-xl bg-[#6ee89a]/10 border border-[#6ee89a]/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <item.icon size={18} className="text-[#6ee89a]" />
-                </div>
-                <span className="text-[14px] text-white/80 leading-snug font-medium pt-1">{item.text}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Performance gap banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-6 bg-white/[0.06] border border-[#068140]/30 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5 px-7 py-5"
-          >
-            <div className="flex items-center gap-4">
-              <TrendingUp size={22} className="text-[#6ee89a] shrink-0" />
-              <p className="text-white font-serif italic text-[18px] leading-snug">
-                This isn't a training problem.{' '}
-                <span className="not-italic font-sans font-semibold text-[16px] text-[#6ee89a]">It's a performance gap.</span>
-              </p>
-            </div>
-            <a href="#contact" className="shrink-0 btn-primary inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full group whitespace-nowrap">
-              Fix It Now <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </motion.div>
         </div>
       </div>
     </section>
@@ -1269,8 +1194,8 @@ export function TrustSection() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-serif text-[28px] sm:text-[36px] lg:text-[52px] leading-[1.1] text-white mb-6"
             >
-              Why Conventional Training<br />
-              <em className="italic text-[#6ee89a]">Falls Short — And We Don't.</em>
+              The Prudentia approach<br />
+              <em className="italic text-[#6ee89a]">to real performance.</em>
             </motion.h2>
 
             <motion.p
@@ -1279,7 +1204,7 @@ export function TrustSection() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="text-white/75 text-[17px] leading-relaxed mb-8 max-w-lg"
             >
-              While conventional providers focus on content delivery — dumping information and hoping it sticks — Prudentia delivers something different.
+              Prudentia goes beyond content delivery. Every programme is built around how people actually perform on the job — connecting learning directly to outcomes that matter.
             </motion.p>
 
             <motion.div
@@ -1702,93 +1627,8 @@ const affiliationCards = [
   },
 ];
 
-export function AffiliationsSection() {
-  return (
-    <section className="bg-[#F8F7F3] overflow-hidden">
-      {/* Client preview label */}
-      <div className="w-full bg-amber-50 border-y border-amber-200 py-2.5 text-center">
-        <span className="text-[11px] font-bold text-amber-700 uppercase tracking-[0.2em]">Option 2 — 3-Card Grid</span>
-      </div>
-      <div className="py-24">
-      <div className="max-w-[1280px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.55 }}
-          className="text-center mb-14"
-        >
-          <SectionTag>Our Partnerships</SectionTag>
-          <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
-            Backed by World-Class Partners
-          </h2>
-          <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
-            Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {affiliationCards.map((card, i) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.55, delay: i * 0.12 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_-4px_rgba(0,39,71,0.09)] flex flex-col"
-            >
-              {/* colour top border */}
-              <div className="h-1 w-full" style={{ backgroundColor: card.accentColor }} />
-
-              <div className="flex flex-col flex-1 p-8">
-                {/* badge */}
-                <span
-                  className="inline-block self-start text-[11px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6"
-                  style={{ backgroundColor: card.accentColor + '15', color: card.accentColor }}
-                >
-                  {card.badge}
-                </span>
-
-                {/* headline */}
-                <h3 className="font-serif text-[22px] sm:text-[24px] leading-[1.25] text-[#002747] mb-6 whitespace-pre-line">
-                  {card.headline}
-                </h3>
-
-                {/* bullet list */}
-                <ul className="space-y-3 flex-1 mb-8">
-                  {card.bullets.map(b => (
-                    <li key={b} className="flex items-start gap-3 text-[15px] text-gray-600">
-                      <span
-                        className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                        style={{ backgroundColor: card.accentColor + '18' }}
-                      >
-                        <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                          <path d="M1 3.5L3.2 5.8L8 1" stroke={card.accentColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <a
-                  href={card.ctaHref}
-                  className="inline-flex items-center gap-2 text-[14px] font-semibold"
-                  style={{ color: card.accentColor }}
-                >
-                  {card.cta}
-                  <ArrowRight size={14} />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-      </div>
-    </section>
-  );
-}
+// ARCHIVED — Option A: 3-Card Grid. Restore by uncommenting below.
+// export function AffiliationsSection() { ... }
 
 // ── Affiliations Tabbed (Option 3) ────────────────────────────────────────────
 
@@ -2118,21 +1958,25 @@ export function AffiliationsStickySection() {
   };
 
   return (
-    <section className="overflow-hidden bg-[#F8F7F3]">
-      {/* Label */}
-      <div className="w-full bg-violet-50 border-y border-violet-200 py-2.5 text-center">
-        <span className="text-[11px] font-bold text-violet-700 uppercase tracking-[0.2em]">Option B — Sticky Tab Bar</span>
-      </div>
+    <section className="overflow-hidden">
+      {/* Dark aurora header */}
+      <div className="relative bg-[#002747] overflow-hidden">
+        <div className="absolute top-[-10%] right-[-5%] w-[700px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.32) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-float-1 16s ease-in-out infinite' }} />
+        <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[420px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(0,85,143,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-float-2 22s ease-in-out infinite' }} />
+        <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
 
-      {/* Section header — scrolls away */}
-      <div className="max-w-[1280px] mx-auto px-6 pt-20 pb-10 text-center">
-        <SectionTag>Our Partnerships</SectionTag>
-        <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
-          Backed by World-Class Partners
-        </h2>
-        <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
-          Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
-        </p>
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-20 pb-12 text-center">
+          <SectionTag>Our Partnerships</SectionTag>
+          <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-white">
+            Backed by World-Class Partners
+          </h2>
+          <p className="mt-4 text-white/50 text-[16px] max-w-xl mx-auto leading-relaxed">
+            Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+          </p>
+        </div>
       </div>
 
       {/* Sticky tab bar */}
@@ -2812,7 +2656,7 @@ export default function Home1() {
         <Navbar />
         <HeroSection />
         <ClientLogoStrip />
-        <ProblemSection />
+        <OutcomesSection />
         <ProcessSection />
           <WhySection />
         <BentoGallery />
