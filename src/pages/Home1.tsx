@@ -719,24 +719,11 @@ function HeroSection() {
                   transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
                 >
                   <div className="font-serif text-[28px] font-bold text-[#002747] leading-none">{b.val}</div>
-                  <div className="text-[11px] uppercase tracking-widest text-gray-400 mt-1 leading-snug">{b.label}</div>
+                  <div className="text-[12px] font-medium text-gray-600 mt-1 leading-snug">{b.label}</div>
                 </motion.div>
               ))}
             </motion.div>
 
-            <motion.div
-              className="mt-8 hidden sm:flex flex-wrap gap-5 text-[13px] font-medium text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-            >
-              {['98% Client Retention', 'EC-Council & SAP Partner', 'Serving 15+ Industries'].map(badge => (
-                <span key={badge} className="flex items-center gap-1.5">
-                  <Check size={13} className="text-[#068140]" />
-                  {badge}
-                </span>
-              ))}
-            </motion.div>
           </div>
 
           {/* ── Right: enquiry form card ── */}
