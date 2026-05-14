@@ -1968,12 +1968,12 @@ export function AffiliationsStickySection() {
         <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
 
-        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-20 pb-12 text-center">
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-14 pb-10 text-center">
           <SectionTag>Our Partnerships</SectionTag>
-          <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-white">
+          <h2 className="mt-4 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-white">
             Backed by World-Class Partners
           </h2>
-          <p className="mt-4 text-white/50 text-[16px] max-w-xl mx-auto leading-relaxed">
+          <p className="mt-3 text-white/50 text-[16px] max-w-xl mx-auto leading-relaxed">
             Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
           </p>
         </div>
@@ -1982,12 +1982,12 @@ export function AffiliationsStickySection() {
       {/* Sticky tab bar */}
       <div className="sticky top-[80px] z-20 bg-[#EDECEA] border-b border-[#D8D5CF]">
         <div className="max-w-[1280px] mx-auto px-6">
-          <div className="grid grid-cols-3 gap-4 py-5">
+          <div className="grid grid-cols-3 gap-3 py-4">
             {partners.map((tab, i) => (
               <button
                 key={tab.id}
                 onClick={() => switchTab(i)}
-                className={`relative text-left rounded-xl px-5 py-4 transition-all duration-300 ${
+                className={`relative text-left rounded-xl px-6 py-5 transition-all duration-300 ${
                   activeTab === i
                     ? 'bg-white shadow-[0_4px_20px_-4px_rgba(0,39,71,0.14)]'
                     : 'bg-white/50 hover:bg-white/80'
@@ -1999,8 +1999,8 @@ export function AffiliationsStickySection() {
                 <div className="flex items-center gap-3">
                   <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: activeTab === i ? tab.accentColor : '#d1d5db' }} />
                   <div>
-                    <span className={`block text-[14px] font-semibold leading-tight ${activeTab === i ? 'text-[#002747]' : 'text-gray-500'}`}>{tab.label}</span>
-                    <span className="block text-[11px] text-gray-400 mt-0.5">{tab.sub}</span>
+                    <span className={`block text-[15px] font-semibold leading-tight ${activeTab === i ? 'text-[#002747]' : 'text-gray-500'}`}>{tab.label}</span>
+                    <span className="block text-[12px] text-gray-400 mt-1">{tab.sub}</span>
                   </div>
                 </div>
               </button>
