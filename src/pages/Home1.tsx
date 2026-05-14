@@ -101,7 +101,6 @@ const whyFeatures: WhyFeature[] = [
   { icon: Users,    title: '1000+ Corporates',     desc: 'Trusted by Fortune 500s and fast-growing businesses.' },
   { icon: Clock,    title: '15+ Years Experience', desc: 'Deep domain expertise across industries.' },
   { icon: Target,   title: 'Outcome-Focused',      desc: 'Every programme tied to measurable KPIs.' },
-  { icon: BookOpen, title: 'Custom Content',        desc: 'Bespoke solutions, never off-the-shelf filler.' },
 ];
 
 const bentoItems = [
@@ -1003,7 +1002,7 @@ export function WhySection() {
               The Partner That Delivers on Its Promises
             </h2>
             <p className="mt-6 text-gray-600 leading-relaxed">
-              We don't just design content — we engineer learning outcomes. Our ISO-certified process, global network, and obsession with measurement set us apart from typical L&D vendors.
+              We don't just design content — we engineer learning outcomes. Our global network, performance-first approach, and obsession with measurement set us apart from typical L&D vendors.
             </p>
             <blockquote className="mt-8 pl-5 border-l-2 border-[#068140] italic font-serif text-xl text-[#002747] leading-relaxed">
               "Learning is not something that is done to people. It's something people do."
@@ -1072,8 +1071,8 @@ export function BentoGallery() {
                 alt={item.label}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
               />
-              {/* Always-on gradient — stronger at bottom */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#001d37]/85 via-[#001d37]/20 to-transparent" />
+              {/* Always-on gradient — lighter overlay so images show through */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#001d37]/70 via-[#001d37]/10 to-transparent" />
               {/* Hover brightens the overlay slightly */}
               <div className="absolute inset-0 bg-[#068140]/0 group-hover:bg-[#068140]/10 transition-colors duration-400" />
 
@@ -2660,13 +2659,7 @@ export default function Home1() {
         <ProcessSection />
           <WhySection />
         <BentoGallery />
-        <ECCouncilSection />
-        <SkillsoftSection />
-        <SAPSection />
-        {/* Option B — desktop only */}
-        <div className="hidden lg:block">
-          <AffiliationsStickySection />
-        </div>
+        <AffiliationsStickySection />
         <TestimonialsSection />
         <CTAVariantLight />
       </div>
