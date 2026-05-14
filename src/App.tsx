@@ -12,7 +12,7 @@ import {
   useInView,
   type MotionValue,
 } from 'motion/react';
-import { ArrowRight, ArrowDown, CheckCircle2, BarChart3, Clock, Users, Building2, Layout, Target, X, TrendingUp, BookOpen, Globe, Linkedin, Twitter, ChevronDown } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Users, Building2, Target, X, TrendingUp, BookOpen, Globe, Linkedin, Twitter, ChevronDown } from 'lucide-react';
 import * as THREE from 'three';
 import { cn } from './lib/utils';
 import { ReactLenis } from 'lenis/react';
@@ -564,479 +564,50 @@ function Hero() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PROBLEM
+// OUTCOMES
 // ─────────────────────────────────────────────────────────────────────────────
 
-const PROBLEM_CARDS = [
-  { text: "Organizations invest in training.", img: "/images/problem-card-1.jpg", phase: "01" },
-  { text: "Employees attend sessions.", img: "/images/problem-card-2.jpg", phase: "02" },
-  { text: "Certificates are issued.", img: "/images/problem-card-3.jpg", phase: "03" },
-  { text: "Compliance boxes get checked.", img: "/images/problem-card-4.jpg", phase: "04" },
+const OUTCOMES = [
+  { num: '01', text: 'Skills that translate directly into performance' },
+  { num: '02', text: 'Learning designed to stick — not just to pass' },
+  { num: '03', text: 'Teams equipped for real-world execution' },
+  { num: '04', text: 'Clear, measurable ROI from every engagement' },
 ];
 
-const PROBLEM_BULLETS = [
-  "Skills don't translate into performance",
-  "Employees forget what they learned",
-  "Teams struggle with real-world execution",
-  "ROI remains completely unclear",
-];
-
-const CONSEQUENCES = [
-  { icon: Clock, text: "Slower project delivery" },
-  { icon: Building2, text: "Increased operational errors" },
-  { icon: BarChart3, text: "Low employee productivity" },
-  { icon: Layout, text: "Poor adoption of new technologies" },
-  { icon: Users, text: "Higher attrition due to lack of growth" },
-];
-
-const CARD_POSITIONS = [
-  "top-[20%] left-[8%] md:left-[15%]",
-  "top-[10%] right-[8%] md:right-[15%]",
-  "top-[45%] left-[12%] md:left-[22%]",
-  "top-[35%] right-[12%] md:right-[22%]",
-];
-
-const CARD_ROTATIONS = [-4, 4, -4, 4];
-
-const CARD_RANGES: { yRange: [number, number]; opIn: [number, number]; opOut: [number, number] }[] = [
-  { yRange: [0.00, 0.32], opIn: [0.00, 0.05], opOut: [0.22, 0.28] },
-  { yRange: [0.04, 0.32], opIn: [0.04, 0.09], opOut: [0.22, 0.28] },
-  { yRange: [0.08, 0.32], opIn: [0.08, 0.13], opOut: [0.22, 0.28] },
-  { yRange: [0.12, 0.32], opIn: [0.12, 0.17], opOut: [0.22, 0.28] },
-];
-
-// Fallback gradient backgrounds per card while images load or are unavailable
-const CARD_FALLBACKS = [
-  'linear-gradient(135deg,#0f2e63 0%,#1a4a6e 100%)',
-  'linear-gradient(135deg,#004d2c 0%,#006b3e 100%)',
-  'linear-gradient(135deg,#1a1a2e 0%,#16213e 100%)',
-  'linear-gradient(135deg,#2c003e 0%,#1a0030 100%)',
-];
-
-function ProblemCard({
-  card, position, scrollYProgress, ranges, rotation, index,
-}: {
-  card: { text: string; img: string; phase: string };
-  position: string;
-  scrollYProgress: MotionValue<number>;
-  ranges: { yRange: [number, number]; opIn: [number, number]; opOut: [number, number] };
-  rotation: number;
-  index: number;
-}) {
-  const [imgError, setImgError] = useState(false);
-  const cardY      = useTransform(scrollYProgress, ranges.yRange, ['150vh', '-150vh']);
-  const cardOpacity = useTransform(
-    scrollYProgress,
-    [ranges.opIn[0], ranges.opIn[1], ranges.opOut[0], ranges.opOut[1]],
-    [0, 1, 1, 0]
-  );
-  const cardScale  = useTransform(scrollYProgress, [ranges.opIn[0], ranges.opIn[1]], [0.9, 1]);
-  const cardRotate = useTransform(scrollYProgress, ranges.yRange, [5, rotation]);
-
+function Outcomes() {
   return (
-    <motion.div
-      style={{ y: cardY, opacity: cardOpacity, scale: cardScale, rotate: cardRotate }}
-      className={`absolute ${position} w-[48vw] md:w-[20vw] aspect-[3/4] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] border border-white/10 will-change-transform`}
-    >
-      {!imgError ? (
-        <img
-          src={card.img}
-          alt={card.text}
-          className="w-full h-full object-cover"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <div className="w-full h-full" style={{ background: CARD_FALLBACKS[index] }} />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-5 md:p-7">
-        <span className="text-[#008A45] font-mono text-[15px] md:text-[15px] mb-2 font-bold tracking-[0.2em] uppercase">
-          Phase {card.phase}
-        </span>
-        <p className="text-white font-semibold text-lg md:text-2xl leading-tight tracking-tight">
-          {card.text}
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-function ProblemBullet({
-  text, scrollYProgress, inRange,
-}: {
-  text: string;
-  scrollYProgress: MotionValue<number>;
-  inRange: [number, number];
-}) {
-  const opacity = useTransform(scrollYProgress, [inRange[0], inRange[1]], [0, 1]);
-  const x       = useTransform(scrollYProgress, [inRange[0], inRange[1]], [-28, 0]);
-
-  return (
-    <motion.div style={{ opacity, x }} className="flex items-start gap-4">
-      <div className="shrink-0 mt-1 bg-red-50 border border-red-100 rounded-full p-2 shadow-sm">
-        <X className="w-4 h-4 md:w-5 md:h-5 text-red-500" strokeWidth={2.5} />
-      </div>
-      <p className="text-lg md:text-xl lg:text-2xl text-gray-700 font-medium tracking-tight leading-snug">
-        {text}
-      </p>
-    </motion.div>
-  );
-}
-
-function Problem() {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const sectionTopRef = useRef(0);
-
-  // Use the global scrollY so Lenis' virtual scroll is measured correctly.
-  // useScroll({ target }) misfires with Lenis because Lenis virtualises the
-  // scroll container — the target offset is computed against the wrong origin.
-  const { scrollY } = useScroll();
-
-  // Measure the section's absolute document offset once after mount (and on resize).
-  useEffect(() => {
-    const measure = () => {
-      if (!outerRef.current) return;
-      sectionTopRef.current =
-        outerRef.current.getBoundingClientRect().top + window.scrollY;
-    };
-    measure();
-    window.addEventListener('resize', measure, { passive: true });
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  // Derive a 0→1 progress value manually from the raw scrollY.
-  const scrollYProgress = useTransform(scrollY, (y) => {
-    const top = sectionTopRef.current;
-    const scrollDistance = (outerRef.current?.offsetHeight ?? 0) - window.innerHeight;
-    if (scrollDistance <= 0) return 0;
-    return Math.max(0, Math.min(1, (y - top) / scrollDistance));
-  });
-
-  // Phase 1: headline visible at entry, dims fast as Card 1 arrives
-  const cnt1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.16, 0.22], [1, 0.85, 0.25, 0]);
-  const cnt1Scale   = useTransform(scrollYProgress, [0, 0.16, 0.22], [1, 1, 1.06]);
-
-  // Phase 3: "But after that?" + panel + bullets — ALL appear simultaneously,
-  // triggered when Card 4 has crossed 50% of viewport height (scroll progress 0.22).
-  // Hold tightened so the next scroll triggers Phase 4 (no double-scroll dead time).
-  const cnt3Opacity      = useTransform(scrollYProgress, [0.22, 0.30, 0.45, 0.55], [0, 1, 1, 0]);
-  const cnt3HeadScale    = useTransform(scrollYProgress, [0.22, 0.30], [0.88, 1]);
-  const cnt3PanelOpacity = useTransform(scrollYProgress, [0.22, 0.30], [0, 1]);
-  const cnt3PanelY       = useTransform(scrollYProgress, [0.22, 0.30], ['32px', '0px']);
-
-  // Phase 4: Cost of Inaction — ALL contents appear simultaneously (single ramp).
-  const cnt4Opacity       = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
-  const cnt4Y             = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
-  const cnt4IconsOpacity  = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
-  const cnt4IconsY        = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
-  const cnt4BannerOpacity = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
-  const cnt4BannerY       = useTransform(scrollYProgress, [0.55, 0.65], ['40px', '0px']);
-
-  // Scroll prompt vanishes quickly
-  const promptOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
-
-  // Bullets all share the same range as the panel — no cascade.
-  const bulletRanges: [number, number][] = [
-    [0.22, 0.30],
-    [0.22, 0.30],
-    [0.22, 0.30],
-    [0.22, 0.30],
-  ];
-
-  return (
-    // Outer scroll spacer — 350 vh gives ~250 vh of pinned scroll travel.
-    // Each phase transition fits in roughly one scroll wheel action.
-    // Mobile uses a simpler stacked layout below — desktop only here.
-    <section ref={outerRef} className="hidden lg:block w-full" style={{ height: '350vh' }}>
-      {/* Sticky viewport — fills full width/height, clips overflowing cards */}
-      <div
-        className="w-full bg-white relative"
-        style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}
-      >
-        {/* Left green accent bar — matches Hero */}
-        <div className="absolute inset-y-0 left-0 w-[3px] z-50 bg-[#008A45]" />
-
-        {/* Scroll prompt */}
-        <motion.div
-          style={{ opacity: promptOpacity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none"
-        >
-          <span className="text-[15px] font-bold tracking-[0.2em] uppercase text-gray-400">Scroll</span>
-          <ArrowDown className="w-4 h-4 text-gray-400 animate-bounce" />
-        </motion.div>
-
-        {/* ── Phase 1 — Problem headline ── */}
-        <motion.div
-          style={{ opacity: cnt1Opacity, scale: cnt1Scale }}
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 xl:px-20 pointer-events-none"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-            <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tighter text-gray-900 max-w-5xl text-center leading-[1.02]">
-            Most Training<br className="hidden md:block" /> Doesn't Work
-          </h2>
-          <p className="font-serif italic text-2xl md:text-4xl lg:text-5xl text-[#008A45]/90 mt-5 tracking-tight text-center max-w-3xl">
-            — And You Already Know It.
-          </p>
-        </motion.div>
-
-        {/* ── Phase 2 — Flying photo cards ── */}
-        <div className="absolute inset-0 z-20 pointer-events-none">
-          {PROBLEM_CARDS.map((card, i) => (
-            <ProblemCard
-              key={i}
-              index={i}
-              card={card}
-              position={CARD_POSITIONS[i]}
-              scrollYProgress={scrollYProgress}
-              ranges={CARD_RANGES[i]}
-              rotation={CARD_ROTATIONS[i]}
-            />
-          ))}
+    <section className="bg-white px-6 sm:px-10 lg:px-16 xl:px-20 py-20 lg:py-28 border-l-[3px] border-[#008A45]">
+      <div className="max-w-5xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-8">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
+          <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">What We Deliver</span>
         </div>
 
-        {/* ── Phase 3 — "But after that?" + WHAT GOES WRONG ── */}
-        <motion.div
-          style={{ opacity: cnt3Opacity }}
-          className="absolute inset-0 z-30 flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
-        >
-          <motion.h2
-            style={{ scale: cnt3HeadScale }}
-            className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#00558F] via-[#008A45] to-[#00558F] text-center leading-[0.95] pb-2 mb-6 md:mb-8 lg:mb-10"
-          >
-            But after that?
-          </motion.h2>
+        <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tighter text-gray-900 leading-[1.02] mb-3 max-w-3xl">
+          Learning that actually
+        </h2>
+        <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl text-[#008A45]/90 tracking-tight mb-6">
+          moves the needle.
+        </p>
+        <p className="text-gray-500 text-[17px] leading-relaxed max-w-xl mb-14">
+          Great learning transfers knowledge, builds capability, and drives real change in how people actually work.
+        </p>
 
-          <motion.div
-            style={{ opacity: cnt3PanelOpacity, y: cnt3PanelY }}
-            className="w-full max-w-3xl bg-white/92 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-gray-100 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.12)] relative overflow-hidden p-6 sm:p-8 md:p-10 lg:p-12"
-          >
-            <div className="absolute -top-32 -right-32 w-72 h-72 bg-[#008A45]/8 rounded-full blur-[70px] pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 w-72 h-72 bg-[#00558F]/8 rounded-full blur-[70px] pointer-events-none" />
-
-            <p className="relative z-10 text-[15px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5 md:mb-6">
-              What goes wrong
-            </p>
-            <div className="relative z-10 space-y-3.5 md:space-y-5">
-              {PROBLEM_BULLETS.map((text, i) => (
-                <ProblemBullet
-                  key={i}
-                  text={text}
-                  scrollYProgress={scrollYProgress}
-                  inRange={bulletRanges[i]}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* ── Phase 4 — The Cost of Inaction ── */}
-        <motion.div
-          style={{ opacity: cnt4Opacity, y: cnt4Y }}
-          className="absolute inset-0 z-40 flex items-center justify-center px-4 sm:px-8 lg:px-16 xl:px-20 pointer-events-none"
-        >
-          <div className="w-full max-w-6xl flex flex-col gap-6 md:gap-8 lg:gap-10 pointer-events-auto">
-            <div className="flex flex-col items-center text-center">
-              <div className="inline-flex items-center gap-2 mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-                <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#008A45]">The Cost of Inaction</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-sans font-bold tracking-tight leading-[1.1] mb-4 text-gray-900 max-w-4xl">
-                If This Continues,{' '}
-                <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
-              </h2>
-              <p className="text-gray-500 text-[15px] md:text-[17px] leading-relaxed max-w-xl">
-                When training fails, the consequences compound across your entire organization.
-              </p>
-            </div>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {OUTCOMES.map((item, i) => (
             <motion.div
-              style={{ opacity: cnt4IconsOpacity, y: cnt4IconsY }}
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 md:gap-x-5 gap-y-6 md:gap-y-7 max-w-5xl mx-auto w-full"
-            >
-              {CONSEQUENCES.map((item, i) => (
-                <div key={i} className="flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
-                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#008A45]" />
-                  </div>
-                  <span className="text-[15px] text-gray-600 leading-snug">{item.text}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              style={{ opacity: cnt4BannerOpacity, y: cnt4BannerY }}
-              className="bg-[#001829] rounded-xl flex items-center gap-4 sm:gap-5 md:gap-6 px-5 sm:px-6 md:px-8 py-5 md:py-7"
-            >
-              <div className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#008A45]/50 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-[#008A45]" />
-              </div>
-              <p className="flex-1 text-white text-[16px] sm:text-[17px] md:text-[19px] font-serif italic leading-snug">
-                This isn't a training problem.{' '}
-                <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
-              </p>
-              <button className="shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white" />
-              </button>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PROBLEM (MOBILE) — simple stacked layout, no scroll-pinning
-// ─────────────────────────────────────────────────────────────────────────────
-
-function ProblemMobile() {
-  return (
-    <section className="block lg:hidden bg-white px-6 sm:px-10 py-14 border-l-[3px] border-[#008A45]">
-      <div className="flex flex-col gap-12 sm:gap-14">
-
-        {/* Part 1 — heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full shadow-sm mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-            <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-gray-600">The Problem</span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-sans font-bold tracking-tighter text-gray-900 max-w-2xl leading-[1.05]">
-            Most Training Doesn't Work
-          </h2>
-          <p className="font-serif italic text-2xl sm:text-3xl text-[#008A45]/90 mt-4 tracking-tight max-w-xl">
-            — And You Already Know It.
-          </p>
-        </motion.div>
-
-        {/* Part 2 — 2x2 grid of cards */}
-        <div className="grid grid-cols-2 gap-4 sm:gap-5">
-          {PROBLEM_CARDS.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
+              key={item.num}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8%' }}
               transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_18px_36px_-12px_rgba(0,0,0,0.3)] border border-white/10"
+              className="bg-[#f8f7f3] rounded-2xl p-6 hover:bg-white hover:shadow-[0_8px_32px_-8px_rgba(0,39,71,0.12)] border border-transparent hover:border-gray-100 transition-all duration-300"
             >
-              <img src={card.img} alt={card.text} className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4">
-                <span className="text-[#6ee89a] font-mono text-[15px] mb-2 font-bold tracking-[0.2em] uppercase">
-                  Phase {card.phase}
-                </span>
-                <p className="text-white font-semibold text-[16px] leading-tight tracking-tight">
-                  {card.text}
-                </p>
-              </div>
+              <span className="font-serif text-[42px] font-bold text-[#008A45]/15 leading-none block mb-4">{item.num}</span>
+              <p className="text-gray-700 text-[15px] sm:text-[16px] leading-snug font-medium">{item.text}</p>
             </motion.div>
           ))}
         </div>
-
-        {/* Part 3 — But after that? + WHAT GOES WRONG bullets */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center gap-6 sm:gap-7"
-        >
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#00558F] via-[#008A45] to-[#00558F] text-center leading-[0.95]">
-            But after that?
-          </h2>
-          <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-[0_24px_60px_-16px_rgba(0,0,0,0.08)] p-6 sm:p-8 relative overflow-hidden">
-            <div className="absolute -top-20 -right-20 w-60 h-60 bg-[#008A45]/8 rounded-full blur-[60px] pointer-events-none" />
-            <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-[#00558F]/8 rounded-full blur-[60px] pointer-events-none" />
-            <p className="relative z-10 text-[15px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">What goes wrong</p>
-            <div className="relative z-10 space-y-4">
-              {PROBLEM_BULLETS.map((text, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-8%' }}
-                  transition={{ delay: i * 0.08, duration: 0.5 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="shrink-0 mt-0.5 bg-red-50 border border-red-100 rounded-full p-2 shadow-sm">
-                    <X className="w-4 h-4 text-red-500" strokeWidth={2.5} />
-                  </div>
-                  <p className="text-[16px] sm:text-[17px] text-gray-700 font-medium leading-snug">
-                    {text}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Part 4 — Cost of Inaction */}
-        <div className="flex flex-col gap-6 sm:gap-7">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-center text-center"
-          >
-            <div className="inline-flex items-center gap-2 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#008A45]" />
-              <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-[#008A45]">The Cost of Inaction</span>
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-sans font-bold tracking-tight leading-[1.1] mb-3 text-gray-900">
-              If This Continues,{' '}
-              <span className="italic font-serif text-[#008A45] font-normal">It Gets Expensive.</span>
-            </h2>
-            <p className="text-gray-500 text-[15px] sm:text-[16px] leading-relaxed max-w-md">
-              When training fails, the consequences compound across your entire organization.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6">
-            {CONSEQUENCES.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-8%' }}
-                transition={{ delay: i * 0.07, duration: 0.5 }}
-                className="flex flex-col items-center text-center gap-3"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#f2faf6] border border-[#008A45]/20 flex items-center justify-center">
-                  <item.icon className="w-5 h-5 text-[#008A45]" />
-                </div>
-                <span className="text-[15px] text-gray-600 leading-snug">{item.text}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-[#001829] rounded-xl flex items-center gap-4 px-5 py-5"
-          >
-            <div className="shrink-0 w-11 h-11 rounded-full border border-[#008A45]/50 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-[#008A45]" />
-            </div>
-            <p className="flex-1 text-white text-[16px] sm:text-[17px] font-serif italic leading-snug">
-              This isn't a training problem.{' '}
-              <span className="not-italic font-sans font-semibold">It's a performance gap.</span>
-            </p>
-            <button className="shrink-0 w-10 h-10 rounded-full border border-[#008A45]/40 flex items-center justify-center hover:bg-[#008A45]/20 transition-colors">
-              <ArrowRight className="w-4 h-4 text-white" />
-            </button>
-          </motion.div>
-        </div>
-
       </div>
     </section>
   );
@@ -2353,8 +1924,7 @@ export default function Home() {
           <Hero />
         </div>
         <main>
-          <Problem />
-          <ProblemMobile />
+          <Outcomes />
           <HowItWorks />
           <OfferBreakdown />
           <ECCouncilSection />
