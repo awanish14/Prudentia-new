@@ -1089,13 +1089,16 @@ function PartnershipsSection() {
     <section className="overflow-hidden">
       {/* Dark aurora header */}
       <div className="relative bg-[#002747] overflow-hidden">
+        {/* Box grid pattern */}
+        <div className="absolute inset-0 opacity-[0.06] pointer-events-none"
+          style={{ backgroundImage: 'linear-gradient(#6ee89a 1px, transparent 1px), linear-gradient(90deg, #6ee89a 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
         <div className="absolute top-[-10%] right-[-5%] w-[700px] h-[500px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.32) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-float-1 16s ease-in-out infinite' }} />
         <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[420px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse, rgba(0,85,143,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-float-2 22s ease-in-out infinite' }} />
         <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
-        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-14 pb-10 text-center">
+        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-20 pb-16 lg:pt-28 lg:pb-20 text-center">
           <span className="inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.16em] text-[#4ade80]">
             <span className="inline-block w-6 h-0.5 bg-[#4ade80] shrink-0" />
             Our Partnerships
