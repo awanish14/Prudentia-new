@@ -1,9 +1,10 @@
-import { motion, useInView, AnimatePresence } from 'motion/react';
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
   BarChart3, Building2, Layout, TrendingUp, CheckCircle2, Shield, Languages,
+  Mail, Phone, MapPin, Linkedin, Twitter, Youtube, GraduationCap, Monitor,
 } from 'lucide-react';
 import { useRef, useState, useEffect, type ElementType, type ReactNode } from 'react';
 
@@ -63,7 +64,7 @@ const services = [
     description:
       'Expert language services in 40+ languages with native-speaker accuracy, cultural nuance, and fast turnaround times.',
     image: '/images/bento-localization.jpg',
-    features: ['40+ Languages Supported', 'Subject-Matter Experts', 'Multimedia Localisation', 'ISO 9001:2015 Certified'],
+    features: ['40+ Languages Supported', 'Subject-Matter Experts', 'Multimedia Localisation', 'Cultural Accuracy Guaranteed'],
   },
 ];
 
@@ -75,6 +76,20 @@ const processSteps = [
   { num: '05', label: 'Measure',    image: '/images/step-measure.jpg'    },
 ];
 
+const processDescriptions: Record<string, string> = {
+  '01': 'We assess skill gaps, roles, and business outcomes before creating a single slide.',
+  '02': 'Learning strategies are meticulously aligned to real-world business use cases.',
+  '03': 'Hybrid delivery combining instructor-led, virtual, video-based, and interactive modules.',
+  '04': 'Real-world scenarios, business simulations, and case-based learning embedded throughout.',
+  '05': 'Strict focus on post-training performance gains — not mere attendance numbers.',
+};
+
+const stepVariants = {
+  enter:  { y: 16, opacity: 0, scale: 0.98 },
+  center: { y: 0,  opacity: 1, scale: 1,   transition: { duration: 0.38, ease: [0.16, 1, 0.3, 1] } },
+  exit:   { y: -8, opacity: 0, scale: 0.98, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] } },
+};
+
 interface WhyFeature {
   icon: ElementType;
   title: string;
@@ -82,12 +97,11 @@ interface WhyFeature {
 }
 
 const whyFeatures: WhyFeature[] = [
-  { icon: Award,    title: 'ISO 9001:2015 Certified', desc: 'Quality management at every stage of delivery.' },
-  { icon: Globe,    title: 'Global Reach',             desc: '25+ countries, 15+ industries, one trusted partner.' },
-  { icon: Users,    title: '500+ Clients',             desc: 'Trusted by Fortune 500s and fast-growing businesses.' },
-  { icon: Clock,    title: '15+ Years Experience',     desc: 'Deep domain expertise across industries.' },
-  { icon: Target,   title: 'Outcome-Focused',          desc: 'Every programme tied to measurable KPIs.' },
-  { icon: BookOpen, title: 'Custom Content',            desc: 'Bespoke solutions, never off-the-shelf filler.' },
+  { icon: Globe,    title: 'Global Reach',         desc: '25+ countries, 15+ industries, one trusted partner.' },
+  { icon: Users,    title: '1000+ Corporates',     desc: 'Trusted by Fortune 500s and fast-growing businesses.' },
+  { icon: Clock,    title: '15+ Years Experience', desc: 'Deep domain expertise across industries.' },
+  { icon: Target,   title: 'Outcome-Focused',      desc: 'Every programme tied to measurable KPIs.' },
+  { icon: BookOpen, title: 'Custom Content',        desc: 'Bespoke solutions, never off-the-shelf filler.' },
 ];
 
 const bentoItems = [
@@ -122,10 +136,17 @@ const differentiators = [
 ];
 
 const ecFeatures = [
-  { title: 'Certified Ethical Hacker (CEH)',       desc: 'Industry gold-standard offensive security certification' },
-  { title: 'SOC Analyst (CSA)',                     desc: 'Blue-team operations and threat detection skills' },
-  { title: 'Enterprise Cyber Awareness',            desc: 'Organisation-wide security culture programs' },
-  { title: 'Continuous Threat Exposure Management', desc: 'Ongoing adversarial readiness and risk reduction' },
+  { title: 'Certified Ethical Hacker (CEH)',           desc: 'Industry gold-standard offensive security certification' },
+  { title: 'SOC Analyst (CSA)',                         desc: 'Blue-team operations and threat detection skills' },
+  { title: 'Certified Cloud Security Engineer (CCSE)', desc: 'Advanced cloud security architecture and compliance' },
+  { title: 'EC-Council Incident Handler (ECIH)',       desc: 'Incident response, digital forensics, and recovery' },
+];
+
+const sapFeatures = [
+  { title: 'Curriculum Development',     desc: 'Collaborating with universities to design comprehensive, industry-aligned SAP training courses.' },
+  { title: 'Hands-On ERP Training',      desc: 'Real-life scenarios and practical exercises inside live SAP enterprise environments.' },
+  { title: 'Full Tool Proficiency',      desc: 'Deep expertise across all SAP modules, tools, and end-to-end business workflows.' },
+  { title: 'Professional Certification', desc: 'Industry-recognised SAP credentials that validate real-world competency and career readiness.' },
 ];
 
 const skillsoftFeatures = [
@@ -162,11 +183,51 @@ const testimonialMetrics = [
   { value: '12',   label: 'languages delivered' },
 ];
 
+const clientLogos = [
+  { src: '/images/clients/hp-logo-icon-8.png',                                   alt: 'HP' },
+  { src: '/images/clients/Schneider_Electric_2007.svg.png',                       alt: 'Schneider Electric' },
+  { src: '/images/clients/mercedes_logos_PNG9.png',                               alt: 'Mercedes-Benz' },
+  { src: '/images/clients/Vodafone_Logo.svg.png',                                 alt: 'Vodafone' },
+  { src: '/images/clients/Fiserv_logo.svg.png',                                   alt: 'Fiserv' },
+  { src: '/images/clients/HEXAWARE.NS_BIG-3c8842d4.png',                          alt: 'Hexaware' },
+  { src: '/images/clients/_0098_zensar-technologies.png',                         alt: 'Zensar' },
+  { src: '/images/clients/BNY_Mellon.svg.png',                                    alt: 'BNY Mellon' },
+  { src: '/images/clients/HSBC_Logo_2018.png',                                    alt: 'HSBC' },
+  { src: '/images/clients/Honeywell_logo.svg.png',                                alt: 'Honeywell' },
+  { src: '/images/clients/john-deere-logo-png-transparent.png',                   alt: 'John Deere' },
+  { src: '/images/clients/Sulzer_AG_logo.svg',                                    alt: 'Sulzer' },
+  { src: '/images/clients/KSB.DE_BIG-3ed3e06b.png',                               alt: 'KSB' },
+  { src: '/images/clients/Bata.svg.png',                                           alt: 'Bata' },
+  { src: '/images/clients/LT-Infotech-Logo-Vector.svg-.png',                      alt: 'LTI Mindtree' },
+  { src: '/images/clients/Atos-Logo.png',                                          alt: 'Atos' },
+  { src: '/images/clients/Logo_of_Deloitte.svg.png',                              alt: 'Deloitte' },
+  { src: '/images/clients/Spectrum_Logo.png',                                      alt: 'Spectrum' },
+  { src: '/images/clients/global-edge.jpg',                                        alt: 'Global Edge' },
+  { src: '/images/clients/Birlasoft_logo.png',                                     alt: 'Birlasoft' },
+  { src: '/images/clients/Skillsoft-logo-navy-RGB_.png',                           alt: 'Skillsoft' },
+  { src: '/images/clients/Tata_Technologies_logo.svg.png',                         alt: 'Tata Technologies' },
+  { src: '/images/clients/bristlecone_logo_600.png',                               alt: 'Bristlecone' },
+  { src: '/images/clients/Infosys_logo.svg.png',                                   alt: 'Infosys' },
+  { src: '/images/clients/NuSummit-Logo-Color.png',                                alt: 'NuSummit' },
+  { src: '/images/clients/SKODA-AUTO-Volkswagen-India-Private-Limited-logo.jpg',   alt: 'Skoda' },
+  { src: '/images/clients/Intelliswift-Ltts-Logo-img-02.png',                      alt: 'Intelliswift' },
+  { src: '/images/clients/Fulcrum_Digital_Logo.jpg',                               alt: 'Fulcrum Digital' },
+  { src: '/images/clients/Mankind_Serving_Life.png',                               alt: 'Mankind Pharma' },
+  { src: '/images/clients/Principal_Financial_Group_logo.svg.png',                 alt: 'Principal Financial' },
+  { src: '/images/clients/CC-Logo-Tagline-Berry-300x.png',                         alt: 'CC' },
+  { src: '/images/clients/Vanderlande-Logo-Black_Orange-line-RGB-_JPG_9740.jpg',   alt: 'Vanderlande' },
+  { src: '/images/clients/Investec_logo.svg.png',                                  alt: 'Investec' },
+  { src: '/images/clients/Syngene-logo-newsroom.png',                              alt: 'Syngene' },
+  { src: '/images/clients/NEULANDLAB.NS_BIG-37c34c1e.png',                         alt: 'Neuland Labs' },
+  { src: '/images/clients/magma-logo-scaled.jpg',                                  alt: 'Magma' },
+  { src: '/images/clients/Datamatics-Logo.wine.png',                               alt: 'Datamatics' },
+];
+
 // ── Primitives ────────────────────────────────────────────────────────────────
 
 function SectionTag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#068140]">
+    <span className="inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.16em] text-[#068140]">
       <span className="inline-block w-6 h-0.5 bg-[#068140] shrink-0" />
       {children}
     </span>
@@ -185,22 +246,28 @@ const megaColumns = [
     ],
   },
   {
-    heading: 'Specialisations',
+    heading: 'Specialisations & Partners',
     items: [
-      { icon: Languages, title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content' },
-      { icon: Shield,    title: 'Certification Programmes',   desc: 'EC-Council, industry-recognised credentials & compliance' },
+      { icon: Languages,      title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content' },
+      { icon: Shield,         title: 'Cybersecurity (EC-Council)', desc: 'CEH, CSA, CCSE, ECIH — certified cyber training & awareness' },
+      { icon: GraduationCap,  title: 'SAP Academy Training',       desc: 'ERP curriculum, SAP tools & professional certification' },
+      { icon: Monitor,        title: 'Skillsoft Percipio LXP',     desc: 'AI-driven platform with 200K+ digital learning assets' },
     ],
   },
 ];
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
 
-function Navbar() {
+export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
   const scrolled = useScrolled(40);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [mobileServices, setMobileServices] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lk = (anchor: string) => isSubpage ? `/${anchor}` : anchor;
+  // On subpages (dark hero banner) with transparent navbar, use light text
+  const navLight = isSubpage && !scrolled;
+  const linkCls = navLight ? 'text-white/90 hover:text-white' : 'text-[#002747] hover:text-[#00558F]';
 
   const openDropdown = (key: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -219,54 +286,32 @@ function Navbar() {
       {/* ── Main bar ── */}
       <div className="max-w-[1280px] mx-auto px-6 h-[72px] flex items-center justify-between">
         <a href="/" className="shrink-0">
-          <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-10 w-auto" />
+          <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-14 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {/* Home dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => openDropdown('home')}
-            onMouseLeave={closeDropdown}
-          >
-            <button className="flex items-center gap-1 text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">
-              Home <ChevronDown size={14} className={`transition-transform duration-200 ${dropdown === 'home' ? 'rotate-180' : ''}`} />
-            </button>
-            <AnimatePresence>
-              {dropdown === 'home' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }} transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-3 w-44 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
-                  onMouseEnter={() => openDropdown('home')}
-                  onMouseLeave={closeDropdown}
-                >
-                  <a href="/"           className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#00558F]">Home Original</a>
-                  <a href="/home1.html" className="block px-4 py-2.5 text-sm text-[#068140] font-semibold hover:bg-gray-50">Home 1 (New)</a>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <a href="/" className={`text-sm font-medium transition-colors ${linkCls}`}>Home</a>
 
           {/* Services mega menu trigger */}
           <div
             onMouseEnter={() => openDropdown('services')}
             onMouseLeave={closeDropdown}
           >
-            <button className={`flex items-center gap-1 text-sm font-medium transition-colors ${dropdown === 'services' ? 'text-[#00558F]' : 'text-[#002747] hover:text-[#00558F]'}`}>
+            <button className={`flex items-center gap-1 text-sm font-medium transition-colors ${dropdown === 'services' ? 'text-[#00558F]' : linkCls}`}>
               Services <ChevronDown size={14} className={`transition-transform duration-200 ${dropdown === 'services' ? 'rotate-180' : ''}`} />
             </button>
           </div>
 
-          <a href="#process"      className="text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">How We Work</a>
-          <a href="#testimonials" className="text-sm font-medium text-[#002747] hover:text-[#00558F] transition-colors">Testimonials</a>
+          <a href={lk('#process')}      className={`text-sm font-medium transition-colors ${linkCls}`}>How We Work</a>
+          <a href={lk('#testimonials')} className={`text-sm font-medium transition-colors ${linkCls}`}>Testimonials</a>
+          <a href="/about" className={`text-sm font-medium transition-colors ${navLight ? 'text-white font-semibold' : isSubpage ? 'text-[#00558F]' : 'text-[#002747] hover:text-[#00558F]'}`}>About Us</a>
         </div>
 
         <div className="flex items-center gap-4">
-          <a href="#contact" className="hidden md:inline-flex btn-primary px-5 py-2.5 text-sm rounded-full">
+          <a href="/contact" className="hidden md:inline-flex btn-primary px-5 py-2.5 text-sm rounded-full">
             <span>Contact Us</span>
           </a>
-          <button className="md:hidden p-2 text-[#002747]" onClick={() => setMobileOpen(!mobileOpen)}>
+          <button className={`md:hidden p-2 ${navLight ? 'text-white' : 'text-[#002747]'}`} onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
@@ -297,7 +342,7 @@ function Navbar() {
                     {col.items.map(item => (
                       <a
                         key={item.title}
-                        href="#services"
+                        href={lk('#services')}
                         className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#F8F7F3] transition-colors"
                       >
                         <div className="w-9 h-9 rounded-lg bg-[#068140]/8 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/15 transition-colors">
@@ -328,14 +373,14 @@ function Navbar() {
 
                 <div>
                   <div className="grid grid-cols-3 gap-2 mt-5 mb-5">
-                    {[{ v: '15+', l: 'Years' }, { v: '15+', l: 'Industries' }, { v: '25+', l: 'Countries' }].map(s => (
+                    {[{ v: '1000+', l: 'Trained' }, { v: '50+', l: 'Abroad' }, { v: '20+', l: 'Certs' }].map(s => (
                       <div key={s.l} className="text-center">
                         <p className="font-serif text-white text-[20px] leading-none font-bold">{s.v}</p>
                         <p className="text-white/45 text-[10px] uppercase tracking-wider mt-1">{s.l}</p>
                       </div>
                     ))}
                   </div>
-                  <a href="#contact" className="btn-primary w-full text-center text-sm font-bold py-2.5 rounded-xl block">
+                  <a href={lk('#contact')} className="btn-primary w-full text-center text-sm font-bold py-2.5 rounded-xl block">
                     <span>Book a Free Call</span>
                   </a>
                 </div>
@@ -347,7 +392,7 @@ function Navbar() {
             <div className="border-t border-gray-100 bg-[#F8F7F3]">
               <div className="max-w-[1280px] mx-auto px-6 py-3 flex items-center justify-between">
                 <p className="text-[12px] text-gray-400">Trusted by TechServe Global, Meridian Financial, Novaris Pharmaceuticals and 500+ more.</p>
-                <a href="#services" className="text-[12px] font-semibold text-[#00558F] hover:text-[#002747] flex items-center gap-1 transition-colors">
+                <a href={lk('#services')} className="text-[12px] font-semibold text-[#00558F] hover:text-[#002747] flex items-center gap-1 transition-colors">
                   Explore all services <ArrowRight size={12} />
                 </a>
               </div>
@@ -366,8 +411,7 @@ function Navbar() {
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-6 py-4 space-y-1">
-              <a href="/"           className="block text-sm text-gray-700 py-2">Home Original</a>
-              <a href="/home1.html" className="block text-sm text-[#068140] font-semibold py-2">Home 1 (New)</a>
+              <a href="/" className="block text-sm font-medium text-[#002747] py-2">Home</a>
 
               {/* Mobile services accordion */}
               <div>
@@ -389,7 +433,7 @@ function Navbar() {
                       {megaColumns.flatMap(c => c.items).map(item => (
                         <a
                           key={item.title}
-                          href="#services"
+                          href={lk('#services')}
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center gap-3 py-2.5"
                         >
@@ -402,10 +446,11 @@ function Navbar() {
                 </AnimatePresence>
               </div>
 
-              <a href="#process"      className="block text-sm text-gray-700 py-2">How We Work</a>
-              <a href="#testimonials" className="block text-sm text-gray-700 py-2">Testimonials</a>
+              <a href={lk('#process')}      className="block text-sm text-gray-700 py-2">How We Work</a>
+              <a href={lk('#testimonials')} className="block text-sm text-gray-700 py-2">Testimonials</a>
+              <a href="/about" className="block text-sm text-gray-700 py-2">About Us</a>
               <div className="pt-2">
-                <a href="#contact" className="btn-primary inline-flex px-5 py-2.5 text-sm rounded-full">
+                <a href="/contact" className="btn-primary inline-flex px-5 py-2.5 text-sm rounded-full">
                   <span>Contact Us</span>
                 </a>
               </div>
@@ -521,16 +566,83 @@ function EnquiryForm() {
   );
 }
 
-function HeroSection() {
+// ── Client Logo Strip ─────────────────────────────────────────────────────────
+
+function LogoRow({ logos, duration, reverse }: { logos: typeof clientLogos; duration: number; reverse: boolean }) {
+  const track = [...logos, ...logos];
+  const anim = reverse
+    ? `marquee-logos-reverse ${duration}s linear infinite`
+    : `marquee-logos ${duration}s linear infinite`;
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background image */}
-      <div
+    <div
+      className="flex items-center gap-12"
+      style={{ animation: anim, width: 'max-content' }}
+      onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.animationPlayState = 'paused'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.animationPlayState = 'running'; }}
+    >
+      {track.map((logo, i) => (
+        <img
+          key={i}
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+          className="h-8 w-auto max-w-[120px] object-contain opacity-75 hover:opacity-100 transition-all duration-300 cursor-default select-none shrink-0"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ClientLogoStrip() {
+  const row1 = clientLogos.slice(0, 13);
+  const row2 = clientLogos.slice(13, 26);
+  const row3 = clientLogos.slice(26);
+  const maskStyle = {
+    maskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
+    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
+  };
+
+  return (
+    <section className="bg-white border-b border-gray-100 py-10 overflow-hidden">
+      <div className="flex justify-center mb-8 px-6">
+        <SectionTag>Trusted by Global Organisations</SectionTag>
+      </div>
+      <div className="flex flex-col gap-9">
+        <div className="overflow-hidden" style={maskStyle}>
+          <LogoRow logos={row1} duration={40} reverse={false} />
+        </div>
+        <div className="overflow-hidden" style={maskStyle}>
+          <LogoRow logos={row2} duration={50} reverse={true} />
+        </div>
+        <div className="overflow-hidden" style={maskStyle}>
+          <LogoRow logos={row3} duration={44} reverse={false} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HeroSection() {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const bgY     = useTransform(scrollY, [0, 600],  ['0%', '22%']);
+  const bgScale = useTransform(scrollY, [0, 900],  [1.0, 1.22]);
+
+
+  return (
+    <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Parallax + scrub-zoom background */}
+      <motion.div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/hero-slide-1.jpg)' }}
+        style={{ backgroundImage: 'url(/images/hero-slide-1.jpg)', y: bgY, scale: bgScale }}
       />
-      {/* Strong left-heavy overlay — legible text on left, visible photo on right */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#F8F7F3]/98 via-[#F8F7F3]/90 to-[#F8F7F3]/40" />
+      {/* Left-heavy cream overlay — inline style avoids Tailwind opacity-modifier edge cases */}
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{ background: 'linear-gradient(to right, rgba(248,247,243,0.98) 0%, rgba(248,247,243,0.92) 45%, rgba(248,247,243,0.42) 100%)' }}
+      />
       {/* Green left accent bar */}
       <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-b from-[#068140] via-[#00558F] to-[#068140] z-20" />
 
@@ -538,12 +650,14 @@ function HeroSection() {
         <div className="grid lg:grid-cols-[1fr_420px] gap-12 xl:gap-20 items-center">
 
           {/* ── Left: headline + trust badges ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 mb-6">
+          <div>
+            {/* Tag line slides in */}
+            <motion.div
+              className="inline-flex items-center gap-2 mb-6"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
               <span className="relative flex h-2.5 w-2.5 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#068140] opacity-60" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#068140]" />
@@ -551,53 +665,88 @@ function HeroSection() {
               <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#068140]">
                 Corporate Training · eLearning · Translation
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="font-serif text-[36px] sm:text-[46px] lg:text-[68px] xl:text-[76px] leading-[1.04] tracking-tight text-[#002747]">
-              Empower Your<br />
-              Team.{' '}
-              <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#068140] to-[#00558F]">
-                Transform
-              </em><br />
-              Your Business.
+            {/* Line-by-line reveal */}
+            <h1 className="font-serif text-[44px] sm:text-[60px] lg:text-[78px] xl:text-[90px] leading-[1.0] tracking-tight text-[#002747]">
+              {[
+                <span key="l1">Empower Your</span>,
+                <span key="l2">Team.{' '}<em className="italic" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, #068140, #00558F)' }}>Transform</em></span>,
+                <span key="l3">Your Business.</span>,
+              ].map((line, i) => (
+                <div key={i} className="overflow-hidden leading-[1.18]">
+                  <motion.div
+                    initial={{ y: '105%' }}
+                    animate={{ y: '0%' }}
+                    transition={{ duration: 0.75, delay: 0.15 + i * 0.13, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {line}
+                  </motion.div>
+                </div>
+              ))}
             </h1>
 
-            <p className="mt-7 text-[16px] md:text-[18px] text-gray-500 leading-relaxed max-w-[500px]">
+            <motion.p
+              className="mt-7 text-[16px] md:text-[18px] text-gray-500 leading-relaxed max-w-[500px]"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
               Prudentia partners with global organisations to design and deliver learning experiences that drive real, measurable performance improvement.
-            </p>
+            </motion.p>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <motion.div
+              className="mt-10 flex flex-wrap gap-3"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
               <a href="#process" className="inline-flex items-center px-6 py-3 text-sm font-semibold text-[#002747] border-2 border-[#002747]/20 rounded-full hover:border-[#002747]/50 transition-colors bg-white/70 backdrop-blur-sm gap-2">
                 How We Work <ArrowRight size={14} />
               </a>
               <a href="#testimonials" className="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-500 hover:text-[#002747] transition-colors">
                 See Client Results →
               </a>
-            </div>
+            </motion.div>
 
-            {/* Trust badges */}
-            <div className="mt-12 pt-8 border-t border-[#002747]/10 grid grid-cols-3 gap-6 max-w-[480px]">
+            {/* Trust badges — staggered */}
+            <motion.div
+              className="mt-12 pt-8 border-t border-[#002747]/10 hidden sm:grid grid-cols-3 gap-6 max-w-[480px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.85 }}
+            >
               {[
-                { val: '500+', label: 'Companies Served' },
-                { val: '15+',  label: 'Years Experience' },
-                { val: '15+',  label: 'Industries Served' },
-              ].map(b => (
-                <div key={b.label}>
+                { val: '1000+', label: 'Corporates Trained' },
+                { val: '50+',   label: 'Abroad Corporates' },
+                { val: '20+',   label: 'Certifications' },
+              ].map((b, i) => (
+                <motion.div
+                  key={b.label}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
+                >
                   <div className="font-serif text-[28px] font-bold text-[#002747] leading-none">{b.val}</div>
                   <div className="text-[11px] uppercase tracking-widest text-gray-400 mt-1 leading-snug">{b.label}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="mt-8 flex flex-wrap gap-5 text-[13px] font-medium text-gray-500">
-              {['ISO 9001:2015 Certified', '98% Client Retention', 'Microsoft & SAP Partner'].map(badge => (
+            <motion.div
+              className="mt-8 hidden sm:flex flex-wrap gap-5 text-[13px] font-medium text-gray-500"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
+            >
+              {['98% Client Retention', 'EC-Council & SAP Partner', 'Serving 15+ Industries'].map(badge => (
                 <span key={badge} className="flex items-center gap-1.5">
                   <Check size={13} className="text-[#068140]" />
                   {badge}
                 </span>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* ── Right: enquiry form card ── */}
           <motion.div
@@ -610,7 +759,7 @@ function HeroSection() {
               {/* Card header */}
               <div className="bg-[#002747] px-6 py-5">
                 <h3 className="font-serif text-[20px] text-white leading-tight">Get a Free Consultation</h3>
-                <p className="text-white/55 text-xs mt-1">We'll design a solution tailored to your goals.</p>
+                <p className="text-white/55 text-[13px] mt-1">We'll design a solution tailored to your goals.</p>
               </div>
               {/* Green top accent */}
               <div className="h-[3px] bg-gradient-to-r from-[#068140] to-[#00558F]" />
@@ -622,33 +771,40 @@ function HeroSection() {
 
         </div>
       </div>
+
     </section>
   );
 }
 
 // ── Stats Strip ───────────────────────────────────────────────────────────────
 
-function StatCounter({ target, suffix = '+', label }: { target: number; suffix?: string; label: string }) {
+function StatCounter({ target, suffix = '+', label, delay = 0 }: { target: number; suffix?: string; label: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
   const count = useCountUp(target, inView);
   return (
-    <div ref={ref} className="px-4 text-center">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
+      className="px-4 text-center"
+    >
       <div className="font-serif text-[36px] md:text-[52px] leading-none text-white mb-2">{count}{suffix}</div>
       <div className="text-[11px] uppercase tracking-widest text-white/60">{label}</div>
-    </div>
+    </motion.div>
   );
 }
 
-function StatsStrip() {
+export function StatsStrip() {
   return (
     <section className="bg-[#002747] py-16">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x divide-white/10">
-          <StatCounter target={500} label="Companies Served" />
-          <StatCounter target={15}  label="Years Experience"  />
-          <StatCounter target={15}  label="Industries Served" />
-          <StatCounter target={25}  label="Countries Reached" />
+          <StatCounter target={500} label="Companies Served"  delay={0}    />
+          <StatCounter target={15}  label="Years Experience"  delay={0.12} />
+          <StatCounter target={15}  label="Industries Served" delay={0.24} />
+          <StatCounter target={25}  label="Countries Reached" delay={0.36} />
         </div>
       </div>
     </section>
@@ -658,24 +814,29 @@ function StatsStrip() {
 // ── Services ──────────────────────────────────────────────────────────────────
 
 function ServicesSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
     <section id="services" className="bg-[#F8F7F3] py-24">
-      <div className="max-w-[1280px] mx-auto px-6" ref={ref}>
-        <SectionTag>What We Do</SectionTag>
-        <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] text-[#002747] max-w-lg">
-          Learning Solutions Built for the Real World
-        </h2>
+      <div className="max-w-[1280px] mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+        >
+          <SectionTag>What We Do</SectionTag>
+          <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] text-[#002747] max-w-lg">
+            Learning Solutions Built for the Real World
+          </h2>
+        </motion.div>
 
         <div className="mt-14 grid md:grid-cols-3 gap-8">
           {services.map((service, i) => (
             <motion.div
               key={service.id}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_16px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.14)] transition-shadow duration-300 border-t-4 border-[#068140] flex flex-col"
             >
               <div className="aspect-[16/9] overflow-hidden">
@@ -710,24 +871,20 @@ function ServicesSection() {
 
 // ── Process ───────────────────────────────────────────────────────────────────
 
-function ProcessSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+export function ProcessSection() {
   const [active, setActive] = useState(0);
 
-  const descriptions: Record<string, string> = {
-    '01': 'We assess skill gaps, roles, and business outcomes before creating a single slide.',
-    '02': 'Learning strategies are meticulously aligned to real-world business use cases.',
-    '03': 'Hybrid delivery combining instructor-led, virtual, video-based, and interactive modules.',
-    '04': 'Real-world scenarios, business simulations, and case-based learning embedded throughout.',
-    '05': 'Strict focus on post-training performance gains — not mere attendance numbers.',
+  const goTo = (i: number) => {
+    if (i === active) return;
+    setActive(i);
   };
 
   return (
-    <section id="process" className="bg-white py-24 overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-6" ref={ref}>
+    <section id="process" className="bg-white py-20 md:py-28">
+      <div className="max-w-[1280px] mx-auto px-6">
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <SectionTag>Our Approach</SectionTag>
             <h2 className="mt-4 font-serif text-[28px] sm:text-[36px] md:text-[42px] text-[#002747] leading-[1.1]">
@@ -740,66 +897,97 @@ function ProcessSection() {
           </p>
         </div>
 
-        {/* Step tabs */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-none">
+        {/* Step tab pills */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
           {processSteps.map((step, i) => (
             <button
               key={step.num}
-              onClick={() => setActive(i)}
-              className={`shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
+              onClick={() => goTo(i)}
+              className={`shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 active === i
                   ? 'bg-[#002747] text-white shadow-md'
                   : 'bg-[#F8F7F3] text-gray-500 hover:text-[#002747]'
               }`}
             >
-              <span className={`text-xs font-bold ${active === i ? 'text-[#068140]' : 'text-gray-400'}`}>{step.num}</span>
+              <span className={`text-xs font-bold ${active === i ? 'text-[#068140]' : 'text-gray-400'}`}>
+                {step.num}
+              </span>
               {step.label}
             </button>
           ))}
         </div>
 
-        {/* Active step card */}
+        {/* Progress bar */}
+        <div className="mt-3 mb-8 h-[2px] bg-[#002747]/8 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-[#068140] to-[#00558F] rounded-full"
+            animate={{ width: `${((active + 1) / processSteps.length) * 100}%` }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </div>
+
+        {/* Step card */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35 }}
-            className="grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,39,71,0.14)]"
+            variants={stepVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,39,71,0.14)] grid md:grid-cols-2"
           >
-            <div className="relative h-64 md:h-auto min-h-[320px]">
+            {/* Photo */}
+            <div className="relative h-[220px] md:h-auto md:min-h-[420px] overflow-hidden">
               <img
                 src={processSteps[active].image}
                 alt={processSteps[active].label}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#002747]/20" />
-              <div className="absolute top-6 left-6">
-                <span className="font-serif text-[72px] font-bold text-white/20 leading-none select-none">
-                  {processSteps[active].num}
-                </span>
-              </div>
+              <span className="absolute top-6 left-6 font-serif text-[72px] font-bold text-white/20 leading-none select-none">
+                {processSteps[active].num}
+              </span>
             </div>
 
-            <div className="bg-[#F8F7F3] p-10 lg:p-14 flex flex-col justify-center">
+            {/* Content */}
+            <div className="bg-[#F8F7F3] p-8 md:p-10 lg:p-14 flex flex-col justify-center">
               <SectionTag>Step {processSteps[active].num}</SectionTag>
-              <h3 className="mt-4 font-serif text-[36px] text-[#002747] leading-tight">
+              <h3 className="mt-4 font-serif text-[32px] md:text-[36px] text-[#002747] leading-tight">
                 {processSteps[active].label}
               </h3>
-              <p className="mt-4 text-gray-600 text-[17px] leading-relaxed">
-                {descriptions[processSteps[active].num]}
+              <p className="mt-4 text-gray-600 text-[16px] md:text-[17px] leading-relaxed">
+                {processDescriptions[processSteps[active].num]}
               </p>
-              <div className="mt-8 flex gap-2">
-                {processSteps.map((_, i) => (
+
+              {/* Dots + Prev/Next */}
+              <div className="mt-8 flex items-center justify-between">
+                <div className="flex gap-2">
+                  {processSteps.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => goTo(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === active ? 'bg-[#068140] w-8' : 'bg-[#002747]/15 w-1.5'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-2">
                   <button
-                    key={i}
-                    onClick={() => setActive(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === active ? 'bg-[#068140] w-8' : 'bg-[#002747]/15 w-1.5'
-                    }`}
-                  />
-                ))}
+                    onClick={() => { if (active > 0) goTo(active - 1); }}
+                    disabled={active === 0}
+                    className="w-9 h-9 rounded-full border border-[#002747]/15 flex items-center justify-center text-[#002747] disabled:opacity-30 hover:bg-[#002747]/5 transition-colors"
+                  >
+                    <ArrowRight size={14} className="rotate-180" />
+                  </button>
+                  <button
+                    onClick={() => { if (active < processSteps.length - 1) goTo(active + 1); }}
+                    disabled={active === processSteps.length - 1}
+                    className="w-9 h-9 rounded-full border border-[#002747]/15 flex items-center justify-center text-[#002747] disabled:opacity-30 hover:bg-[#002747]/5 transition-colors"
+                  >
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -812,13 +1000,10 @@ function ProcessSection() {
 
 // ── Why Prudentia ─────────────────────────────────────────────────────────────
 
-function WhySection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-
+export function WhySection() {
   return (
     <section className="bg-[#F8F7F3] py-24">
-      <div className="max-w-[1280px] mx-auto px-6" ref={ref}>
+      <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <div>
             <SectionTag>Why Prudentia</SectionTag>
@@ -837,18 +1022,19 @@ function WhySection() {
             {whyFeatures.map((feature, i) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="bg-white rounded-2xl p-5 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.08)]"
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-white rounded-2xl p-6 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.08)] border border-gray-50"
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#068140]/10 flex items-center justify-center shrink-0">
-                    <feature.icon size={16} className="text-[#068140]" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#068140]/10 flex items-center justify-center shrink-0">
+                    <feature.icon size={20} className="text-[#068140]" />
                   </div>
-                  <h4 className="font-semibold text-sm text-[#002747] leading-tight">{feature.title}</h4>
+                  <h4 className="font-semibold text-[16px] text-[#002747] leading-tight">{feature.title}</h4>
                 </div>
-                <p className="text-xs text-gray-500 leading-relaxed">{feature.desc}</p>
+                <p className="text-[14px] text-gray-500 leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -860,12 +1046,9 @@ function WhySection() {
 
 // ── Bento Gallery ─────────────────────────────────────────────────────────────
 
-function BentoGallery() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-
+export function BentoGallery() {
   return (
-    <section className="bg-[#F8F7F3] py-24" ref={ref}>
+    <section className="bg-[#F8F7F3] py-24">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
@@ -882,14 +1065,14 @@ function BentoGallery() {
 
         <div
           className="grid gap-3 grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[240px]"
-          ref={ref}
         >
           {bentoItems.map((item, i) => (
             <motion.div
               key={item.image}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 32, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.65, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className={`relative rounded-2xl overflow-hidden group cursor-pointer${item.large ? ' col-span-2 row-span-2' : ''}`}
             >
               <img
@@ -924,7 +1107,7 @@ function BentoGallery() {
 
 // ── Problem ───────────────────────────────────────────────────────────────────
 
-function ProblemSection() {
+export function ProblemSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
@@ -951,8 +1134,8 @@ function ProblemSection() {
               transition={{ duration: 0.75, delay: 0.08 }}
               className="font-serif text-[36px] sm:text-[48px] lg:text-[72px] xl:text-[80px] leading-[1.0] text-[#002747]"
             >
-              Most Training<br />
-              <em className="italic text-[#068140]">Doesn't Work.</em>
+              Conventional Training<br />
+              <em className="italic text-[#068140]">Falls Short.</em>
             </motion.h2>
           </div>
 
@@ -986,35 +1169,48 @@ function ProblemSection() {
         </div>
       </div>
 
-      {/* Bottom half: cost of inaction */}
-      <div className="relative bg-[#F8F7F3]">
-        <div className="max-w-[1280px] mx-auto px-6 py-16">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
+      {/* Bottom half: cost of inaction — navy bg for clear visual break */}
+      <div className="relative bg-[#002747] overflow-hidden">
+        {/* Aurora blobs — subtle atmospheric glow */}
+        <div className="absolute top-[-10%] right-[-5%] w-[700px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.32) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-float-1 16s ease-in-out infinite' }} />
+        <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[420px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(0,85,143,0.25) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-float-2 22s ease-in-out infinite' }} />
+        <div className="absolute top-[25%] left-[-5%] w-[450px] h-[320px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,129,64,0.18) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-float-3 28s ease-in-out infinite' }} />
 
-            <div className="lg:w-72 shrink-0">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">The cost of inaction</p>
-              <h3 className="font-serif text-[28px] text-[#002747] leading-snug">
+        <div className="max-w-[1280px] mx-auto px-6 py-16">
+
+          {/* Header row */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-3">The cost of inaction</p>
+              <h3 className="font-serif text-[28px] sm:text-[34px] text-white leading-snug">
                 If This Continues,{' '}
-                <em className="italic text-[#068140]">It Gets Expensive.</em>
+                <em className="italic text-[#6ee89a]">It Gets Expensive.</em>
               </h3>
             </div>
+            <p className="text-white/50 text-[15px] leading-relaxed max-w-xs md:text-right">
+              Every month without a structured learning system is a month of compounding loss.
+            </p>
+          </div>
 
-            <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              {consequences.map((item, i) => (
-                <motion.div
-                  key={item.text}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.45, delay: 0.3 + i * 0.07 }}
-                  className="flex flex-col items-center text-center gap-2.5 p-4 bg-white rounded-xl border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)]"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#F8F7F3] border border-gray-100 flex items-center justify-center">
-                    <item.icon size={17} className="text-[#068140]" />
-                  </div>
-                  <span className="text-xs text-gray-600 leading-snug font-medium">{item.text}</span>
-                </motion.div>
-              ))}
-            </div>
+          {/* Consequence cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {consequences.map((item, i) => (
+              <motion.div
+                key={item.text}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.45, delay: 0.3 + i * 0.07 }}
+                className="flex items-start gap-4 p-5 bg-white/[0.05] border border-white/10 rounded-2xl hover:bg-white/[0.08] transition-colors"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#6ee89a]/10 border border-[#6ee89a]/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <item.icon size={18} className="text-[#6ee89a]" />
+                </div>
+                <span className="text-[14px] text-white/80 leading-snug font-medium pt-1">{item.text}</span>
+              </motion.div>
+            ))}
           </div>
 
           {/* Performance gap banner */}
@@ -1022,16 +1218,16 @@ function ProblemSection() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-8 bg-[#002747] rounded-xl flex items-center justify-between gap-6 px-8 py-5"
+            className="mt-6 bg-white/[0.06] border border-[#068140]/30 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5 px-7 py-5"
           >
             <div className="flex items-center gap-4">
-              <TrendingUp size={22} className="text-[#068140] shrink-0" />
-              <p className="text-white font-serif italic text-lg leading-snug">
+              <TrendingUp size={22} className="text-[#6ee89a] shrink-0" />
+              <p className="text-white font-serif italic text-[18px] leading-snug">
                 This isn't a training problem.{' '}
-                <span className="not-italic font-sans font-semibold text-base">It's a performance gap.</span>
+                <span className="not-italic font-sans font-semibold text-[16px] text-[#6ee89a]">It's a performance gap.</span>
               </p>
             </div>
-            <a href="#contact" className="shrink-0 btn-primary inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full group">
+            <a href="#contact" className="shrink-0 btn-primary inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full group whitespace-nowrap">
               Fix It Now <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
@@ -1043,7 +1239,7 @@ function ProblemSection() {
 
 // ── Trust & Differentiation ───────────────────────────────────────────────────
 
-function TrustSection() {
+export function TrustSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
@@ -1073,8 +1269,8 @@ function TrustSection() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-serif text-[28px] sm:text-[36px] lg:text-[52px] leading-[1.1] text-white mb-6"
             >
-              Why Most Training Fails<br />
-              <em className="italic text-[#6ee89a]">— And Why Prudentia Delivers.</em>
+              Why Conventional Training<br />
+              <em className="italic text-[#6ee89a]">Falls Short — And We Don't.</em>
             </motion.h2>
 
             <motion.p
@@ -1083,7 +1279,7 @@ function TrustSection() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="text-white/75 text-[17px] leading-relaxed mb-8 max-w-lg"
             >
-              While most providers focus on content delivery — dumping information and hoping it sticks — we deliver something different.
+              While conventional providers focus on content delivery — dumping information and hoping it sticks — Prudentia delivers something different.
             </motion.p>
 
             <motion.div
@@ -1142,12 +1338,9 @@ function TrustSection() {
 
 // ── EC-Council Partnership ────────────────────────────────────────────────────
 
-function ECCouncilSection() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-
+export function ECCouncilSection() {
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[#002747]" style={{ minHeight: '560px' }}>
+    <section className="relative overflow-hidden bg-[#002747]" style={{ minHeight: '560px' }}>
       {/* Green glow — top right */}
       <div className="absolute top-0 right-0 w-[55vw] h-[55vw] bg-[#068140]/12 rounded-full blur-[140px] pointer-events-none translate-x-1/4 -translate-y-1/4" />
       {/* Subtle grid texture */}
@@ -1160,7 +1353,8 @@ function ECCouncilSection() {
         <div className="flex items-start justify-between mb-12 lg:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-2 bg-[#068140]/15 border border-[#068140]/30 rounded-full"
           >
@@ -1179,7 +1373,8 @@ function ECCouncilSection() {
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] text-white mb-6"
             >
@@ -1189,16 +1384,18 @@ function ECCouncilSection() {
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.12 }}
               className="text-[17px] text-white/55 leading-relaxed mb-10 max-w-md"
             >
               Certified cybersecurity capability for your entire workforce — from first-line awareness to advanced threat response.
             </motion.p>
             <motion.a
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.38 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               href="#contact"
               className="btn-primary inline-flex items-center gap-2.5 font-bold px-8 py-4 rounded-full text-sm tracking-wide group"
             >
@@ -1213,22 +1410,28 @@ function ECCouncilSection() {
               <motion.div
                 key={f.title}
                 initial={{ opacity: 0, x: 20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.2 + i * 0.1 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.55, delay: i * 0.1 }}
                 className="flex items-start gap-6 py-6 group hover:bg-white/3 px-2 -mx-2 rounded-xl transition-colors"
               >
                 <span className="font-serif text-[28px] font-bold text-[#068140]/40 group-hover:text-[#068140]/80 transition-colors leading-none mt-0.5 shrink-0 w-8">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div>
-                  <h4 className="text-white font-semibold text-[15px] mb-1 leading-snug">{f.title}</h4>
-                  <p className="text-white/45 text-sm leading-relaxed">{f.desc}</p>
+                  <h4 className="text-white font-semibold text-[17px] mb-1.5 leading-snug">{f.title}</h4>
+                  <p className="text-white/55 text-[15px] leading-relaxed">{f.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
         </div>
+        {/* Mobile-only CTA — sits after the feature list */}
+        <a href="#contact" className="mt-8 md:hidden inline-flex items-center gap-2.5 btn-primary font-bold px-8 py-4 rounded-full text-sm tracking-wide group">
+          Explore Cybersecurity Training
+          <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+        </a>
       </div>
     </section>
   );
@@ -1236,9 +1439,7 @@ function ECCouncilSection() {
 
 // ── Skillsoft Percipio ────────────────────────────────────────────────────────
 
-function SkillsoftSection() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+export function SkillsoftSection() {
 
   const platformStats = [
     { value: '200K+', label: 'Learning Assets' },
@@ -1248,7 +1449,7 @@ function SkillsoftSection() {
   ];
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[#F8F7F3] py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-[#F8F7F3] py-20 lg:py-28">
       {/* Cyan accent bar — top */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00a3e0] via-[#00558F] to-transparent" />
 
@@ -1257,7 +1458,8 @@ function SkillsoftSection() {
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-4 py-2 bg-[#00a3e0]/10 border border-[#00a3e0]/25 rounded-full mb-10"
         >
@@ -1272,8 +1474,9 @@ function SkillsoftSection() {
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7 }}
               className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] text-[#002747] mb-6"
             >
               Enterprise Learning<br />
@@ -1281,8 +1484,9 @@ function SkillsoftSection() {
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               className="text-[17px] text-gray-500 leading-relaxed mb-10 max-w-md"
             >
               A fully managed LXP deployed in weeks. AI-personalized learning journeys, 200,000+ assets, and real-time skill intelligence — zero infrastructure required.
@@ -1291,8 +1495,9 @@ function SkillsoftSection() {
             {/* Platform stats row */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
               className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10"
             >
               {platformStats.map((s, i) => (
@@ -1304,9 +1509,10 @@ function SkillsoftSection() {
             </motion.div>
 
             <motion.a
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.45 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               href="#contact"
               className="inline-flex items-center gap-2.5 bg-[#002747] text-white font-bold px-8 py-4 rounded-full hover:bg-[#00558F] transition-colors text-sm tracking-wide group"
             >
@@ -1317,9 +1523,10 @@ function SkillsoftSection() {
 
           {/* Right: features as clean rows */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.25 }}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.65, delay: 0.1 }}
             className="bg-white rounded-3xl border border-[#002747]/8 shadow-[0_8px_40px_-8px_rgba(0,39,71,0.1)] overflow-hidden"
           >
             {skillsoftFeatures.map((f, i) => (
@@ -1329,12 +1536,816 @@ function SkillsoftSection() {
               >
                 <div className="w-1 self-stretch rounded-full bg-[#00a3e0]/20 group-hover:bg-[#00a3e0] transition-colors shrink-0 mt-1" />
                 <div>
-                  <h4 className="text-[#002747] font-semibold text-sm mb-1 leading-snug">{f.title}</h4>
-                  <p className="text-gray-400 text-[13px] leading-relaxed">{f.desc}</p>
+                  <h4 className="text-[#002747] font-semibold text-[17px] mb-1.5 leading-snug">{f.title}</h4>
+                  <p className="text-gray-500 text-[15px] leading-relaxed">{f.desc}</p>
                 </div>
               </div>
             ))}
           </motion.div>
+
+        </div>
+        {/* Mobile-only CTA */}
+        <a href="#contact" className="mt-8 md:hidden inline-flex items-center gap-2.5 bg-[#002747] text-white font-bold px-8 py-4 rounded-full hover:bg-[#00558F] transition-colors text-sm tracking-wide group">
+          Explore the LXP Platform
+          <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+// ── SAP Academy Partnership ───────────────────────────────────────────────────
+
+export function SAPSection() {
+  return (
+    <section className="relative overflow-hidden bg-white py-20 lg:py-28">
+      {/* Top accent bar — SAP blue */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#0070D2] via-[#004C97] to-transparent" />
+      {/* Subtle blue glow — top right */}
+      <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3"
+        style={{ background: 'radial-gradient(ellipse, rgba(0,112,210,0.08) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+
+      <div className="relative max-w-[1280px] mx-auto px-6">
+
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#0070D2]/8 border border-[#0070D2]/20 rounded-full mb-10"
+        >
+          <span className="w-2 h-2 rounded-full bg-[#0070D2]" />
+          <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0070D2]">In Partnership with SAP Academy</span>
+        </motion.div>
+
+        {/* Main 2-col */}
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+
+          {/* Left: heading + desc + CTA */}
+          <div>
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] text-[#002747] mb-6"
+            >
+              Bridging Academia<br />
+              <em className="italic text-[#0070D2]">&amp; Enterprise.</em>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="text-[17px] text-gray-500 leading-relaxed mb-10 max-w-md"
+            >
+              As an authorised SAP Academy partner, Prudentia helps universities and enterprises build comprehensive SAP curricula — closing the gap between academic theory and real-world ERP practice.
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              href="#contact"
+              className="btn-primary inline-flex items-center gap-2.5 font-bold px-8 py-4 rounded-full text-sm tracking-wide group"
+            >
+              Explore SAP Training
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          </div>
+
+          {/* Right: numbered feature list */}
+          <div className="space-y-0 divide-y divide-gray-100">
+            {sapFeatures.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.55, delay: i * 0.1 }}
+                className="flex items-start gap-6 py-6 group hover:bg-[#F0F7FF] px-2 -mx-2 rounded-xl transition-colors"
+              >
+                <span className="font-serif text-[28px] font-bold text-[#0070D2]/30 group-hover:text-[#0070D2]/70 transition-colors leading-none mt-0.5 shrink-0 w-8">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h4 className="text-[#002747] font-semibold text-[17px] mb-1.5 leading-snug">{f.title}</h4>
+                  <p className="text-gray-500 text-[15px] leading-relaxed">{f.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+        {/* Mobile-only CTA */}
+        <a href="#contact" className="mt-8 md:hidden inline-flex items-center gap-2.5 btn-primary font-bold px-8 py-4 rounded-full text-sm tracking-wide group">
+          Explore SAP Training
+          <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+// ── Affiliations (consolidated 3-card summary) ────────────────────────────────
+
+const affiliationCards = [
+  {
+    id: 'ec-council',
+    accentColor: '#068140',
+    logo: '/images/ec-council-logo.png',
+    logoFallback: 'EC-Council',
+    badge: 'Authorised Training Centre',
+    headline: 'Globally Recognised\nCybersecurity Certifications',
+    bullets: [
+      'Certified Ethical Hacker (CEH)',
+      'SOC Analyst (CSA)',
+      'Certified Cloud Security Engineer (CCSE)',
+      'EC-Council Incident Handler (ECIH)',
+    ],
+    cta: 'Explore Certifications',
+    ctaHref: '#',
+  },
+  {
+    id: 'skillsoft',
+    accentColor: '#00a3e0',
+    logo: '/images/skillsoft-logo.png',
+    logoFallback: 'Skillsoft',
+    badge: 'Content Partner',
+    headline: '200,000+ Learning\nAssets on One Platform',
+    bullets: [
+      'AI-Driven Personalisation Engine',
+      'Courses, Videos, Books & Labs',
+      'Skill Intelligence & Analytics',
+      'No Infrastructure Investment',
+    ],
+    cta: 'Explore Platform',
+    ctaHref: '#',
+  },
+  {
+    id: 'sap',
+    accentColor: '#0070D2',
+    logo: '/images/sap-logo.png',
+    logoFallback: 'SAP',
+    badge: 'SAP Academy Partner',
+    headline: 'Enterprise ERP Training\nby Certified SAP Experts',
+    bullets: [
+      'Curriculum Development with Universities',
+      'Hands-On Training in Live SAP Environments',
+      'Full Tool Proficiency Across SAP Modules',
+      'Industry-Recognised SAP Certifications',
+    ],
+    cta: 'Explore SAP Training',
+    ctaHref: '#',
+  },
+];
+
+export function AffiliationsSection() {
+  return (
+    <section className="bg-[#F8F7F3] overflow-hidden">
+      {/* Client preview label */}
+      <div className="w-full bg-amber-50 border-y border-amber-200 py-2.5 text-center">
+        <span className="text-[11px] font-bold text-amber-700 uppercase tracking-[0.2em]">Option 2 — 3-Card Grid</span>
+      </div>
+      <div className="py-24">
+      <div className="max-w-[1280px] mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55 }}
+          className="text-center mb-14"
+        >
+          <SectionTag>Our Partnerships</SectionTag>
+          <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
+            Backed by World-Class Partners
+          </h2>
+          <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+            Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {affiliationCards.map((card, i) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.55, delay: i * 0.12 }}
+              className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_-4px_rgba(0,39,71,0.09)] flex flex-col"
+            >
+              {/* colour top border */}
+              <div className="h-1 w-full" style={{ backgroundColor: card.accentColor }} />
+
+              <div className="flex flex-col flex-1 p-8">
+                {/* badge */}
+                <span
+                  className="inline-block self-start text-[11px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6"
+                  style={{ backgroundColor: card.accentColor + '15', color: card.accentColor }}
+                >
+                  {card.badge}
+                </span>
+
+                {/* headline */}
+                <h3 className="font-serif text-[22px] sm:text-[24px] leading-[1.25] text-[#002747] mb-6 whitespace-pre-line">
+                  {card.headline}
+                </h3>
+
+                {/* bullet list */}
+                <ul className="space-y-3 flex-1 mb-8">
+                  {card.bullets.map(b => (
+                    <li key={b} className="flex items-start gap-3 text-[15px] text-gray-600">
+                      <span
+                        className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ backgroundColor: card.accentColor + '18' }}
+                      >
+                        <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                          <path d="M1 3.5L3.2 5.8L8 1" stroke={card.accentColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <a
+                  href={card.ctaHref}
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold"
+                  style={{ color: card.accentColor }}
+                >
+                  {card.cta}
+                  <ArrowRight size={14} />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Affiliations Tabbed (Option 3) ────────────────────────────────────────────
+
+const tabsData = [
+  {
+    id: 'ec-council',
+    label: 'EC-Council',
+    sub: 'Cybersecurity Certifications',
+    accentColor: '#068140',
+    isDark: false,
+    badge: 'In Partnership with EC-Council',
+    badgeBg: 'rgba(6,129,64,0.08)',
+    badgeBorder: 'rgba(6,129,64,0.20)',
+    badgeText: '#068140',
+    headlineTop: 'From Awareness',
+    headlineBottom: 'to Advanced Defense.',
+    italicColor: '#068140',
+    desc: 'Certified cybersecurity capability for your entire workforce — from first-line awareness to advanced threat response.',
+    features: null as null | {title:string;desc:string}[],
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(6,129,64,0.30)',
+    featureNumHover: 'rgba(6,129,64,0.70)',
+    cta: 'Explore Cybersecurity Training',
+    ctaBg: '#068140',
+    decorText: 'CYBER',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
+  {
+    id: 'skillsoft',
+    label: 'Skillsoft',
+    sub: 'Learning Experience Platform',
+    accentColor: '#00a3e0',
+    isDark: false,
+    badge: 'Powered by Skillsoft Percipio',
+    badgeBg: 'rgba(0,163,224,0.10)',
+    badgeBorder: 'rgba(0,163,224,0.25)',
+    badgeText: '#00558F',
+    headlineTop: 'Enterprise Learning',
+    headlineBottom: 'as a Subscription.',
+    italicColor: '#00558F',
+    desc: 'A fully managed LXP deployed in weeks. AI-personalized learning journeys, 200,000+ assets, and real-time skill intelligence — zero infrastructure required.',
+    features: null as null | {title:string;desc:string}[],
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(0,163,224,0.4)',
+    featureNumHover: 'rgba(0,163,224,0.8)',
+    cta: 'Explore the LXP Platform',
+    ctaBg: '#002747',
+    decorText: '',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
+  {
+    id: 'sap',
+    label: 'SAP Academy',
+    sub: 'ERP & Enterprise Training',
+    accentColor: '#0070D2',
+    isDark: false,
+    badge: 'In Partnership with SAP Academy',
+    badgeBg: 'rgba(0,112,210,0.08)',
+    badgeBorder: 'rgba(0,112,210,0.20)',
+    badgeText: '#0070D2',
+    headlineTop: 'Bridging Academia',
+    headlineBottom: '& Enterprise.',
+    italicColor: '#0070D2',
+    desc: 'As an authorised SAP Academy partner, Prudentia helps universities and enterprises build comprehensive SAP curricula — closing the gap between academic theory and real-world ERP practice.',
+    features: null as null | {title:string;desc:string}[],
+    featureDivider: '#f0f0f0',
+    featureNumBase: 'rgba(0,112,210,0.30)',
+    featureNumHover: 'rgba(0,112,210,0.70)',
+    cta: 'Explore SAP Training',
+    ctaBg: '#0070D2',
+    decorText: 'SAP',
+    panelBg: '#F8F7F3',
+    headlineColor: '#002747',
+    descColor: '#6b7280',
+  },
+];
+
+export function AffiliationsTabsSection() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const partners = tabsData.map((p, i) => ({
+    ...p,
+    features: i === 0 ? ecFeatures : i === 1 ? skillsoftFeatures : sapFeatures,
+  }));
+
+  const p = partners[activeTab];
+
+  const switchTab = (i: number) => {
+    setDir(i > activeTab ? 1 : -1);
+    setActiveTab(i);
+  };
+
+  return (
+    <section className="overflow-hidden">
+      {/* Client preview label */}
+      <div className="w-full bg-indigo-50 border-y border-indigo-200 py-2.5 text-center">
+        <span className="text-[11px] font-bold text-indigo-700 uppercase tracking-[0.2em]">Option 2 — Tabbed Layout</span>
+      </div>
+
+      {/* Section header */}
+      <div className="bg-[#F8F7F3] pt-20 pb-10">
+        <div className="max-w-[1280px] mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55 }}
+          >
+            <SectionTag>Our Partnerships</SectionTag>
+            <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
+              Backed by World-Class Partners
+            </h2>
+            <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+              Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Tab bar */}
+      <div className="bg-[#EDECEA] py-8">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="grid grid-cols-3 gap-4">
+            {partners.map((tab, i) => (
+              <button
+                key={tab.id}
+                onClick={() => switchTab(i)}
+                className={`relative text-left rounded-2xl p-6 transition-all duration-300 outline-none group ${
+                  activeTab === i
+                    ? 'bg-white shadow-[0_8px_32px_-8px_rgba(0,39,71,0.16)]'
+                    : 'bg-white/50 hover:bg-white/80 hover:shadow-[0_4px_16px_-4px_rgba(0,39,71,0.08)]'
+                }`}
+              >
+                {/* Coloured top accent — active only */}
+                {activeTab === i && (
+                  <motion.div
+                    layoutId="tab-accent-bar"
+                    className="absolute top-0 left-5 right-5 h-[3px] rounded-b-full"
+                    style={{ backgroundColor: tab.accentColor }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                  />
+                )}
+
+                {/* Icon dot */}
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-all duration-300"
+                  style={{
+                    backgroundColor: activeTab === i ? tab.accentColor + '18' : 'rgba(0,0,0,0.04)',
+                  }}
+                >
+                  <span
+                    className="w-3.5 h-3.5 rounded-full transition-all duration-300"
+                    style={{ backgroundColor: activeTab === i ? tab.accentColor : '#9ca3af' }}
+                  />
+                </div>
+
+                {/* Text */}
+                <span
+                  className={`block text-[16px] font-semibold leading-tight mb-1.5 transition-colors duration-200 ${
+                    activeTab === i ? 'text-[#002747]' : 'text-gray-500 group-hover:text-gray-700'
+                  }`}
+                >
+                  {tab.label}
+                </span>
+                <span
+                  className={`block text-[12px] leading-snug transition-colors duration-200 ${
+                    activeTab === i ? 'text-gray-400' : 'text-gray-400/70'
+                  }`}
+                >
+                  {tab.sub}
+                </span>
+
+                {/* Active chevron caret pointing down into panel */}
+                {activeTab === i && (
+                  <motion.div
+                    layoutId="tab-caret"
+                    className="absolute -bottom-[13px] left-1/2 -translate-x-1/2 w-6 h-6 bg-white rotate-45 shadow-[2px_2px_4px_-1px_rgba(0,39,71,0.08)]"
+                    transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Panel */}
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={activeTab}
+          custom={dir}
+          initial={{ opacity: 0, x: dir * 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: dir * -40 }}
+          transition={{ duration: 0.38, ease: [0.32, 0, 0.67, 0] }}
+          style={{ backgroundColor: p.panelBg }}
+          className="relative overflow-hidden"
+        >
+          {/* Decorative text watermark */}
+          {p.decorText && (
+            <span
+              className="absolute top-0 right-8 font-serif text-[8rem] font-bold leading-none select-none pointer-events-none"
+              style={{ color: p.isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,39,71,0.04)' }}
+            >
+              {p.decorText}
+            </span>
+          )}
+          {/* Accent glow */}
+          <div
+            className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3"
+            style={{ background: `radial-gradient(ellipse, ${p.accentColor}14 0%, transparent 70%)`, filter: 'blur(90px)' }}
+          />
+
+          <div className="relative max-w-[1280px] mx-auto px-6 py-16 lg:py-24">
+
+            {/* Badge */}
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-10"
+              style={{ backgroundColor: p.badgeBg, border: `1px solid ${p.badgeBorder}` }}
+            >
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.accentColor }} />
+              <span className="text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: p.badgeText }}>{p.badge}</span>
+            </div>
+
+            {/* 2-col grid */}
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+
+              {/* Left */}
+              <div>
+                <h2
+                  className="font-serif text-[28px] sm:text-[36px] md:text-[44px] lg:text-[58px] leading-[1.05] mb-6"
+                  style={{ color: p.headlineColor }}
+                >
+                  {p.headlineTop}<br />
+                  <em className="italic" style={{ color: p.italicColor }}>{p.headlineBottom}</em>
+                </h2>
+                <p className="text-[17px] leading-relaxed mb-10 max-w-md" style={{ color: p.descColor }}>
+                  {p.desc}
+                </p>
+                {/* Skillsoft mini-stats */}
+                {activeTab === 1 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+                    {[
+                      { v: '200K+', l: 'Learning Assets' },
+                      { v: 'AI', l: 'Personalized Paths' },
+                      { v: '8 wks', l: 'Avg. Time to Deploy' },
+                      { v: '45M+', l: 'Learners Globally' },
+                    ].map(s => (
+                      <div key={s.l} className="bg-white rounded-xl p-4 border border-[#002747]/8 shadow-sm">
+                        <div className="font-serif text-[24px] font-bold leading-none mb-1" style={{ color: p.accentColor }}>{s.v}</div>
+                        <div className="text-[10px] uppercase tracking-widest text-gray-400 leading-snug">{s.l}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2.5 text-white font-bold px-8 py-4 rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide group"
+                  style={{ backgroundColor: p.ctaBg }}
+                >
+                  {p.cta}
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+
+              {/* Right: feature list */}
+              <div
+                className={`divide-y rounded-2xl overflow-hidden ${p.isDark ? '' : 'bg-white border border-[#002747]/8 shadow-[0_8px_40px_-8px_rgba(0,39,71,0.10)]'}`}
+                style={{ borderColor: p.isDark ? 'transparent' : undefined, divideColor: p.featureDivider }}
+              >
+                {(p.features ?? []).map((f, fi) => (
+                  <div
+                    key={f.title}
+                    className={`flex items-start gap-6 px-6 py-6 transition-colors group ${p.isDark ? 'hover:bg-white/5' : 'hover:bg-[#f5f9ff]'}`}
+                    style={{ borderTop: fi > 0 ? `1px solid ${p.featureDivider}` : 'none' }}
+                  >
+                    <span
+                      className="font-serif text-[28px] font-bold leading-none mt-0.5 shrink-0 w-8 transition-colors"
+                      style={{ color: p.featureNumBase }}
+                    >
+                      {String(fi + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <h4
+                        className="font-semibold text-[17px] mb-1.5 leading-snug"
+                        style={{ color: p.isDark ? '#ffffff' : '#002747' }}
+                      >
+                        {f.title}
+                      </h4>
+                      <p className="text-[15px] leading-relaxed" style={{ color: p.isDark ? 'rgba(255,255,255,0.5)' : '#9ca3af' }}>
+                        {f.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </section>
+  );
+}
+
+// ── Option B: Sticky Tab Bar ──────────────────────────────────────────────────
+
+export function AffiliationsStickySection() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const partners = tabsData.map((p, i) => ({
+    ...p,
+    features: i === 0 ? ecFeatures : i === 1 ? skillsoftFeatures : sapFeatures,
+  }));
+
+  const p = partners[activeTab];
+
+  const switchTab = (i: number) => {
+    setDir(i > activeTab ? 1 : -1);
+    setActiveTab(i);
+  };
+
+  return (
+    <section className="overflow-hidden bg-[#F8F7F3]">
+      {/* Label */}
+      <div className="w-full bg-violet-50 border-y border-violet-200 py-2.5 text-center">
+        <span className="text-[11px] font-bold text-violet-700 uppercase tracking-[0.2em]">Option B — Sticky Tab Bar</span>
+      </div>
+
+      {/* Section header — scrolls away */}
+      <div className="max-w-[1280px] mx-auto px-6 pt-20 pb-10 text-center">
+        <SectionTag>Our Partnerships</SectionTag>
+        <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
+          Backed by World-Class Partners
+        </h2>
+        <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+          Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+        </p>
+      </div>
+
+      {/* Sticky tab bar */}
+      <div className="sticky top-[80px] z-20 bg-[#EDECEA] border-b border-[#D8D5CF]">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="grid grid-cols-3 gap-4 py-5">
+            {partners.map((tab, i) => (
+              <button
+                key={tab.id}
+                onClick={() => switchTab(i)}
+                className={`relative text-left rounded-xl px-5 py-4 transition-all duration-300 ${
+                  activeTab === i
+                    ? 'bg-white shadow-[0_4px_20px_-4px_rgba(0,39,71,0.14)]'
+                    : 'bg-white/50 hover:bg-white/80'
+                }`}
+              >
+                {activeTab === i && (
+                  <motion.div layoutId="sticky-tab-bar" className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full" style={{ backgroundColor: tab.accentColor }} transition={{ type: 'spring', stiffness: 500, damping: 40 }} />
+                )}
+                <div className="flex items-center gap-3">
+                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: activeTab === i ? tab.accentColor : '#d1d5db' }} />
+                  <div>
+                    <span className={`block text-[14px] font-semibold leading-tight ${activeTab === i ? 'text-[#002747]' : 'text-gray-500'}`}>{tab.label}</span>
+                    <span className="block text-[11px] text-gray-400 mt-0.5">{tab.sub}</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Content panel — full natural height, no overflow hidden */}
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={activeTab}
+          custom={dir}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{ backgroundColor: p.panelBg }}
+        >
+          <div className="max-w-[1280px] mx-auto px-6 py-8 lg:py-10">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ backgroundColor: p.badgeBg, border: `1px solid ${p.badgeBorder}` }}
+            >
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.accentColor }} />
+              <span className="text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: p.badgeText }}>{p.badge}</span>
+            </div>
+
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+              <div>
+                <h2 className="font-serif text-[28px] sm:text-[38px] lg:text-[52px] leading-[1.05] mb-6" style={{ color: p.headlineColor }}>
+                  {p.headlineTop}<br />
+                  <em className="italic" style={{ color: p.italicColor }}>{p.headlineBottom}</em>
+                </h2>
+                <p className="text-[17px] leading-relaxed mb-10 max-w-md" style={{ color: p.descColor }}>{p.desc}</p>
+                <a href="#contact" className="inline-flex items-center gap-2.5 text-white font-bold px-8 py-4 rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide group" style={{ backgroundColor: p.ctaBg }}>
+                  {p.cta}
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+              <div className={`rounded-2xl overflow-hidden self-start -mt-2 ${!p.isDark ? 'bg-white border border-[#002747]/8 shadow-[0_8px_40px_-8px_rgba(0,39,71,0.10)]' : ''}`}>
+                {(p.features ?? []).map((f, fi) => (
+                  <div key={f.title} className={`flex items-start gap-6 px-6 py-5 ${fi > 0 ? `border-t` : ''} transition-colors group ${p.isDark ? 'hover:bg-white/5' : 'hover:bg-[#f5f9ff]'}`} style={{ borderColor: p.featureDivider }}>
+                    <span className="font-serif text-[26px] font-bold leading-none mt-0.5 shrink-0 w-8" style={{ color: p.featureNumBase }}>{String(fi + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h4 className="font-semibold text-[16px] mb-1 leading-snug" style={{ color: p.isDark ? '#ffffff' : '#002747' }}>{f.title}</h4>
+                      <p className="text-[14px] leading-relaxed" style={{ color: p.isDark ? 'rgba(255,255,255,0.5)' : '#9ca3af' }}>{f.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </section>
+  );
+}
+
+// ── Option C: Side Tabs ────────────────────────────────────────────────────────
+
+export function AffiliationsSideTabsSection() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const partners = tabsData.map((p, i) => ({
+    ...p,
+    features: i === 0 ? ecFeatures : i === 1 ? skillsoftFeatures : sapFeatures,
+  }));
+
+  const p = partners[activeTab];
+
+  const switchTab = (i: number) => {
+    setDir(i > activeTab ? 1 : -1);
+    setActiveTab(i);
+  };
+
+  return (
+    <section className="bg-[#F8F7F3] overflow-hidden">
+      {/* Label */}
+      <div className="w-full bg-teal-50 border-y border-teal-200 py-2.5 text-center">
+        <span className="text-[11px] font-bold text-teal-700 uppercase tracking-[0.2em]">Option C — Side Tabs</span>
+      </div>
+
+      <div className="max-w-[1280px] mx-auto px-6 py-20">
+
+        {/* Section header */}
+        <div className="text-center mb-14">
+          <SectionTag>Our Partnerships</SectionTag>
+          <h2 className="mt-5 font-serif text-[30px] sm:text-[38px] lg:text-[46px] leading-[1.15] text-[#002747]">
+            Backed by World-Class Partners
+          </h2>
+          <p className="mt-4 text-gray-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+            Prudentia is authorised by leading global organisations — giving you access to certified programmes, premium content, and enterprise-grade platforms.
+          </p>
+        </div>
+
+        {/* Side tabs grid */}
+        <div className="grid lg:grid-cols-[280px_1fr] gap-6 items-start">
+
+          {/* Left: stacked tab cards */}
+          <div className="flex flex-col gap-3">
+            {partners.map((tab, i) => (
+              <button
+                key={tab.id}
+                onClick={() => switchTab(i)}
+                className={`relative text-left rounded-2xl p-5 transition-all duration-300 border ${
+                  activeTab === i
+                    ? 'bg-white shadow-[0_8px_32px_-8px_rgba(0,39,71,0.16)] border-transparent'
+                    : 'bg-white/60 border-transparent hover:bg-white/90'
+                }`}
+              >
+                {/* Left accent bar */}
+                {activeTab === i && (
+                  <motion.div layoutId="side-tab-accent" className="absolute left-0 top-4 bottom-4 w-[3px] rounded-r-full" style={{ backgroundColor: tab.accentColor }} transition={{ type: 'spring', stiffness: 500, damping: 40 }} />
+                )}
+                <div className="pl-3">
+                  {/* Dot + label */}
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <span className="w-2 h-2 rounded-full shrink-0 transition-colors" style={{ backgroundColor: activeTab === i ? tab.accentColor : '#d1d5db' }} />
+                    <span className={`text-[15px] font-semibold leading-tight ${activeTab === i ? 'text-[#002747]' : 'text-gray-500'}`}>{tab.label}</span>
+                  </div>
+                  <p className={`text-[12px] leading-snug pl-[18px] ${activeTab === i ? 'text-gray-500' : 'text-gray-400'}`}>{tab.sub}</p>
+                  {/* Feature preview — visible only on active */}
+                  {activeTab === i && (
+                    <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mt-4 pl-[18px] space-y-1.5">
+                      {(tab.features ?? (i === 0 ? ecFeatures : i === 1 ? skillsoftFeatures : sapFeatures)).map(f => (
+                        <li key={f.title} className="flex items-center gap-2 text-[12px] text-gray-500">
+                          <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: tab.accentColor }} />
+                          {f.title}
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Right: content panel */}
+          <AnimatePresence mode="wait" custom={dir}>
+            <motion.div
+              key={activeTab}
+              custom={dir}
+              initial={{ opacity: 0, x: dir * 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: dir * -24 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl overflow-hidden"
+              style={{ backgroundColor: p.panelBg }}
+            >
+              {/* Accent top border */}
+              <div className="h-1" style={{ backgroundColor: p.accentColor }} />
+
+              <div className="p-8 lg:p-10">
+                <div
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
+                  style={{ backgroundColor: p.badgeBg, border: `1px solid ${p.badgeBorder}` }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p.accentColor }} />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: p.badgeText }}>{p.badge}</span>
+                </div>
+
+                <h2 className="font-serif text-[26px] lg:text-[36px] leading-[1.1] mb-4" style={{ color: p.headlineColor }}>
+                  {p.headlineTop}<br />
+                  <em className="italic" style={{ color: p.italicColor }}>{p.headlineBottom}</em>
+                </h2>
+                <p className="text-[15px] leading-relaxed mb-8" style={{ color: p.descColor }}>{p.desc}</p>
+
+                {/* Feature list */}
+                <div className={`rounded-xl overflow-hidden mb-8 ${!p.isDark ? 'border border-[#002747]/8' : ''}`}>
+                  {(p.features ?? []).map((f, fi) => (
+                    <div key={f.title} className={`flex items-start gap-4 px-5 py-4 ${fi > 0 ? 'border-t' : ''} ${p.isDark ? 'hover:bg-white/5' : 'hover:bg-[#f5f9ff]'} transition-colors`} style={{ borderColor: p.featureDivider }}>
+                      <span className="font-serif text-[20px] font-bold leading-none mt-0.5 shrink-0 w-7" style={{ color: p.featureNumBase }}>{String(fi + 1).padStart(2, '0')}</span>
+                      <div>
+                        <h4 className="font-semibold text-[15px] mb-0.5" style={{ color: p.isDark ? '#ffffff' : '#002747' }}>{f.title}</h4>
+                        <p className="text-[13px] leading-relaxed" style={{ color: p.isDark ? 'rgba(255,255,255,0.5)' : '#9ca3af' }}>{f.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <a href="#contact" className="inline-flex items-center gap-2.5 text-white font-bold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide group" style={{ backgroundColor: p.ctaBg }}>
+                  {p.cta}
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
         </div>
       </div>
@@ -1344,7 +2355,7 @@ function SkillsoftSection() {
 
 // ── Testimonials ──────────────────────────────────────────────────────────────
 
-function TestimonialsSection() {
+export function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -1381,9 +2392,9 @@ function TestimonialsSection() {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="max-w-[1280px] mx-auto px-6">
-        <div className="grid lg:grid-cols-[340px_1fr] gap-16 lg:gap-24 items-center">
+        <div className="flex flex-col lg:grid lg:grid-cols-[340px_1fr] gap-16 lg:gap-24 lg:items-center">
 
-          {/* Left — label + heading + navigation */}
+          {/* Left — label + heading + description (desktop also has nav) */}
           <div>
             <SectionTag>Client Stories</SectionTag>
             <h2 className="mt-5 font-serif text-[28px] sm:text-[36px] lg:text-[50px] leading-[1.1] text-[#002747]">
@@ -1394,18 +2405,12 @@ function TestimonialsSection() {
               Every engagement measured against real business impact — not certificates issued.
             </p>
 
-            {/* Arrow nav + counter */}
-            <div className="mt-10 flex items-center gap-4">
-              <button
-                onClick={prev}
-                className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200"
-              >
+            {/* Arrow nav + counter — desktop only */}
+            <div className="hidden lg:flex mt-10 items-center gap-4">
+              <button onClick={prev} className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200">
                 <ChevronLeft size={18} />
               </button>
-              <button
-                onClick={next}
-                className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200"
-              >
+              <button onClick={next} className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200">
                 <ChevronRight size={18} />
               </button>
               <span className="ml-2 font-serif text-[#002747]">
@@ -1415,12 +2420,9 @@ function TestimonialsSection() {
               </span>
             </div>
 
-            {/* Progress bar */}
-            <div className="mt-5 w-[180px] h-[2px] bg-gray-100 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#068140] rounded-full"
-                style={{ width: `${progress}%`, transition: paused ? 'none' : 'width 40ms linear' }}
-              />
+            {/* Progress bar — desktop only */}
+            <div className="hidden lg:block mt-5 w-[180px] h-[2px] bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[#068140] rounded-full" style={{ width: `${progress}%`, transition: paused ? 'none' : 'width 40ms linear' }} />
             </div>
           </div>
 
@@ -1467,41 +2469,166 @@ function TestimonialsSection() {
             </AnimatePresence>
           </div>
 
+          {/* Mobile nav + progress — appears after quote */}
+          <div className="lg:hidden flex items-center gap-4">
+            <button onClick={prev} className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200">
+              <ChevronLeft size={18} />
+            </button>
+            <button onClick={next} className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#002747] hover:bg-[#002747] hover:text-white transition-all duration-200">
+              <ChevronRight size={18} />
+            </button>
+            <span className="ml-2 font-serif text-[#002747]">
+              <span className="text-[22px] font-bold">{String(active + 1).padStart(2, '0')}</span>
+              <span className="text-gray-300 mx-1.5">/</span>
+              <span className="text-sm text-gray-400">{String(testimonials.length).padStart(2, '0')}</span>
+            </span>
+            <div className="ml-4 flex-1 h-[2px] bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[#068140] rounded-full" style={{ width: `${progress}%`, transition: paused ? 'none' : 'width 40ms linear' }} />
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   );
 }
 
-// ── CTA ───────────────────────────────────────────────────────────────────────
 
-function CTASection() {
+// ── CTA Variant: Light ────────────────────────────────────────────────────────
+
+export function CTAVariantLight() {
   return (
-    <section id="contact" className="relative bg-[#002747] py-24 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#068140] opacity-[0.12] rounded-full blur-[100px]" />
+    <section className="relative bg-[#F8F7F3] overflow-hidden">
+      {/* Subtle warm tint blob — top right */}
+      <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-[#068140]/5 rounded-full blur-[160px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      {/* Large faint serif word */}
+      <div className="absolute bottom-0 right-0 pointer-events-none select-none overflow-hidden leading-none">
+        <span className="font-serif font-bold text-[#002747] opacity-[0.04]"
+          style={{ fontSize: 'clamp(80px,14vw,180px)', letterSpacing: '-0.03em' }}>
+          LEARN
+        </span>
       </div>
-      <div className="relative z-10 max-w-[760px] mx-auto px-6 text-center">
-        <SectionTag>Let's Work Together</SectionTag>
-        <h2 className="mt-4 font-serif text-[32px] sm:text-[40px] md:text-[48px] leading-[1.15] text-white">
-          Ready to Transform Your<br /><em className="italic">Learning Culture?</em>
-        </h2>
-        <p className="mt-6 text-white/65 text-lg max-w-lg mx-auto leading-relaxed">
-          Talk to our experts. We'll design a learning strategy tailored to your goals, your people, and your budget.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-4 justify-center">
-          <a
-            href="mailto:info@prudentia.bizzinfo.in"
-            className="inline-flex items-center gap-2 bg-white text-[#002747] font-semibold px-8 py-4 rounded-full hover:bg-gray-50 transition-colors shadow-lg text-sm"
+
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 py-24">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start">
+
+          {/* ── Left ── */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 mb-6"
+            >
+              <span className="w-6 h-0.5 bg-[#068140]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#068140]">Let's Work Together</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-serif text-[32px] sm:text-[44px] lg:text-[56px] leading-[1.1] text-[#002747]"
+            >
+              Ready to Build a<br />
+              <em className="italic" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(to right, #068140, #00558F)' }}>High-Performance</em><br />
+              Learning Culture?
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mt-6 text-gray-500 text-[16px] leading-relaxed max-w-lg"
+            >
+              Talk to our experts. We'll design a learning strategy tailored to your goals, your people, and your budget — no generic templates.
+            </motion.p>
+
+            {/* Three paths */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-10 grid sm:grid-cols-3 gap-3"
+            >
+              {[
+                { label: 'Corporate Training',    desc: 'ILT, VILT & Blended' },
+                { label: 'eLearning Development', desc: 'SCORM, Micro, Gamified' },
+                { label: 'Translation',           desc: '40+ Languages, Fast TAT' },
+              ].map(p => (
+                <a key={p.label} href="#services"
+                  className="group flex flex-col gap-1 p-4 rounded-xl border border-gray-200 bg-white hover:border-[#068140]/40 hover:shadow-sm transition-all"
+                >
+                  <span className="text-[#002747] font-semibold text-[15px] group-hover:text-[#068140] transition-colors">{p.label}</span>
+                  <span className="text-gray-400 text-[13px]">{p.desc}</span>
+                </a>
+              ))}
+            </motion.div>
+
+            {/* Pull quote */}
+            <motion.blockquote
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-10 pl-5 border-l-2 border-[#068140]"
+            >
+              <p className="text-gray-500 italic text-[15px] leading-relaxed">
+                "Prudentia didn't just deliver training — they transformed how our teams think about learning."
+              </p>
+              <p className="mt-2 text-[#068140] text-[12px] font-semibold uppercase tracking-wider">— VP People & Culture, TechServe Global</p>
+            </motion.blockquote>
+          </div>
+
+          {/* ── Right: form card ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white rounded-3xl shadow-[0_8px_48px_rgba(0,39,71,0.12)] overflow-hidden"
           >
-            Schedule a Free Call <ArrowRight size={16} />
-          </a>
-          <a
-            href="#services"
-            className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-8 py-4 rounded-full hover:border-white/60 transition-colors text-sm"
-          >
-            View Our Services
-          </a>
+            {/* Card top accent */}
+            <div className="h-[3px] bg-gradient-to-r from-[#068140] to-[#00558F]" />
+
+            <div className="p-8">
+              <h3 className="font-serif text-[22px] text-[#002747] mb-1">Book a Free Consultation</h3>
+              <p className="text-gray-400 text-sm mb-7">Response within 24 hours. No commitment required.</p>
+
+              <div className="space-y-3">
+                <input placeholder="Your name"
+                  className="w-full px-4 py-3 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#068140] transition" />
+                <input placeholder="Work email" type="email"
+                  className="w-full px-4 py-3 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#068140] transition" />
+                <input placeholder="Organisation"
+                  className="w-full px-4 py-3 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#068140] transition" />
+                <select className="w-full px-4 py-3 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl text-gray-500 focus:outline-none focus:border-[#068140] transition">
+                  <option value="">I need help with…</option>
+                  <option>Corporate Training</option>
+                  <option>eLearning Development</option>
+                  <option>Translation & Localisation</option>
+                  <option>Certification Programme</option>
+                  <option>Multiple Services</option>
+                </select>
+                <textarea rows={2} placeholder="Briefly describe your training needs…"
+                  className="w-full px-4 py-3 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#068140] transition resize-none" />
+              </div>
+
+              <button className="mt-5 w-full btn-primary py-3.5 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
+                <span>Send My Request</span>
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+
+            {/* Direct contact strip */}
+            <div className="border-t border-gray-100 bg-[#F8F7F3] px-8 py-5 flex flex-col sm:flex-row gap-4">
+              <a href="mailto:info@prudentia.bizzinfo.in" className="flex items-center gap-2 text-gray-400 hover:text-[#002747] text-xs transition-colors">
+                <Mail size={13} className="text-[#068140]" /> info@prudentia.bizzinfo.in
+              </a>
+              <a href="tel:+912066025600" className="flex items-center gap-2 text-gray-400 hover:text-[#002747] text-xs transition-colors">
+                <Phone size={13} className="text-[#068140]" /> +91 20 6602 5600
+              </a>
+            </div>
+          </motion.div>
+
         </div>
       </div>
     </section>
@@ -1510,333 +2637,198 @@ function CTASection() {
 
 // ── Footer ────────────────────────────────────────────────────────────────────
 
-function Footer() {
+export function Footer() {
   return (
-    <footer className="bg-[#001d37] py-16">
-      <div className="max-w-[1280px] mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-10 mb-12">
-          <div>
-            <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-10 w-auto brightness-0 invert mb-4" />
-            <p className="text-white/55 text-sm leading-relaxed">
-              Real-world learning solutions for global organisations.
+    <footer
+      className="relative lg:fixed lg:bottom-0 lg:left-0 lg:right-0 w-full bg-[#001528] overflow-hidden"
+      style={{ zIndex: 0 }}
+    >
+      {/* Giant "PRUDENTIA" wordmark watermark — no repeating pattern */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <motion.span
+          className="font-serif font-bold leading-none whitespace-nowrap"
+          style={{
+            fontSize: 'clamp(80px, 18vw, 240px)',
+            letterSpacing: '-0.03em',
+            WebkitTextStroke: '1px rgba(255,255,255,0.06)',
+            color: 'transparent',
+          }}
+          animate={{ x: [0, -50, 0] }}
+          transition={{ duration: 28, ease: 'easeInOut', repeat: Infinity }}
+        >
+          PRUDENTIA
+        </motion.span>
+      </div>
+      {/* Green wash — top left */}
+      <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-[#068140]/10 rounded-full blur-[170px] pointer-events-none -translate-x-1/3 -translate-y-1/3" />
+      {/* Blue wash — bottom right */}
+      <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] bg-[#00558F]/12 rounded-full blur-[150px] pointer-events-none translate-x-1/4 translate-y-1/4" />
+      {/* Thin gradient accent line at top */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#068140] via-[#00558F] to-transparent" />
+
+      <div className="relative z-10">
+
+        {/* ── Main grid ── */}
+        <div className="max-w-[1280px] mx-auto px-6 pt-20 pb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.4fr] gap-12">
+
+            {/* Col 1: Brand */}
+            <div>
+              <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-11 w-auto mb-5" />
+              <p className="text-white/55 text-[15px] leading-relaxed max-w-[260px]">
+                Real-world learning solutions that drive measurable performance for global organisations.
+              </p>
+              <div className="flex items-center gap-4 mt-6">
+                {[
+                  { Icon: Linkedin, href: 'https://linkedin.com' },
+                  { Icon: Twitter,  href: 'https://twitter.com' },
+                  { Icon: Youtube,  href: 'https://youtube.com' },
+                ].map(({ Icon, href }) => (
+                  <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/45 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all">
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Col 2: Services */}
+            <div>
+              <h5 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6ee89a]/70 mb-5">Services</h5>
+              <ul className="space-y-3.5">
+                {[
+                  { label: 'Corporate Training',         href: '#services' },
+                  { label: 'eLearning Development',      href: '#services' },
+                  { label: 'Translation & Localisation', href: '#services' },
+                  { label: 'Workshops & Bootcamps',      href: '#services' },
+                  { label: 'Certification Programmes',   href: '#services' },
+                ].map(item => (
+                  <li key={item.label}>
+                    <a href={item.href}
+                      className="group flex items-center gap-2.5 text-white/55 text-[15px] hover:text-white transition-colors">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#068140] shrink-0 group-hover:scale-150 transition-transform" />
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Col 3: Company */}
+            <div>
+              <h5 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6ee89a]/70 mb-5">Company</h5>
+              <ul className="space-y-3.5">
+                {[
+                  { label: 'About Us',     href: '#' },
+                  { label: 'Case Studies', href: '#' },
+                  { label: 'Clients',      href: '#' },
+                  { label: 'Careers',      href: '#' },
+                  { label: 'Contact Us',   href: '#contact' },
+                ].map(item => (
+                  <li key={item.label}>
+                    <a href={item.href}
+                      className="group flex items-center gap-2.5 text-white/55 text-[15px] hover:text-white transition-colors">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#068140] shrink-0 group-hover:scale-150 transition-transform" />
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Col 4: Contact + Stats */}
+            <div>
+              <h5 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6ee89a]/70 mb-5">Get in Touch</h5>
+              <ul className="space-y-4">
+                <li>
+                  <a href="mailto:info@prudentia.net.in"
+                    className="flex items-start gap-3 text-white/55 text-[15px] hover:text-white transition-colors group">
+                    <span className="w-8 h-8 rounded-lg bg-white/6 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/25 transition-colors">
+                      <Mail size={14} className="text-[#068140]" />
+                    </span>
+                    info@prudentia.net.in
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+919730021477"
+                    className="flex items-start gap-3 text-white/55 text-[15px] hover:text-white transition-colors group">
+                    <span className="w-8 h-8 rounded-lg bg-white/6 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/25 transition-colors">
+                      <Phone size={14} className="text-[#068140]" />
+                    </span>
+                    +91 97300 21477
+                  </a>
+                </li>
+                <li>
+                  <div className="flex items-start gap-3 text-white/55 text-[15px]">
+                    <span className="w-8 h-8 rounded-lg bg-white/6 flex items-center justify-center shrink-0 mt-0.5">
+                      <MapPin size={14} className="text-[#068140]" />
+                    </span>
+                    <span>101, 1st Floor, Piyusha Society<br />Law College Road, Erandwane<br />Pune 411004, Maharashtra</span>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex items-start gap-3 text-white/55 text-[15px]">
+                    <span className="w-8 h-8 rounded-lg bg-white/6 flex items-center justify-center shrink-0 mt-0.5">
+                      <Clock size={14} className="text-[#068140]" />
+                    </span>
+                    <span>Mon – Fri: 9:00 AM – 6:00 PM IST<br />Saturday: 9:00 AM – 1:00 PM IST</span>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+        </div>
+
+        {/* ── Bottom bar ── */}
+        <div className="border-t border-white/[0.08]">
+          <div className="max-w-[1280px] mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-white/30 text-[13px]">
+              © {new Date().getFullYear()} Prudentia Technology Solutions India Pvt Ltd. All rights reserved.
             </p>
-          </div>
-
-          <div>
-            <h5 className="text-white font-semibold text-sm mb-4">Services</h5>
-            <ul className="space-y-2.5">
-              {['Corporate Training', 'eLearning Development', 'Translation & Localisation', 'Workshops & Bootcamps'].map(item => (
-                <li key={item}>
-                  <a href="#services" className="text-white/55 text-sm hover:text-white transition-colors">{item}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h5 className="text-white font-semibold text-sm mb-4">Company</h5>
-            <ul className="space-y-2.5">
-              {['About Us', 'Case Studies', 'Careers', 'Contact Us'].map(item => (
-                <li key={item}>
-                  <a href="#" className="text-white/55 text-sm hover:text-white transition-colors">{item}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h5 className="text-white font-semibold text-sm mb-4">Get in Touch</h5>
-            <ul className="space-y-2.5">
-              <li>
-                <a href="mailto:info@prudentia.bizzinfo.in" className="text-white/55 text-sm hover:text-white transition-colors">
-                  info@prudentia.bizzinfo.in
+            <div className="flex items-center gap-6">
+              {['Privacy Policy', 'Terms of Service', 'Sitemap'].map(link => (
+                <a key={link} href="#"
+                  className="text-white/30 text-[13px] hover:text-white/65 transition-colors">
+                  {link}
                 </a>
-              </li>
-              <li className="text-white/55 text-sm">Pune, Maharashtra, India</li>
-            </ul>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/35 text-sm">© 2025 Prudentia Technology Solutions India Pvt Ltd. All rights reserved.</p>
-          <div className="flex gap-6">
-            {['Privacy Policy', 'Terms of Service'].map(link => (
-              <a key={link} href="#" className="text-white/35 text-sm hover:text-white/60 transition-colors">{link}</a>
-            ))}
-          </div>
-        </div>
       </div>
     </footer>
   );
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
-
-// ── Hero Variant 1 — Split-screen ────────────────────────────────────────────
-
-function HeroVariant1() {
-  return (
-    <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden">
-      {/* Variant label */}
-      <div className="absolute top-20 left-6 z-30">
-        <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#068140] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full shadow-lg">
-          ✦ Hero Variant 1
-        </span>
-      </div>
-
-      {/* ── Left: cream content panel ── */}
-      <div className="relative z-10 flex flex-col justify-center w-full lg:w-1/2 bg-white px-8 sm:px-14 xl:px-20 pt-36 pb-16 lg:pt-28">
-        {/* Green left accent bar */}
-        <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-b from-[#068140] via-[#00558F] to-[#068140]" />
-
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <span className="w-6 h-0.5 bg-[#068140]" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#068140]">Corporate Training · eLearning · Translation</span>
-          </div>
-
-          <h1 className="font-serif text-[38px] sm:text-[50px] xl:text-[62px] leading-[1.06] tracking-tight text-[#002747]">
-            Empower Your Team.<br />
-            <em className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#068140] to-[#00558F]">
-              Transform Your Business.
-            </em>
-          </h1>
-
-          <p className="mt-5 text-[15px] text-gray-500 leading-relaxed max-w-[420px]">
-            Prudentia partners with global organisations to design learning experiences that drive real, measurable performance improvement.
-          </p>
-
-          {/* Compact trust badges */}
-          <div className="mt-8 flex flex-wrap gap-4 text-[12px] font-medium text-gray-500">
-            {['ISO 9001:2015 Certified', '98% Client Retention', '500+ Companies'].map(b => (
-              <span key={b} className="flex items-center gap-1.5">
-                <Check size={12} className="text-[#068140]" />
-                {b}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Enquiry form — inlined below headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 bg-[#F8F7F3] rounded-2xl border border-gray-100 p-6"
-        >
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-4">Get a Free Consultation</p>
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            <input placeholder="Your name" className="px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
-            <input placeholder="Organisation" className="px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
-          </div>
-          <input placeholder="work@company.com" type="email" className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800 mb-3" />
-          <select className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#068140] text-gray-400 mb-3">
-            <option value="">Select a service…</option>
-            <option>Corporate Training</option>
-            <option>eLearning Development</option>
-            <option>Translation & Localisation</option>
-            <option>Certification Programme</option>
-          </select>
-          <button className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
-            Request Free Consultation
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-          <p className="text-center text-[11px] text-gray-400 mt-2">No commitment · Response within 24 hours</p>
-        </motion.div>
-      </div>
-
-      {/* ── Right: raw photo, no overlay ── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full lg:w-1/2 min-h-[50vh] lg:min-h-screen relative"
-      >
-        <img
-          src="/images/hero-slide-2.jpg"
-          alt="Prudentia Training"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* Subtle stat overlay — bottom-left of photo */}
-        <div className="absolute bottom-8 left-8 right-8 lg:right-auto lg:max-w-[280px]">
-          <div className="bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/50">
-            <div className="grid grid-cols-3 divide-x divide-gray-200">
-              {[{ v: '500+', l: 'Companies' }, { v: '15+', l: 'Years' }, { v: '25+', l: 'Countries' }].map(s => (
-                <div key={s.l} className="text-center px-3">
-                  <p className="font-serif text-[22px] font-bold text-[#002747] leading-none">{s.v}</p>
-                  <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-1">{s.l}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-// ── Hero Variant 5 — Asymmetric grid ─────────────────────────────────────────
-
-function HeroVariant5() {
-  return (
-    <section className="relative min-h-screen bg-[#F8F7F3] overflow-hidden pt-24 pb-12 px-6 sm:px-10 xl:px-16">
-      {/* Variant label */}
-      <div className="absolute top-20 left-6 z-30">
-        <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#00558F] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full shadow-lg">
-          ✦ Hero Variant 5
-        </span>
-      </div>
-
-      {/* Subtle grid texture */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: 'linear-gradient(#002747 1px,transparent 1px),linear-gradient(90deg,#002747 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
-
-      <div className="relative max-w-[1280px] mx-auto h-full">
-        <div
-          className="grid gap-4 lg:gap-5"
-          style={{
-            gridTemplateColumns: '1fr 380px',
-            gridTemplateRows: 'auto auto',
-          }}
-        >
-          {/* ── Top-left: oversized headline ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col justify-end pb-4 col-span-2 lg:col-span-1"
-          >
-            <div className="inline-flex items-center gap-2 mb-5">
-              <span className="w-6 h-0.5 bg-[#068140]" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#068140]">Global Learning Partner</span>
-            </div>
-            <h1 className="font-serif text-[44px] sm:text-[60px] xl:text-[78px] leading-[1.0] tracking-tight text-[#002747]">
-              Learning That<br />
-              Actually{' '}
-              <em className="italic text-transparent bg-clip-text bg-gradient-to-br from-[#068140] to-[#00558F]">
-                Changes
-              </em><br />
-              Behaviour.
-            </h1>
-            <p className="mt-5 text-[15px] text-gray-500 leading-relaxed max-w-[480px]">
-              We design training, eLearning and localisation programmes that drive real performance — not just attendance records.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#process" className="btn-primary inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-full">
-                <span>See How It Works</span>
-                <ArrowRight size={14} />
-              </a>
-              <a href="#testimonials" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-500 hover:text-[#002747] transition-colors">
-                Client Stories →
-              </a>
-            </div>
-          </motion.div>
-
-          {/* ── Top-right: tilted stat card ── */}
-          <motion.div
-            initial={{ opacity: 0, rotate: -6, scale: 0.92 }}
-            animate={{ opacity: 1, rotate: -3, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:flex flex-col justify-between bg-[#002747] rounded-3xl p-7 shadow-[0_20px_60px_-12px_rgba(0,39,71,0.35)] self-end"
-            style={{ transformOrigin: 'bottom right' }}
-          >
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-4">Our Track Record</p>
-              <div className="space-y-5">
-                {[
-                  { v: '500+', l: 'Companies Trained' },
-                  { v: '15+',  l: 'Industries Served' },
-                  { v: '25+',  l: 'Countries Reached' },
-                ].map(s => (
-                  <div key={s.l} className="flex items-baseline gap-3">
-                    <span className="font-serif text-[42px] text-white leading-none font-bold">{s.v}</span>
-                    <span className="text-[11px] uppercase tracking-wider text-white/45 leading-tight">{s.l}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="mt-6 pt-5 border-t border-white/10">
-              <p className="text-white/45 text-[11px] leading-relaxed">ISO 9001:2015 · Microsoft Partner · EC-Council</p>
-            </div>
-          </motion.div>
-
-          {/* ── Bottom-left: compact form ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_32px_-4px_rgba(0,0,0,0.08)] p-6 col-span-2 lg:col-span-1"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-4">Start the Conversation</p>
-            <div className="grid grid-cols-2 gap-3 mb-3">
-              <input placeholder="Your name" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
-              <input placeholder="work@company.com" type="email" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
-            </div>
-            <div className="grid grid-cols-2 gap-3 mb-3">
-              <input placeholder="Organisation" className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] placeholder:text-gray-300 text-gray-800" />
-              <select className="px-3.5 py-2.5 text-sm bg-[#F8F7F3] border border-gray-200 rounded-xl focus:outline-none focus:border-[#068140] text-gray-400">
-                <option value="">Service…</option>
-                <option>Corporate Training</option>
-                <option>eLearning Development</option>
-                <option>Translation & Localisation</option>
-                <option>Certification Programme</option>
-              </select>
-            </div>
-            <button className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
-              Request Free Consultation
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </motion.div>
-
-          {/* ── Bottom-right: photo with diagonal clip ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:block rounded-3xl overflow-hidden relative"
-            style={{
-              clipPath: 'polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%)',
-              minHeight: '320px',
-            }}
-          >
-            <img
-              src="/images/hero-slide-3.jpg"
-              alt="Prudentia Training"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#002747]/40 to-transparent" />
-          </motion.div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function Home1() {
   return (
-    <ReactLenis root>
-      <div className="min-h-screen bg-[#F8F7F3]">
+    <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+      {/* Content — z-1 sits above the fixed footer; bg-[#F8F7F3] prevents gaps showing footer behind sections */}
+      <div className="relative z-[1] bg-[#F8F7F3]">
         <Navbar />
         <HeroSection />
-        <HeroVariant1 />
-        <HeroVariant5 />
-        <StatsStrip />
+        <ClientLogoStrip />
         <ProblemSection />
         <ProcessSection />
-        <WhySection />
-        <TrustSection />
+          <WhySection />
         <BentoGallery />
         <ECCouncilSection />
         <SkillsoftSection />
+        <SAPSection />
+        {/* Option B — desktop only */}
+        <div className="hidden lg:block">
+          <AffiliationsStickySection />
+        </div>
         <TestimonialsSection />
-        <CTASection />
-        <Footer />
+        <CTAVariantLight />
       </div>
+      {/* Transparent spacer — desktop only. Same height as footer. Scrolls past to uncover fixed footer beneath. */}
+      <div className="hidden lg:block h-[480px] relative z-[1]" />
+      <Footer />
     </ReactLenis>
   );
 }

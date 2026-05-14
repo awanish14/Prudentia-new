@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   motion,
   useScroll,
@@ -420,249 +420,143 @@ function Navigation() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HERO SLIDER  (exact GSAP fromTo port → imperative MotionValues)
+// HERO
 // ─────────────────────────────────────────────────────────────────────────────
 
-const SLIDES = [
-  {
-    id: 1,
-    sub: "Performance Engineering",
-    before: "Turn Workforce Training Into",
-    accent: "Measurable",
-    after:  "Business Growth",
-    desc: "AI-powered learning systems built for global enterprises. We reduce onboarding time by 40% and tie every module directly to your primary business KPIs.",
-    cta: "Book Your Free Audit",
-    img: "/images/hero-slide-1.jpg",
-  },
-  {
-    id: 2,
-    sub: "Global Deployment",
-    before: "Train Teams at",
-    accent: "Scale",
-    after:  "Without Losing Consistency",
-    desc: "Deliver standardized, high-impact learning across regions and roles. Ensure compliance and elevate global workforce capabilities seamlessly.",
-    cta: "Explore Solutions",
-    img: "/images/hero-slide-2.jpg",
-  },
-  {
-    id: 3,
-    sub: "Measured Impact",
-    before: "Replace Training Programs With",
-    accent: "Performance",
-    after:  "Systems",
-    desc: "Move beyond workshops. We build learning ecosystems tied directly to business KPIs, identifying talent and driving real-time productivity.",
-    cta: "View Case Studies",
-    img: "/images/hero-slide-3.jpg",
-  },
-];
-
-const N = SLIDES.length;
-const CARD_EASE = [0.25, 1, 0.35, 1] as const;
-const CARD_DUR  = 1.9;
-
 function Hero() {
-  const [current, setCurrent] = useState(0);
-  const currentRef = useRef(0);
-
-  // ── Imperative MotionValues per card (mirrors GSAP's fromTo exactly) ──
-  // Initial positions: card-0 active, card-1 next(right peek), card-2 upcoming(far right)
-  const cx0 = useMotionValue('0%');   const co0 = useMotionValue(1);   const cs0 = useMotionValue(1);
-  const cx1 = useMotionValue('112%'); const co1 = useMotionValue(0.6); const cs1 = useMotionValue(0.9);
-  const cx2 = useMotionValue('224%'); const co2 = useMotionValue(0);   const cs2 = useMotionValue(0.8);
-  const cxAll = [cx0, cx1, cx2];
-  const coAll = [co0, co1, co2];
-  const csAll = [cs0, cs1, cs2];
-
-  const goTo = useCallback((incoming: number) => {
-    const outgoing = currentRef.current;
-    if (incoming === outgoing) return;
-    currentRef.current = incoming;
-    setCurrent(incoming);
-
-    const upcoming = (incoming + 1) % N;
-    const t = { duration: CARD_DUR, ease: CARD_EASE };
-
-    // 1. Outgoing card → exits LEFT (mirror: gsap.to outgoing → xPercent: -110)
-    animate(cxAll[outgoing], '-112%', t);
-    animate(coAll[outgoing], 0,      t);
-    animate(csAll[outgoing], 0.8,    t);
-
-    // 2. Incoming card → becomes active (mirror: gsap.fromTo incoming → xPercent: 0)
-    animate(cxAll[incoming], '0%', t);
-    animate(coAll[incoming], 1,    t);
-    animate(csAll[incoming], 1,    t);
-
-    // 3. Upcoming card → slides from far-right into preview slot
-    //    (mirror: gsap.fromTo upcoming, {xPercent:220}, {xPercent:110})
-    cxAll[upcoming].set('224%'); // instant teleport to far right (inside overflow:hidden — invisible)
-    animate(cxAll[upcoming], '112%', t);
-    animate(coAll[upcoming], 0.6,    t);
-    animate(csAll[upcoming], 0.9,    t);
-  }, []);
-
-  // Auto-advance
-  useEffect(() => {
-    const t = setTimeout(() => goTo((currentRef.current + 1) % N), 6000);
-    return () => clearTimeout(t);
-  }, [current, goTo]);
-
   return (
-    <section className="relative min-h-[800px] h-screen w-full overflow-hidden flex items-center pt-20">
+    <section className="relative min-h-screen overflow-hidden pt-24 pb-12 px-6 sm:px-10 xl:px-16">
+      {/* Full-screen background image */}
+      <div className="absolute inset-0">
+        <img src="/images/hero-slide-1.jpg" alt="" className="w-full h-full object-cover" />
+      </div>
+      {/* Dark overlay — preserves text legibility */}
+      <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(135deg, rgba(6,24,38,0.97) 0%, rgba(6,24,38,0.90) 50%, rgba(6,24,38,0.70) 100%)' }} />
+      {/* Green left accent bar */}
+      <div className="absolute inset-y-0 left-0 w-[3px] z-[1] bg-[#068140]" />
+      {/* Subtle grid texture */}
+      <div className="absolute inset-0 z-[1] opacity-[0.04]"
+        style={{ backgroundImage: 'linear-gradient(#6ee89a 1px,transparent 1px),linear-gradient(90deg,#6ee89a 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
 
-      {/* ── Full-screen crossfade backgrounds ── */}
-      {SLIDES.map((slide, idx) => (
-        <motion.div key={slide.id}
-          className="absolute inset-0 w-full h-full"
-          initial={false}
-          animate={{ opacity: idx === current ? 1 : 0, scale: idx === current ? 1 : 1.06 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          style={{ zIndex: idx === current ? 1 : 0 }}>
-          <img src={slide.img} alt="" className="w-full h-full object-cover" />
-        </motion.div>
-      ))}
+      <div className="relative z-[2] max-w-[1280px] mx-auto h-full">
+        <div
+          className="grid gap-4 lg:gap-5"
+          style={{
+            gridTemplateColumns: '1fr 380px',
+            gridTemplateRows: 'auto auto',
+          }}
+        >
+          {/* ── Top-left: oversized headline ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 36 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col justify-end pb-4 col-span-2 lg:col-span-1"
+          >
+            <div className="inline-flex items-center gap-2 mb-5">
+              <span className="w-6 h-0.5 bg-[#6ee89a]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]">Global Learning Partner</span>
+            </div>
+            <h1 className="font-serif text-[44px] sm:text-[60px] xl:text-[78px] leading-[1.0] tracking-tight text-white">
+              Learning That<br />
+              Actually{' '}
+              <em className="italic text-transparent bg-clip-text bg-gradient-to-br from-[#6ee89a] to-[#00558F]">
+                Changes
+              </em><br />
+              Behaviour.
+            </h1>
+            <p className="mt-5 text-[15px] text-white/55 leading-relaxed max-w-[480px]">
+              We design training, eLearning and localisation programmes that drive real performance — not just attendance records.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <MagneticButton className="btn-primary inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-full">
+                See How It Works
+                <ArrowRight size={14} />
+              </MagneticButton>
+              <a href="#testimonials" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/40 hover:text-white transition-colors">
+                Client Stories →
+              </a>
+            </div>
+          </motion.div>
 
-      {/* Dark navy overlay — left-heavy for text legibility */}
-      <div className="absolute inset-0 z-10 pointer-events-none
-        bg-gradient-to-r from-[#001829]/96 via-[#001829]/82 to-[#001829]/20" />
-      {/* Prudentia green left accent bar */}
-      <div className="absolute inset-y-0 left-0 w-[3px] z-20 bg-[#008A45]" />
-
-      {/* ── Main content — full width with px padding ── */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-center
-        w-full px-6 sm:px-10 lg:px-16 xl:px-20 max-w-none">
-
-        {/* Left text column */}
-        <div className="relative h-[360px] sm:h-[400px] lg:h-[430px] w-full lg:w-[58%] flex items-center">
-          <AnimatePresence mode="wait">
-            <motion.div key={current}
-              initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
-              transition={{ duration: 0.85, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 flex flex-col justify-center pr-0 lg:pr-12">
-
-              {/* Sub-label — Prudentia pill */}
-              <div className="inline-flex items-center gap-3 px-3 py-1.5
-                bg-white/10 backdrop-blur-sm border border-white/20 rounded-full
-                w-fit mb-6">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#008A45] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#008A45]" />
-                </span>
-                <span className="text-[15px] font-bold uppercase tracking-[0.2em] text-white/85">
-                  {SLIDES[current].sub}
-                </span>
-              </div>
-
-              {/* ── Headline ──
-                  Font: Inter 800 (extrabold) for body words — loaded via Google Fonts
-                  Font: Playfair Display italic for the accent word (Prudentia brand mix)
-                  Template used: text-5xl lg:text-[4rem] font-extrabold tracking-tight  */}
-              <h1 className="font-sans font-bold tracking-tight text-white
-                leading-[1.06] mb-6 max-w-2xl text-4xl sm:text-5xl lg:text-[3.8rem]">
-                {SLIDES[current].before}{' '}
-                <em className="font-serif not-italic italic font-light
-                  text-transparent bg-clip-text
-                  bg-gradient-to-r from-[#008A45] to-[#00558F] pr-1">
-                  {SLIDES[current].accent}
-                </em>{' '}
-                {SLIDES[current].after}
-              </h1>
-
-              {/* Description */}
-              <p className="text-lg text-white/75 leading-relaxed max-w-xl mb-10 font-medium">
-                {SLIDES[current].desc}
-              </p>
-
-              {/* CTA — template's sharp/bold button style */}
-              <div className="flex items-center gap-4">
-                <MagneticButton className="btn-primary px-8 py-[18px] font-bold text-[15px] uppercase tracking-widest flex-shrink-0">
-                  {SLIDES[current].cta}
-                </MagneticButton>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* ── Slide dot nav (desktop only — mobile uses the card strip's progress bar) ── */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
-          className="hidden lg:flex items-center gap-3 mt-6
-            lg:absolute lg:bottom-10 lg:left-16 xl:left-20">
-          {SLIDES.map((_, idx) => (
-            <button key={idx} onClick={() => goTo(idx)}
-              className={cn(
-                'transition-all duration-500 rounded-none',
-                idx === current ? 'w-8 h-[3px] bg-[#008A45]' : 'w-[10px] h-[3px] bg-white/30 hover:bg-[#008A45]/50'
-              )}
-              aria-label={`Go to slide ${idx + 1}`} />
-          ))}
-        </motion.div>
-
-        {/* ── Bounded card strip (bottom on mobile, bottom-right on desktop) ── */}
-        <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 lg:bottom-10
-          left-0 md:left-auto right-0
-          w-full md:w-[580px] lg:w-[880px] xl:w-[980px]
-          h-[200px] sm:h-[240px] md:h-[300px] lg:h-[340px]
-          overflow-hidden pointer-events-none z-30">
-          <div className="relative w-full h-full pointer-events-auto">
-            {SLIDES.map((slide, idx) => (
-              <motion.div key={slide.id}
-                onClick={() => goTo(idx)}
-                style={{
-                  x: cxAll[idx],
-                  opacity: coAll[idx],
-                  scale: csAll[idx],
-                  zIndex: idx === current ? 10 : 5,
-                }}
-                className="absolute top-3 bottom-3 sm:top-4 sm:bottom-4 left-4 sm:left-6 rounded-[2px]
-                  w-[260px] sm:w-[300px] md:w-[330px] lg:w-[400px] xl:w-[430px]
-                  overflow-hidden cursor-pointer shadow-2xl
-                  border border-white/15 group flex flex-col"
-                aria-label={`Go to slide ${idx + 1}`}>
-
-                {/* Image section — shifts slightly up on hover */}
-                <div className="relative flex-1 overflow-hidden">
-                  <img src={slide.img} alt={slide.sub}
-                    className="w-full h-full object-cover scale-[1.04] -translate-y-2
-                      transition-transform duration-1000 group-hover:scale-[1.08] group-hover:-translate-y-3" />
-                  <div className="absolute inset-0 bg-gray-900/25 transition-colors group-hover:bg-gray-900/10" />
-                  {/* Green top accent on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#008A45]
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  {/* Slide number badge */}
-                  <div className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full
-                    bg-white/20 backdrop-blur-md flex items-center justify-center
-                    border border-white/30 text-white text-[15px] font-extrabold shadow-md">
-                    {String(idx + 1).padStart(2, '0')}
+          {/* ── Top-right: tilted stat card ── */}
+          <motion.div
+            initial={{ opacity: 0, rotate: -6, scale: 0.92 }}
+            animate={{ opacity: 1, rotate: -3, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:flex flex-col justify-between bg-[#002747] rounded-3xl p-7 shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5)] self-end border border-white/8"
+            style={{ transformOrigin: 'bottom right' }}
+          >
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6ee89a]/70 mb-4">Our Track Record</p>
+              <div className="space-y-5">
+                {[
+                  { v: '500+', l: 'Companies Trained' },
+                  { v: '15+',  l: 'Industries Served' },
+                  { v: '25+',  l: 'Countries Reached' },
+                ].map(s => (
+                  <div key={s.l} className="flex items-baseline gap-3">
+                    <span className="font-serif text-[42px] text-white leading-none font-bold">{s.v}</span>
+                    <span className="text-[11px] uppercase tracking-wider text-white/45 leading-tight">{s.l}</span>
                   </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="text-white/45 text-[11px] leading-relaxed">EC-Council · Skillsoft Percipio · SAP Academy</p>
+            </div>
+          </motion.div>
+
+          {/* ── Bottom-left: compact form ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white/[0.05] rounded-3xl border border-white/10 shadow-[0_8px_32px_-4px_rgba(0,0,0,0.3)] p-6 col-span-2 lg:col-span-1 backdrop-blur-sm"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/35 mb-4">Start the Conversation</p>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input placeholder="Your name" className="px-3.5 py-2.5 text-sm bg-white/[0.07] border border-white/10 rounded-xl focus:outline-none focus:border-[#6ee89a] placeholder:text-white/25 text-white" />
+              <input placeholder="work@company.com" type="email" className="px-3.5 py-2.5 text-sm bg-white/[0.07] border border-white/10 rounded-xl focus:outline-none focus:border-[#6ee89a] placeholder:text-white/25 text-white" />
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input placeholder="Organisation" className="px-3.5 py-2.5 text-sm bg-white/[0.07] border border-white/10 rounded-xl focus:outline-none focus:border-[#6ee89a] placeholder:text-white/25 text-white" />
+              <select className="px-3.5 py-2.5 text-sm bg-white/[0.07] border border-white/10 rounded-xl focus:outline-none focus:border-[#6ee89a] text-white/35">
+                <option value="">Service…</option>
+                <option>Corporate Training</option>
+                <option>eLearning Development</option>
+                <option>Translation &amp; Localisation</option>
+                <option>Certification Programme</option>
+              </select>
+            </div>
+            <button className="w-full btn-primary py-3 text-sm font-bold rounded-xl flex items-center justify-center gap-2 group">
+              Request Free Consultation
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
+
+          {/* ── Bottom-right: trust badges ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:flex flex-col justify-center gap-3 pl-4"
+          >
+            {[
+              { label: 'SAP Academy Partner',     sub: 'Authorised ERP curriculum & certification' },
+              { label: 'EC-Council Authorized',   sub: 'Global cybersecurity training' },
+              { label: 'Skillsoft Percipio',      sub: '200K+ assets on the AI-powered LXP' },
+            ].map(b => (
+              <div key={b.label} className="flex items-start gap-3 py-3 px-4 bg-white/[0.06] border border-white/10 rounded-xl backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6ee89a] shrink-0 mt-1.5" />
+                <div>
+                  <p className="text-white text-[14px] font-semibold leading-tight">{b.label}</p>
+                  <p className="text-white/45 text-[12px] mt-0.5">{b.sub}</p>
                 </div>
-
-                {/* White text box below image */}
-                <div className="bg-white px-3 py-3 sm:px-5 sm:py-4 shrink-0 min-h-[68px] sm:min-h-[80px] md:min-h-[90px]">
-                  <h4 className="text-gray-900 text-[15px] sm:text-[16px] lg:text-[18px] font-semibold leading-snug line-clamp-2 mb-2 sm:mb-3 tracking-tight">
-                    {slide.before} <span className="text-[#008A45] italic font-serif">{slide.accent}</span> {slide.after}
-                  </h4>
-                  <div className="h-[2px] bg-gray-100 w-full overflow-hidden rounded-full">
-                    <motion.div
-                      key={`p-${idx}-${current}`}
-                      className="h-full bg-[#008A45]"
-                      initial={{ width: '0%' }}
-                      animate={idx === current ? { width: '100%' } : { width: '0%' }}
-                      transition={idx === current ? { duration: 6, ease: 'linear' } : { duration: 0.25 }}
-                    />
-                  </div>
-                </div>
-
-                {/* Corner bracket accents */}
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#008A45]/70 pointer-events-none" />
-                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#008A45]/70 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#008A45]/70 pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#008A45]/70 pointer-events-none" />
-
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </section>
@@ -1771,21 +1665,18 @@ function TrustAndDifferentiation() {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2400&auto=format&fit=crop')",
-        }}
+        style={{ backgroundImage: "url('/images/hero-slide-2.jpg')" }}
       />
-      {/* Gradient overlays for legibility + brand wash */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#07111d]/95 via-[#001530]/85 to-[#00558F]/55" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#07111d]/85 via-transparent to-[#07111d]/30" />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(135deg, rgba(7,17,29,0.96) 0%, rgba(0,21,48,0.88) 55%, rgba(0,85,143,0.60) 100%)' }} />
+      <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(to top, rgba(7,17,29,0.88) 0%, transparent 50%, rgba(7,17,29,0.32) 100%)' }} />
       <div className="absolute -top-40 -right-40 w-[42vw] h-[42vw] bg-[#008A45]/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-40 -left-40 w-[36vw] h-[36vw] bg-[#00558F]/22 rounded-full blur-[120px] pointer-events-none" />
       {/* Left green accent bar — matches Hero / Problem */}
       <div className="absolute inset-y-0 left-0 w-[3px] bg-[#008A45] z-30" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8 lg:gap-10">
+      <div className="relative z-[2] w-full max-w-7xl mx-auto flex flex-col gap-8 lg:gap-10">
 
         {/* Eyebrow + heading */}
         <div className="flex flex-col items-start max-w-4xl">
@@ -2457,7 +2348,6 @@ export default function Home() {
         className="bg-white min-h-screen selection:bg-[var(--color-prudentia-green)]/10 selection:text-[var(--color-prudentia-green-dark)] font-sans antialiased text-gray-900 lg:cursor-none"
         style={{ position: 'relative', zIndex: 1 }}
       >
-        {/* Nav is absolute within this relative container — overlays the hero, scrolls away with the page */}
         <div className="relative">
           <Navigation />
           <Hero />
@@ -2465,7 +2355,6 @@ export default function Home() {
         <main>
           <Problem />
           <ProblemMobile />
-          <Solution />
           <HowItWorks />
           <OfferBreakdown />
           <ECCouncilSection />
@@ -2475,9 +2364,7 @@ export default function Home() {
           <FinalCTA />
         </main>
       </div>
-      {/* Transparent spacer (desktop only) — footer clip-reveals through here as FinalCTA scrolls away. */}
       <div className="hidden lg:block h-screen relative z-[1]" />
-      {/* Footer: fixed bottom on desktop (clip-revealed via spacer). In normal flow on mobile (renders after content). */}
       <Footer />
       <ExitIntent />
     </ReactLenis>
