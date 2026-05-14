@@ -470,7 +470,7 @@ function Hero() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <MagneticButton className="btn-primary inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-full">
-                See How It Works
+                Our Services
                 <ArrowRight size={14} />
               </MagneticButton>
               <a href="#testimonials" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/40 hover:text-white transition-colors">
