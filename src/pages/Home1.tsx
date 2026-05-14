@@ -231,18 +231,18 @@ const megaColumns = [
   {
     heading: 'Learning Solutions',
     items: [
-      { icon: Users,     title: 'Corporate Training',     desc: 'ILT, VILT, blended learning & leadership programmes' },
-      { icon: BookOpen,  title: 'eLearning Development',  desc: 'SCORM, microlearning, gamification & custom LXP builds' },
-      { icon: Target,    title: 'Workshops & Bootcamps',  desc: 'Immersive, hands-on skill-building intensives' },
+      { icon: Users,     title: 'Corporate Training',     desc: 'ILT, VILT, blended learning & leadership programmes',        href: '/services/corporate-training' },
+      { icon: BookOpen,  title: 'eLearning Development',  desc: 'SCORM, microlearning, gamification & custom LXP builds',     href: '/services/elearning' },
+      { icon: Target,    title: 'Workshops & Bootcamps',  desc: 'Immersive, hands-on skill-building intensives',              href: '/services/workshops' },
     ],
   },
   {
     heading: 'Specialisations & Partners',
     items: [
-      { icon: Languages,      title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content' },
-      { icon: Shield,         title: 'Cybersecurity (EC-Council)', desc: 'CEH, CSA, CCSE, ECIH — certified cyber training & awareness' },
-      { icon: GraduationCap,  title: 'SAP Academy Training',       desc: 'ERP curriculum, SAP tools & professional certification' },
-      { icon: Monitor,        title: 'Skillsoft Percipio LXP',     desc: 'AI-driven platform with 200K+ digital learning assets' },
+      { icon: Languages,      title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content',   href: '/services/translation' },
+      { icon: Shield,         title: 'Cybersecurity (EC-Council)', desc: 'CEH, CSA, CCSE, ECIH — certified cyber training & awareness', href: '/services/certification' },
+      { icon: GraduationCap,  title: 'SAP Academy Training',       desc: 'ERP curriculum, SAP tools & professional certification',      href: '/services/certification' },
+      { icon: Monitor,        title: 'Skillsoft Percipio LXP',     desc: 'AI-driven platform with 200K+ digital learning assets',       href: '/services/elearning' },
     ],
   },
 ];
@@ -333,7 +333,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
                     {col.items.map(item => (
                       <a
                         key={item.title}
-                        href={lk('#services')}
+                        href={item.href}
                         className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#F8F7F3] transition-colors"
                       >
                         <div className="w-9 h-9 rounded-lg bg-[#068140]/8 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/15 transition-colors">
@@ -424,7 +424,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
                       {megaColumns.flatMap(c => c.items).map(item => (
                         <a
                           key={item.title}
-                          href={lk('#services')}
+                          href={item.href}
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center gap-3 py-2.5"
                         >
@@ -2382,11 +2382,11 @@ export function CTAVariantLight() {
               className="mt-10 grid sm:grid-cols-3 gap-3"
             >
               {[
-                { label: 'Corporate Training',    desc: 'ILT, VILT & Blended' },
-                { label: 'eLearning Development', desc: 'SCORM, Micro, Gamified' },
-                { label: 'Translation',           desc: '40+ Languages, Fast TAT' },
+                { label: 'Corporate Training',    desc: 'ILT, VILT & Blended',      href: '/services/corporate-training' },
+                { label: 'eLearning Development', desc: 'SCORM, Micro, Gamified',    href: '/services/elearning' },
+                { label: 'Translation',           desc: '40+ Languages, Fast TAT',   href: '/services/translation' },
               ].map(p => (
-                <a key={p.label} href="#services"
+                <a key={p.label} href={p.href}
                   className="group flex flex-col gap-1 p-4 rounded-xl border border-gray-200 bg-white hover:border-[#068140]/40 hover:shadow-sm transition-all"
                 >
                   <span className="text-[#002747] font-semibold text-[15px] group-hover:text-[#068140] transition-colors">{p.label}</span>
@@ -2527,11 +2527,11 @@ export function Footer() {
               <h5 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6ee89a]/70 mb-5">Services</h5>
               <ul className="space-y-3.5">
                 {[
-                  { label: 'Corporate Training',         href: '#services' },
-                  { label: 'eLearning Development',      href: '#services' },
-                  { label: 'Translation & Localisation', href: '#services' },
-                  { label: 'Workshops & Bootcamps',      href: '#services' },
-                  { label: 'Certification Programmes',   href: '#services' },
+                  { label: 'Corporate Training',         href: '/services/corporate-training' },
+                  { label: 'eLearning Development',      href: '/services/elearning' },
+                  { label: 'Translation & Localisation', href: '/services/translation' },
+                  { label: 'Workshops & Bootcamps',      href: '/services/workshops' },
+                  { label: 'Certification Programmes',   href: '/services/certification' },
                 ].map(item => (
                   <li key={item.label}>
                     <a href={item.href}

@@ -267,11 +267,10 @@ function Logo({ light = false }: { light?: boolean }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
-  { label: 'Corporate Training', href: '#' },
-  { label: 'eLearning', href: '#' },
-  { label: 'About Us', href: '#' },
-  { label: 'Case Studies', href: '#' },
-  { label: 'Contact', href: '#' },
+  { label: 'Corporate Training', href: '/services/corporate-training' },
+  { label: 'eLearning',          href: '/services/elearning' },
+  { label: 'About',              href: '/about' },
+  { label: 'Contact',            href: '/contact' },
 ];
 
 function Navigation() {
@@ -295,30 +294,6 @@ function Navigation() {
             className="hidden lg:flex items-center gap-0.5 px-3 py-1.5 rounded-full border backdrop-blur-md"
             style={{ backgroundColor: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.22)' }}
           >
-            {/* Home dropdown */}
-            <div className="relative"
-              onMouseEnter={() => setHomeDropdown(true)}
-              onMouseLeave={() => setHomeDropdown(false)}
-            >
-              <button className="px-4 py-2 rounded-full text-[14px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20 flex items-center gap-1">
-                Home <ChevronDown size={12} />
-              </button>
-              <AnimatePresence>
-                {homeDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2 w-44 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/10"
-                    style={{ background: '#07111d' }}
-                  >
-                    <a href="/" className="block px-4 py-3 text-[13px] font-semibold text-white/90 hover:bg-white/10 uppercase tracking-wider">Home (Original)</a>
-                    <a href="/home1.html" className="block px-4 py-3 text-[13px] font-semibold text-[#6ee89a] hover:bg-white/10 uppercase tracking-wider">Home 1 →</a>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
             {NAV_LINKS.map(link => (
               <a key={link.label} href={link.href}
                 className="px-4 py-2 rounded-full text-[14px] font-bold uppercase tracking-widest transition-colors duration-200 whitespace-nowrap text-gray-800 hover:text-[#008A45] hover:bg-white/20">
