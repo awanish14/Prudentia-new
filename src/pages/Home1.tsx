@@ -276,7 +276,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
       }`}
     >
       {/* ── Main bar ── */}
-      <div className="max-w-[1280px] mx-auto px-6 h-[72px] flex items-center justify-between">
+      <div className="max-w-[1280px] mx-auto px-6 h-[88px] flex items-center justify-between">
         <a href="/" className="shrink-0">
           <img src="/images/logo-prudentia.png" alt="Prudentia" className="h-14 w-auto" />
         </a>
@@ -638,7 +638,7 @@ function HeroSection() {
       {/* Green left accent bar */}
       <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-b from-[#068140] via-[#00558F] to-[#068140] z-20" />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-28 pb-16 w-full">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-36 pb-16 w-full">
         <div className="grid lg:grid-cols-[1fr_420px] gap-12 xl:gap-20 items-center">
 
           {/* ── Left: headline + trust badges ── */}

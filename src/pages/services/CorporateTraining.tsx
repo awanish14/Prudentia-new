@@ -86,7 +86,7 @@ const audiences = [
 
 function HeroSection() {
   return (
-    <section className="relative bg-[#002747] pt-[120px] pb-20 overflow-hidden">
+    <section className="relative bg-[#002747] pt-[136px] pb-20 overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.06]"
         style={{
