@@ -15,3 +15,21 @@ coverage/
 NEXT_SESSION_PROMPT.md
 NEXT-SESSION-PROMPT.md
 CORTEX_INTELLIGENCE_MASTER.md
+
+# Deploy scripts (versioned one-offs — use deploy.py)
+deploy_v*.py
+
+# Local screenshots and design files
+screenshot*.png
+FireShot*.png
+white-logo.png
+
+# Alternate entry HTML files (not used in build)
+home-original.html
+
+# Raw asset/source folders (not for git)
+Prudetia_Clinet_logo/
+dist-server/
+
+# Documents
+*.pptx
