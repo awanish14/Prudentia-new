@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import App from './App';
+import Home1 from './pages/Home1';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import CorporateTraining from './pages/services/CorporateTraining';
@@ -12,7 +12,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Home1 />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/services/corporate-training" element={<CorporateTraining />} />
