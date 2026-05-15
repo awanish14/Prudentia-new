@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { ReactLenis } from 'lenis/react';
+
 import {
   ArrowRight, Monitor, Code2, Globe, Zap,
   CheckCircle2, Layers, Play, BarChart3, MessageSquare, Cpu,
@@ -291,7 +291,7 @@ function CTASection() {
 
 export default function ELearning() {
   return (
-    <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+    <>
       <div className="relative z-[1] bg-[#F8F7F3]">
         <Navbar isSubpage />
         <HeroSection />
@@ -302,6 +302,6 @@ export default function ELearning() {
       </div>
       <div className="hidden lg:block h-[480px] relative z-[1] pointer-events-none" />
       <Footer />
-    </ReactLenis>
+    </>
   );
 }

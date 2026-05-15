@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { ReactLenis } from 'lenis/react';
+
 import {
   ArrowRight, Globe, FileText, Mic, CheckCircle2,
   Languages, MessageSquare, Layers, Users, Zap,
@@ -325,7 +325,7 @@ function CTASection() {
 
 export default function Translation() {
   return (
-    <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+    <>
       <div className="relative z-[1] bg-[#F8F7F3]">
         <Navbar isSubpage />
         <HeroSection />
@@ -337,6 +337,6 @@ export default function Translation() {
       </div>
       <div className="hidden lg:block h-[480px] relative z-[1] pointer-events-none" />
       <Footer />
-    </ReactLenis>
+    </>
   );
 }

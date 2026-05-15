@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ReactLenis, useLenis } from 'lenis/react';
 import Home1 from './pages/Home1';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -11,26 +12,33 @@ import Translation from './pages/services/Translation';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
+  const lenis = useLenis();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, lenis]);
   return null;
 }
 
 export default function Router() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home1 />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/services/corporate-training" element={<CorporateTraining />} />
-        <Route path="/services/elearning" element={<ELearning />} />
-        <Route path="/services/certification" element={<Certification />} />
-        <Route path="/services/workshops" element={<Workshops />} />
-        <Route path="/services/translation" element={<Translation />} />
-      </Routes>
+      <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home1 />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services/corporate-training" element={<CorporateTraining />} />
+          <Route path="/services/elearning" element={<ELearning />} />
+          <Route path="/services/certification" element={<Certification />} />
+          <Route path="/services/workshops" element={<Workshops />} />
+          <Route path="/services/translation" element={<Translation />} />
+        </Routes>
+      </ReactLenis>
     </BrowserRouter>
   );
 }

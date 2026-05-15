@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { ReactLenis } from 'lenis/react';
+
 import {
   ArrowRight, Mail, Phone, MapPin, Clock,
   Check, AlertCircle, Loader,
@@ -327,7 +327,7 @@ function MainSection() {
 
 export default function Contact() {
   return (
-    <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+    <>
       <div className="relative z-[1] bg-[#F8F7F3]">
         <Navbar isSubpage />
         <HeroSection />
@@ -335,6 +335,6 @@ export default function Contact() {
       </div>
       <div className="hidden lg:block h-[480px] relative z-[1]" />
       <Footer />
-    </ReactLenis>
+    </>
   );
 }

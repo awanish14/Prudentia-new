@@ -1,5 +1,4 @@
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { ReactLenis } from 'lenis/react';
 import {
   ChevronDown, ChevronLeft, ChevronRight, ArrowRight, Check, Menu, X,
   Globe, BookOpen, Users, Award, Clock, Target, MessageSquare,
@@ -2637,7 +2636,7 @@ export function Footer() {
 
 export default function Home1() {
   return (
-    <ReactLenis root options={{ lerp: 0.07, duration: 1.4, smoothWheel: true }}>
+    <>
       {/* Content — z-1 sits above the fixed footer; bg-[#F8F7F3] prevents gaps showing footer behind sections */}
       <div className="relative z-[1] bg-[#F8F7F3]">
         <Navbar />
@@ -2654,6 +2653,6 @@ export default function Home1() {
       {/* Transparent spacer — desktop only. Same height as footer. Scrolls past to uncover fixed footer beneath. */}
       <div className="hidden lg:block h-[480px] relative z-[1]" />
       <Footer />
-    </ReactLenis>
+    </>
   );
 }
