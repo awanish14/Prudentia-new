@@ -7,6 +7,7 @@ import {
   Mail, Phone, MapPin, Linkedin, Twitter, Youtube, GraduationCap, Monitor,
 } from 'lucide-react';
 import { useRef, useState, useEffect, type ElementType, type ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 // ── Hooks ─────────────────────────────────────────────────────────────────────
 
@@ -281,7 +282,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="/" className={`text-sm font-medium transition-colors ${linkCls}`}>Home</a>
+          <Link to="/" className={`text-sm font-medium transition-colors ${linkCls}`}>Home</Link>
 
           {/* Services mega menu trigger */}
           <div
@@ -295,13 +296,13 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
 
           <a href={lk('#process')}      className={`text-sm font-medium transition-colors ${linkCls}`}>How We Work</a>
           <a href={lk('#testimonials')} className={`text-sm font-medium transition-colors ${linkCls}`}>Testimonials</a>
-          <a href="/about" className={`text-sm font-medium transition-colors ${navLight ? 'text-white font-semibold' : isSubpage ? 'text-[#00558F]' : 'text-[#002747] hover:text-[#00558F]'}`}>About Us</a>
+          <Link to="/about" className={`text-sm font-medium transition-colors ${navLight ? 'text-white font-semibold' : isSubpage ? 'text-[#00558F]' : 'text-[#002747] hover:text-[#00558F]'}`}>About Us</Link>
         </div>
 
         <div className="flex items-center gap-4">
-          <a href="/contact" className="hidden md:inline-flex btn-primary px-5 py-2.5 text-sm rounded-full">
+          <Link to="/contact" className="hidden md:inline-flex btn-primary px-5 py-2.5 text-sm rounded-full">
             <span>Contact Us</span>
-          </a>
+          </Link>
           <button className={`md:hidden p-2 ${navLight ? 'text-white' : 'text-[#002747]'}`} onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -331,9 +332,9 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-5">{col.heading}</p>
                   <div className="space-y-1">
                     {col.items.map(item => (
-                      <a
+                      <Link
                         key={item.title}
-                        href={item.href}
+                        to={item.href}
                         className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#F8F7F3] transition-colors"
                       >
                         <div className="w-9 h-9 rounded-lg bg-[#068140]/8 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#068140]/15 transition-colors">
@@ -343,7 +344,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
                           <p className="text-[14px] font-semibold text-[#002747] group-hover:text-[#00558F] transition-colors leading-tight">{item.title}</p>
                           <p className="text-[12px] text-gray-400 mt-0.5 leading-snug">{item.desc}</p>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -402,7 +403,7 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-6 py-4 space-y-1">
-              <a href="/" className="block text-sm font-medium text-[#002747] py-2">Home</a>
+              <Link to="/" className="block text-sm font-medium text-[#002747] py-2">Home</Link>
 
               {/* Mobile services accordion */}
               <div>
@@ -422,15 +423,15 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
                       className="overflow-hidden pl-3 border-l-2 border-[#068140]/20 ml-1 mb-1"
                     >
                       {megaColumns.flatMap(c => c.items).map(item => (
-                        <a
+                        <Link
                           key={item.title}
-                          href={item.href}
+                          to={item.href}
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center gap-3 py-2.5"
                         >
                           <item.icon size={14} className="text-[#068140] shrink-0" />
                           <span className="text-sm text-gray-700">{item.title}</span>
-                        </a>
+                        </Link>
                       ))}
                     </motion.div>
                   )}
@@ -439,11 +440,11 @@ export function Navbar({ isSubpage = false }: { isSubpage?: boolean }) {
 
               <a href={lk('#process')}      className="block text-sm text-gray-700 py-2">How We Work</a>
               <a href={lk('#testimonials')} className="block text-sm text-gray-700 py-2">Testimonials</a>
-              <a href="/about" className="block text-sm text-gray-700 py-2">About Us</a>
+              <Link to="/about" className="block text-sm text-gray-700 py-2">About Us</Link>
               <div className="pt-2">
-                <a href="/contact" className="btn-primary inline-flex px-5 py-2.5 text-sm rounded-full">
+                <Link to="/contact" className="btn-primary inline-flex px-5 py-2.5 text-sm rounded-full">
                   <span>Contact Us</span>
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -2534,11 +2535,11 @@ export function Footer() {
                   { label: 'Certification Programmes',   href: '/services/certification' },
                 ].map(item => (
                   <li key={item.label}>
-                    <a href={item.href}
+                    <Link to={item.href}
                       className="group flex items-center gap-2.5 text-white/55 text-[15px] hover:text-white transition-colors">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#068140] shrink-0 group-hover:scale-150 transition-transform" />
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

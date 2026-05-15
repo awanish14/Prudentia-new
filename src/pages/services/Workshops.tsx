@@ -323,7 +323,7 @@ export default function Workshops() {
         <DifferentiatorsSection />
         <CTASection />
       </div>
-      <div className="hidden lg:block h-[480px] relative z-[1]" />
+      <div className="hidden lg:block h-[480px] relative z-[1] pointer-events-none" />
       <Footer />
     </ReactLenis>
   );
