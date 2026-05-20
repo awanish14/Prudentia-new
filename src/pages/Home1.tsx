@@ -240,8 +240,8 @@ const megaColumns = [
     heading: 'Specialisations & Partners',
     items: [
       { icon: Languages,      title: 'Translation & Localisation', desc: '40+ languages — eLearning, technical & marketing content',   href: '/services/translation' },
-      { icon: Shield,         title: 'Cybersecurity (EC-Council)', desc: 'CEH, CSA, CCSE, ECIH — certified cyber training & awareness', href: '/services/certification' },
-      { icon: GraduationCap,  title: 'SAP Academy Training',       desc: 'ERP curriculum, SAP tools & professional certification',      href: '/services/certification' },
+      { icon: Shield,         title: 'Cybersecurity (EC-Council)', desc: 'CEH, CSA, CCSE, ECIH — certified cyber training & awareness', href: '/services/cybersecurity' },
+      { icon: GraduationCap,  title: 'SAP Academy Training',       desc: 'ERP curriculum, SAP tools & professional certification',      href: '/services/sap-academy' },
       { icon: Monitor,        title: 'Skillsoft Percipio LXP',     desc: 'AI-driven platform with 200K+ digital learning assets',       href: '/services/elearning' },
     ],
   },
@@ -2531,7 +2531,8 @@ export function Footer() {
                   { label: 'eLearning Development',      href: '/services/elearning' },
                   { label: 'Translation & Localisation', href: '/services/translation' },
                   { label: 'Workshops & Bootcamps',      href: '/services/workshops' },
-                  { label: 'Certification Programmes',   href: '/services/certification' },
+                  { label: 'Cybersecurity — EC-Council',  href: '/services/cybersecurity' },
+                  { label: 'SAP Academy Training',        href: '/services/sap-academy' },
                 ].map(item => (
                   <li key={item.label}>
                     <Link to={item.href}

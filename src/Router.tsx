@@ -7,6 +7,8 @@ import Contact from './pages/Contact';
 import CorporateTraining from './pages/services/CorporateTraining';
 import ELearning from './pages/services/ELearning';
 import Certification from './pages/services/Certification';
+import Cybersecurity from './pages/services/Cybersecurity';
+import SapAcademy from './pages/services/SapAcademy';
 import Workshops from './pages/services/Workshops';
 import Translation from './pages/services/Translation';
 
@@ -35,6 +37,8 @@ export default function Router() {
           <Route path="/services/corporate-training" element={<CorporateTraining />} />
           <Route path="/services/elearning" element={<ELearning />} />
           <Route path="/services/certification" element={<Certification />} />
+          <Route path="/services/cybersecurity" element={<Cybersecurity />} />
+          <Route path="/services/sap-academy" element={<SapAcademy />} />
           <Route path="/services/workshops" element={<Workshops />} />
           <Route path="/services/translation" element={<Translation />} />
         </Routes>
