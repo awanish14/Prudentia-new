@@ -191,7 +191,7 @@ function DeliverablesSection() {
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${ACCENT}12` }}>
                   <d.icon size={20} style={{ color: ACCENT }} />
                 </div>
-                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{d.title}</h3>
+                <h3 className="text-[17px] font-semibold text-[#002747] mb-2">{d.title}</h3>
                 <p className="text-[15px] text-gray-500 leading-relaxed">{d.desc}</p>
               </div>
             </FadeUp>
@@ -250,7 +250,7 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[16px] font-semibold text-white mb-2">{step.title}</h3>
+                <h3 className="text-[17px] font-semibold text-white mb-2">{step.title}</h3>
                 <p className="text-[15px] text-white/45 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>

@@ -203,7 +203,7 @@ function WorkshopTypesSection() {
                   <span className="text-gray-200">·</span>
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">{w.format}</span>
                 </div>
-                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{w.title}</h3>
+                <h3 className="text-[17px] font-semibold text-[#002747] mb-2">{w.title}</h3>
                 <p className="text-[15px] text-gray-500 leading-relaxed flex-1">{w.desc}</p>
               </div>
             </FadeUp>
