@@ -1307,7 +1307,7 @@ export function ECCouncilSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              href="#contact"
+              href="/services/cybersecurity"
               className="btn-primary inline-flex items-center gap-2.5 font-bold px-8 py-4 rounded-full text-sm tracking-wide group"
             >
               Explore Cybersecurity Training
@@ -1339,7 +1339,7 @@ export function ECCouncilSection() {
 
         </div>
         {/* Mobile-only CTA — sits after the feature list */}
-        <a href="#contact" className="mt-8 md:hidden inline-flex items-center gap-2.5 btn-primary font-bold px-8 py-4 rounded-full text-sm tracking-wide group">
+        <a href="/services/cybersecurity" className="mt-8 md:hidden inline-flex items-center gap-2.5 btn-primary font-bold px-8 py-4 rounded-full text-sm tracking-wide group">
           Explore Cybersecurity Training
           <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
         </a>
@@ -1638,6 +1638,7 @@ const tabsData = [
     featureNumBase: 'rgba(6,129,64,0.30)',
     featureNumHover: 'rgba(6,129,64,0.70)',
     cta: 'Explore Cybersecurity Training',
+    ctaHref: '/services/cybersecurity',
     ctaBg: '#068140',
     decorText: 'CYBER',
     panelBg: '#F8F7F3',
@@ -1663,6 +1664,7 @@ const tabsData = [
     featureNumBase: 'rgba(0,163,224,0.4)',
     featureNumHover: 'rgba(0,163,224,0.8)',
     cta: 'Explore the LXP Platform',
+    ctaHref: '/services/elearning',
     ctaBg: '#002747',
     decorText: '',
     panelBg: '#F8F7F3',
@@ -1688,6 +1690,7 @@ const tabsData = [
     featureNumBase: 'rgba(0,112,210,0.30)',
     featureNumHover: 'rgba(0,112,210,0.70)',
     cta: 'Explore SAP Training',
+    ctaHref: '/services/sap-academy',
     ctaBg: '#0070D2',
     decorText: 'SAP',
     panelBg: '#F8F7F3',
@@ -1876,7 +1879,7 @@ export function AffiliationsTabsSection() {
                   </div>
                 )}
                 <a
-                  href="#contact"
+                  href={p.ctaHref}
                   className="inline-flex items-center gap-2.5 text-white font-bold px-8 py-4 rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide group"
                   style={{ backgroundColor: p.ctaBg }}
                 >

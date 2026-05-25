@@ -279,7 +279,7 @@ function CTASection() {
             <a href="/contact" className="btn-primary inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold rounded-full">
               Start the Conversation <ArrowRight size={14} />
             </a>
-            <a href="/services/certification" className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-[#002747] border border-[#002747]/20 rounded-full hover:bg-[#002747] hover:text-white transition-all">
+            <a href="/services/cybersecurity" className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-[#002747] border border-[#002747]/20 rounded-full hover:bg-[#002747] hover:text-white transition-all">
               Explore Certification <ArrowRight size={14} />
             </a>
           </div>
