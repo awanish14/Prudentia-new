@@ -355,7 +355,7 @@ function WhySAPSection() {
             <FadeUp key={item.stat} delay={i * 0.07}>
               <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.04] h-full flex flex-col">
                 <div className="font-serif text-[42px] leading-none text-white mb-3">{item.stat}</div>
-                <p className="text-[13px] text-white/50 leading-relaxed flex-1">{item.label}</p>
+                <p className="text-[15px] text-white/50 leading-relaxed flex-1">{item.label}</p>
                 <span className="text-[10px] font-medium text-white/20 uppercase tracking-wider mt-3">{item.source}</span>
               </div>
             </FadeUp>
@@ -375,7 +375,7 @@ function ModulesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Eight modules.<br />Every critical function.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[540px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[540px] leading-relaxed">
             Training takes place in live SAP environments — not simulations. Every module is built from SAP Academy's authorised curriculum and aligned to the current S/4HANA platform.
           </p>
         </FadeUp>
@@ -394,7 +394,7 @@ function ModulesSection() {
                 <div className="p-6">
                   <div className="flex flex-col lg:flex-row lg:gap-10">
                     <div className="lg:w-[340px] flex-shrink-0">
-                      <p className="text-[14px] text-gray-500 leading-relaxed">{mod.desc}</p>
+                      <p className="text-[15px] text-gray-500 leading-relaxed">{mod.desc}</p>
                     </div>
                     <div className="mt-5 lg:mt-0 flex-1">
                       <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-4">Topics Covered</p>
@@ -427,7 +427,7 @@ function CareerTracksSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Three paths into<br />the SAP ecosystem.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-400 max-w-[480px] mx-auto leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-400 max-w-[480px] mx-auto leading-relaxed">
             Whether you're configuring, developing, or operating — Prudentia trains you for the track that matches your role and goals.
           </p>
         </FadeUp>
@@ -440,7 +440,7 @@ function CareerTracksSection() {
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.18em] mb-1" style={{ color: ACCENT }}>{track.tagline}</span>
                 <h3 className="text-[18px] font-bold text-[#002747] mb-3">{track.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed mb-5">{track.desc}</p>
+                <p className="text-[15px] text-gray-500 leading-relaxed mb-5">{track.desc}</p>
                 <div className="mt-auto space-y-2">
                   {track.path.map((step, si) => (
                     <div key={si} className="flex items-start gap-2.5">
@@ -481,8 +481,8 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{step.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{step.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{step.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -506,7 +506,7 @@ function CTASection() {
               SAP-certified talent?
             </em>
           </h2>
-          <p className="mt-5 text-[16px] text-white/45 leading-relaxed">
+          <p className="mt-5 text-[17px] text-white/45 leading-relaxed">
             Tell us which modules your team needs and we'll design a training programme that fits your implementation timeline, role structure, and certification goals.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

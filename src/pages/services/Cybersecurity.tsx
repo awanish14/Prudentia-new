@@ -294,7 +294,7 @@ function ThreatContextSection() {
             <FadeUp key={item.stat} delay={i * 0.07}>
               <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.04] h-full flex flex-col">
                 <div className="font-serif text-[42px] leading-none text-white mb-3">{item.stat}</div>
-                <p className="text-[13px] text-white/50 leading-relaxed flex-1">{item.label}</p>
+                <p className="text-[15px] text-white/50 leading-relaxed flex-1">{item.label}</p>
                 <span className="text-[10px] font-medium text-white/20 uppercase tracking-wider mt-3">{item.source}</span>
               </div>
             </FadeUp>
@@ -314,7 +314,7 @@ function CertificationsSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Six certifications.<br />One authorised provider.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[540px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[540px] leading-relaxed">
             Every programme is delivered directly from EC-Council's official curriculum — no third-party resellers, no modified syllabi, no shortcuts on exam alignment.
           </p>
         </FadeUp>
@@ -334,7 +334,7 @@ function CertificationsSection() {
                 <div className="p-6">
                   <div className="flex flex-col lg:flex-row lg:gap-10">
                     <div className="lg:w-[340px] flex-shrink-0">
-                      <p className="text-[14px] text-gray-500 leading-relaxed mb-4">{cert.desc}</p>
+                      <p className="text-[15px] text-gray-500 leading-relaxed mb-4">{cert.desc}</p>
                       <div className="flex flex-wrap gap-x-5 gap-y-1 text-[12px] text-gray-400 sm:hidden">
                         <span><span className="font-semibold text-[#002747]">Level:</span> {cert.level}</span>
                         <span><span className="font-semibold text-[#002747]">Duration:</span> {cert.duration}</span>
@@ -373,7 +373,7 @@ function AudienceSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Built for every layer<br />of your security team.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-400 max-w-[480px] mx-auto leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-400 max-w-[480px] mx-auto leading-relaxed">
             From first-line SOC analysts to forensic investigators — each EC-Council certification is purpose-built for a specific security role.
           </p>
         </FadeUp>
@@ -384,8 +384,8 @@ function AudienceSection() {
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${ACCENT}12` }}>
                   <a.icon size={18} style={{ color: ACCENT }} />
                 </div>
-                <h3 className="text-[14px] font-semibold text-[#002747] mb-2">{a.title}</h3>
-                <p className="text-[12px] text-gray-500 leading-relaxed">{a.desc}</p>
+                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{a.title}</h3>
+                <p className="text-[14px] text-gray-500 leading-relaxed">{a.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -413,8 +413,8 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{step.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{step.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{step.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -438,7 +438,7 @@ function CTASection() {
               certified security team?
             </em>
           </h2>
-          <p className="mt-5 text-[16px] text-white/45 leading-relaxed">
+          <p className="mt-5 text-[17px] text-white/45 leading-relaxed">
             Tell us which certification tracks you're targeting and we'll design a training schedule around your team's availability — classroom, virtual, or blended.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

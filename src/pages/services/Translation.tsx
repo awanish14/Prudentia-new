@@ -182,7 +182,7 @@ function DeliverablesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Every format.<br />Every language.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[520px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[520px] leading-relaxed">
             From eLearning SCORM packages to legal compliance documents — we handle the full spectrum of corporate content localisation.
           </p>
         </FadeUp>
@@ -194,8 +194,8 @@ function DeliverablesSection() {
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${ACCENT}12` }}>
                   <d.icon size={20} style={{ color: ACCENT }} />
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{d.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{d.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{d.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{d.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -214,7 +214,7 @@ function LanguagesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             40+ languages.<br />Native translators for each.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[500px] mx-auto leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[500px] mx-auto leading-relaxed">
             A selection of the languages we cover — if yours isn't listed, ask us. Our network is broader than this page.
           </p>
         </FadeUp>
@@ -254,8 +254,8 @@ function QualitySection() {
             <FadeUp key={q.title} delay={i * 0.07}>
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/8 hover:border-white/20 transition-all duration-300 h-full">
                 <div className="w-2 h-2 rounded-full mb-4" style={{ backgroundColor: ACCENT_LIGHT }} />
-                <h3 className="text-[15px] font-semibold text-white mb-2">{q.title}</h3>
-                <p className="text-[13px] text-white/45 leading-relaxed">{q.desc}</p>
+                <h3 className="text-[16px] font-semibold text-white mb-2">{q.title}</h3>
+                <p className="text-[15px] text-white/45 leading-relaxed">{q.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -284,8 +284,8 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{step.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{step.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{step.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -306,7 +306,7 @@ function CTASection() {
           <h2 className="font-serif text-[36px] md:text-[48px] leading-[1.1] tracking-tight text-[#002747]">
             Ready to go global<br /><em className="italic">without losing your voice?</em>
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 leading-relaxed">
             Share your source content, target languages, and timeline — we'll respond with a quote and a project plan within one business day.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

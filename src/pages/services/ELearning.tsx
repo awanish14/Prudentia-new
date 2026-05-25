@@ -179,7 +179,7 @@ function DeliverablesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             End-to-end eLearning.<br />Nothing outsourced.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[520px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[520px] leading-relaxed">
             Instructional design, media production, LMS deployment — one team, one point of contact, zero handoff chaos.
           </p>
         </FadeUp>
@@ -191,8 +191,8 @@ function DeliverablesSection() {
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${ACCENT}12` }}>
                   <d.icon size={20} style={{ color: ACCENT }} />
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{d.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{d.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{d.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{d.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -250,8 +250,8 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[15px] font-semibold text-white mb-2">{step.title}</h3>
-                <p className="text-[13px] text-white/45 leading-relaxed">{step.desc}</p>
+                <h3 className="text-[16px] font-semibold text-white mb-2">{step.title}</h3>
+                <p className="text-[15px] text-white/45 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -272,7 +272,7 @@ function CTASection() {
           <h2 className="font-serif text-[36px] md:text-[48px] leading-[1.1] tracking-tight text-[#002747]">
             Let's build your<br /><em className="italic">eLearning roadmap.</em>
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 leading-relaxed">
             Share a brief and we'll come back with a scoping proposal — complete with recommended tools, timelines, and a sample interaction design.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

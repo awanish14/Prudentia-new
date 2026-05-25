@@ -186,7 +186,7 @@ function WorkshopTypesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Off-the-shelf is a myth.<br />These are starting points.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[520px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[520px] leading-relaxed">
             Each workshop below is customised to your organisation's context before delivery. Nothing runs verbatim.
           </p>
         </FadeUp>
@@ -203,8 +203,8 @@ function WorkshopTypesSection() {
                   <span className="text-gray-200">·</span>
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">{w.format}</span>
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{w.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed flex-1">{w.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{w.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed flex-1">{w.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -236,7 +236,7 @@ function FormatsSection() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] px-2 py-1 rounded-full" style={{ color: ACCENT, backgroundColor: `${ACCENT}12` }}>{f.tag}</span>
                 </div>
                 <h3 className="text-[17px] font-semibold text-[#002747] mb-3">{f.label}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{f.desc}</p>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{f.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -256,7 +256,7 @@ function DifferentiatorsSection() {
             <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-white mt-4">
               What makes our<br /><em className="italic" style={{ WebkitTextFillColor: 'transparent', backgroundClip: 'text', WebkitBackgroundClip: 'text', backgroundImage: `linear-gradient(to right, ${ACCENT_LIGHT}, #068140)` }}>workshops different.</em>
             </h2>
-            <p className="mt-5 text-[16px] text-white/45 leading-relaxed">
+            <p className="mt-5 text-[17px] text-white/45 leading-relaxed">
               We design for behavioural transfer, not just learner satisfaction scores. The distinction matters when you're investing in your people.
             </p>
           </FadeUp>
@@ -273,7 +273,7 @@ function DifferentiatorsSection() {
                   className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 hover:bg-white/8 transition-colors"
                 >
                   <CheckCircle2 size={14} style={{ color: ACCENT_LIGHT }} className="shrink-0 mt-0.5" />
-                  <span className="text-[13px] text-white/65 leading-relaxed">{d}</span>
+                  <span className="text-[15px] text-white/65 leading-relaxed">{d}</span>
                 </motion.div>
               ))}
             </div>
@@ -295,7 +295,7 @@ function CTASection() {
           <h2 className="font-serif text-[36px] md:text-[48px] leading-[1.1] tracking-tight text-[#002747]">
             Got a team challenge?<br /><em className="italic">Let's design the workshop.</em>
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 leading-relaxed">
             Share what you're trying to shift — mindset, skill, behaviour — and we'll come back with a workshop design proposal within 48 hours.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

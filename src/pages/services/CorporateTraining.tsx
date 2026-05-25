@@ -178,7 +178,7 @@ function DeliverablesSection() {
           <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-[#002747] mt-4">
             Every programme.<br />Purpose-built.
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 max-w-[520px] leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 max-w-[520px] leading-relaxed">
             We don't do off-the-shelf. Every engagement starts with your objectives and ends with measurable results.
           </p>
         </FadeUp>
@@ -190,8 +190,8 @@ function DeliverablesSection() {
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${ACCENT}12` }}>
                   <d.icon size={20} style={{ color: ACCENT }} />
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{d.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{d.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{d.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{d.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -220,8 +220,8 @@ function ProcessSection() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-[13px] font-bold mb-4 shrink-0" style={{ backgroundColor: ACCENT }}>
                   {step.num}
                 </div>
-                <h3 className="text-[15px] font-semibold text-[#002747] mb-2">{step.title}</h3>
-                <p className="text-[13px] text-gray-500 leading-relaxed">{step.desc}</p>
+                <h3 className="text-[16px] font-semibold text-[#002747] mb-2">{step.title}</h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{step.desc}</p>
               </div>
             </FadeUp>
           ))}
@@ -241,7 +241,7 @@ function AudienceSection() {
             <h2 className="font-serif text-[38px] md:text-[50px] leading-[1.1] tracking-tight text-white mt-4">
               Across seniority.<br /><em className="italic" style={{ WebkitTextFillColor: 'transparent', backgroundClip: 'text', WebkitBackgroundClip: 'text', backgroundImage: `linear-gradient(to right, ${ACCENT_LIGHT}, #00558F)` }}>Across functions.</em>
             </h2>
-            <p className="mt-5 text-[16px] text-white/45 leading-relaxed max-w-[460px]">
+            <p className="mt-5 text-[17px] text-white/45 leading-relaxed max-w-[460px]">
               Our programmes are designed for the full talent lifecycle — from onboarding to C-suite leadership development.
             </p>
           </FadeUp>
@@ -258,7 +258,7 @@ function AudienceSection() {
                   className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 hover:bg-white/8 transition-colors"
                 >
                   <CheckCircle2 size={14} style={{ color: ACCENT_LIGHT }} className="shrink-0" />
-                  <span className="text-[14px] text-white/70">{a}</span>
+                  <span className="text-[15px] text-white/70">{a}</span>
                 </motion.div>
               ))}
             </div>
@@ -280,7 +280,7 @@ function CTASection() {
           <h2 className="font-serif text-[36px] md:text-[48px] leading-[1.1] tracking-tight text-[#002747]">
             Ready to build a<br /><em className="italic">training programme that works?</em>
           </h2>
-          <p className="mt-5 text-[16px] text-gray-500 leading-relaxed">
+          <p className="mt-5 text-[17px] text-gray-500 leading-relaxed">
             Share your objectives and we'll come back with a concrete proposal — no generic decks, no unnecessary jargon.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
